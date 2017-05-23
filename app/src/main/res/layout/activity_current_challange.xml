@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.fatburner.fatburner.CurrentChalange">
+    tools:context="com.fatburner.fatburner.CurrentChallange">
 
     <EditText
         android:id="@+id/editText2"
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Current Chalange"
+        android:text="Current Challange"
         android:textAlignment="center"
         tools:layout_editor_absoluteX="84dp"
         tools:layout_editor_absoluteY="208dp" />

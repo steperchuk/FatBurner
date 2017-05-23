@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/nav_chanlange"
-        android:title="Current Chalange"
+    <item android:id="@+id/nav_challange"
+        android:title="Current Challange"
         android:icon="@mipmap/ic_person_black_24dp" />
 
     <item android:id="@+id/nav_programs"
