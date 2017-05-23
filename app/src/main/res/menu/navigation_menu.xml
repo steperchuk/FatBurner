@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/nav_chanlange"
+        android:title="Current Chalange"
+        android:icon="@mipmap/ic_person_black_24dp" />
+
+    <item android:id="@+id/nav_programs"
+        android:title="My Programms"
+        android:icon="@mipmap/ic_list_black_24dp"/>
+
+    <item android:id="@+id/nav_diet"
+        android:title="Diet"
+        android:icon="@mipmap/ic_accessibility_black_24dp"/>
+
+    <item android:id="@+id/nav_settings"
+        android:title="Settings"
+        android:icon="@mipmap/ic_settings_black_24dp"/>
+
+    <item android:id="@+id/nav_calendar"
+        android:title="Meal Calendar"
+        android:icon="@mipmap/ic_perm_contact_calendar_black_24dp"/>
+
+    <item android:id="@+id/nav_achivements"
+        android:title="My achievements"
+        android:icon="@mipmap/ic_trending_up_black_24dp"/>
+
+
+</menu>
