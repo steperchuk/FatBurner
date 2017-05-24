@@ -1,6 +1,7 @@
 package com.fatburner.fatburner;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -32,6 +33,7 @@ public class Menu extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setupDrawerContent(mNavigationView);
+
 
     }
 
