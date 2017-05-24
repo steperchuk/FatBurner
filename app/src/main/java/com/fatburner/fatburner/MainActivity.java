@@ -7,6 +7,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,8 +33,24 @@ public class MainActivity extends AppCompatActivity {
 
         setupDrawerContent(mNavigationView);
 
+        final Button startButton = (Button) findViewById(R.id.start_btn);
+        startButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if(startButton.getText().equals("Start"))
+                {startButton.setText("Done");}
+                else
+                {startButton.setText("Start");}
+
+                    Intent intent = new Intent(MainActivity.this, Settings.class);
+                    startActivity(intent);
+
+            }
+        });
+
 
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
