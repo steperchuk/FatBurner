@@ -6,27 +6,276 @@
     android:layout_height="match_parent"
     tools:context="com.fatburner.fatburner.Settings">
 
-        <EditText
-            android:id="@+id/activityTitle"
+        <CheckBox
+            android:id="@+id/friday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Settings"
-            android:textAlignment="center"
-            tools:layout_editor_absoluteX="94dp"
-            tools:layout_editor_absoluteY="217dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_above="@+id/switchWaterNotification"
+            android:layout_alignLeft="@+id/monday"
+            android:layout_alignStart="@+id/monday"
+            android:layout_marginBottom="12dp"
+            android:text="Fri" />
+
+        <CheckBox
+            android:id="@+id/saturday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/friday"
+            android:layout_alignBottom="@+id/friday"
+            android:layout_alignLeft="@+id/thuesday"
+            android:layout_alignStart="@+id/thuesday"
+            android:text="Sat" />
+
+        <CheckBox
+            android:id="@+id/wensday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wen"
+            android:layout_below="@+id/trainingStart"
+            android:layout_alignRight="@+id/sunday"
+            android:layout_alignEnd="@+id/sunday" />
+
+        <CheckBox
+            android:id="@+id/monday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mon"
+            android:layout_alignTop="@+id/textView6"
+            android:layout_alignLeft="@+id/applyButton"
+            android:layout_alignStart="@+id/applyButton" />
 
         <Button
             android:id="@+id/applyButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Apply"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="27dp" />
+            android:layout_marginBottom="16dp"
+            android:text="Edit" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="33dp"
+            android:text="Gender"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="27dp"
+            android:layout_marginStart="27dp" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textView"
+            android:layout_alignStart="@+id/textView"
+            android:layout_below="@+id/textView"
+            android:layout_marginTop="20dp"
+            android:text="Age"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textView2"
+            android:layout_alignStart="@+id/textView2"
+            android:layout_below="@+id/textView2"
+            android:layout_marginTop="23dp"
+            android:text="Weight"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textView3"
+            android:layout_alignStart="@+id/textView3"
+            android:layout_below="@+id/weight"
+            android:text="Day start time"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textView4"
+            android:layout_alignStart="@+id/textView4"
+            android:layout_below="@+id/textView4"
+            android:layout_marginTop="17dp"
+            android:text="Training start time"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textView5"
+            android:layout_alignStart="@+id/textView5"
+            android:layout_below="@+id/trainingStart"
+            android:text="Training days"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Notify about water"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="26dp"
+            android:layout_above="@+id/textView8"
+            android:layout_alignLeft="@+id/textView6"
+            android:layout_alignStart="@+id/textView6" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Notify about food"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="22dp"
+            android:layout_above="@+id/textView9"
+            android:layout_alignLeft="@+id/textView7"
+            android:layout_alignStart="@+id/textView7" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Notify about sleep"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="26dp"
+            android:layout_above="@+id/applyButton"
+            android:layout_alignLeft="@+id/textView8"
+            android:layout_alignStart="@+id/textView8" />
+
+        <Switch
+            android:id="@+id/switchSleepNotification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/textView9"
+            android:layout_marginEnd="24dp"
+            android:layout_marginRight="24dp" />
+
+        <Switch
+            android:id="@+id/switchFoodNotification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/switchSleepNotification"
+            android:layout_alignRight="@+id/switchSleepNotification"
+            android:layout_alignTop="@+id/textView8" />
+
+        <Switch
+            android:id="@+id/switchWaterNotification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/switchFoodNotification"
+            android:layout_alignRight="@+id/switchFoodNotification"
+            android:layout_alignTop="@+id/textView7" />
+
+        <EditText
+            android:id="@+id/dayStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="time"
+            android:layout_below="@+id/textView3"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignLeft="@+id/trainingStart"
+            android:layout_alignStart="@+id/trainingStart" />
+
+        <EditText
+            android:id="@+id/trainingStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="time"
+            android:layout_alignBaseline="@+id/textView5"
+            android:layout_alignBottom="@+id/textView5"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toRightOf="@+id/monday"
+            android:layout_toEndOf="@+id/monday" />
+
+        <EditText
+            android:id="@+id/weight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textView3"
+            android:layout_alignBottom="@+id/textView3"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:layout_alignLeft="@+id/age"
+            android:layout_alignStart="@+id/age" />
+
+        <EditText
+            android:id="@+id/age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_below="@+id/textView"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignLeft="@+id/gender"
+            android:layout_alignStart="@+id/gender" />
+
+        <CheckBox
+            android:id="@+id/thursday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thu"
+            android:layout_alignBaseline="@+id/friday"
+            android:layout_alignBottom="@+id/friday"
+            android:layout_toRightOf="@+id/textView2"
+            android:layout_toEndOf="@+id/textView2" />
+
+        <CheckBox
+            android:id="@+id/sunday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/saturday"
+            android:layout_alignBottom="@+id/saturday"
+            android:layout_alignLeft="@+id/switchWaterNotification"
+            android:layout_alignStart="@+id/switchWaterNotification"
+            android:text="Sun" />
+
+        <CheckBox
+            android:id="@+id/thuesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tue"
+            android:layout_below="@+id/trainingStart"
+            android:layout_toRightOf="@+id/applyButton"
+            android:layout_toEndOf="@+id/applyButton" />
+
+        <Switch
+            android:id="@+id/gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/age"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="Male" />
 
 
 </RelativeLayout>
