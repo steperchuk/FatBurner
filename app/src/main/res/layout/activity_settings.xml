@@ -6,44 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.fatburner.fatburner.Settings">
 
-        <CheckBox
-            android:id="@+id/friday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/switchWaterNotification"
-            android:layout_alignLeft="@+id/monday"
-            android:layout_alignStart="@+id/monday"
-            android:layout_marginBottom="12dp"
-            android:text="Fri" />
-
-        <CheckBox
-            android:id="@+id/saturday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/friday"
-            android:layout_alignBottom="@+id/friday"
-            android:layout_alignLeft="@+id/thuesday"
-            android:layout_alignStart="@+id/thuesday"
-            android:text="Sat" />
-
-        <CheckBox
-            android:id="@+id/wensday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Wen"
-            android:layout_below="@+id/trainingStart"
-            android:layout_alignRight="@+id/sunday"
-            android:layout_alignEnd="@+id/sunday" />
-
-        <CheckBox
-            android:id="@+id/monday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mon"
-            android:layout_alignTop="@+id/textView6"
-            android:layout_alignLeft="@+id/applyButton"
-            android:layout_alignStart="@+id/applyButton" />
-
         <Button
             android:id="@+id/applyButton"
             android:layout_width="wrap_content"
@@ -95,35 +57,37 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textView3"
-            android:layout_alignStart="@+id/textView3"
-            android:layout_below="@+id/weight"
             android:text="Day start time"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_alignBaseline="@+id/dayStart"
+            android:layout_alignBottom="@+id/dayStart"
+            android:layout_alignLeft="@+id/textView3"
+            android:layout_alignStart="@+id/textView3" />
 
         <TextView
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textView4"
-            android:layout_alignStart="@+id/textView4"
-            android:layout_below="@+id/textView4"
-            android:layout_marginTop="17dp"
             android:text="Training start time"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_below="@+id/textView4"
+            android:layout_alignLeft="@+id/textView4"
+            android:layout_alignStart="@+id/textView4"
+            android:layout_marginTop="25dp" />
 
         <TextView
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textView5"
-            android:layout_alignStart="@+id/textView5"
-            android:layout_below="@+id/trainingStart"
             android:text="Training days"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_below="@+id/trainingStart"
+            android:layout_alignLeft="@+id/textView5"
+            android:layout_alignStart="@+id/textView5"
+            android:layout_marginTop="21dp" />
 
         <TextView
             android:id="@+id/textView7"
@@ -191,26 +155,22 @@
             android:id="@+id/dayStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="time"
-            android:layout_below="@+id/textView3"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_alignLeft="@+id/trainingStart"
-            android:layout_alignStart="@+id/trainingStart" />
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/weight"
+            android:ems="10"
+            android:inputType="time" />
 
         <EditText
             android:id="@+id/trainingStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="time"
             android:layout_alignBaseline="@+id/textView5"
             android:layout_alignBottom="@+id/textView5"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_toRightOf="@+id/monday"
-            android:layout_toEndOf="@+id/monday" />
+            android:layout_alignParentRight="true"
+            android:ems="10"
+            android:inputType="none" />
 
         <EditText
             android:id="@+id/weight"
@@ -218,55 +178,30 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/textView3"
             android:layout_alignBottom="@+id/textView3"
+            android:layout_alignLeft="@+id/age"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
+            android:layout_alignStart="@+id/age"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:layout_alignLeft="@+id/age"
-            android:layout_alignStart="@+id/age" />
+            android:digits="0123456789."
+            android:maxLength="4"
+            android:inputType="numberDecimal"/>
 
         <EditText
             android:id="@+id/age"
+            android:digits="0123456789"
+            android:maxLength="2"
+            android:inputType="numberDecimal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_below="@+id/textView"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
             android:layout_alignLeft="@+id/gender"
-            android:layout_alignStart="@+id/gender" />
-
-        <CheckBox
-            android:id="@+id/thursday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Thu"
-            android:layout_alignBaseline="@+id/friday"
-            android:layout_alignBottom="@+id/friday"
-            android:layout_toRightOf="@+id/textView2"
-            android:layout_toEndOf="@+id/textView2" />
-
-        <CheckBox
-            android:id="@+id/sunday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/saturday"
-            android:layout_alignBottom="@+id/saturday"
-            android:layout_alignLeft="@+id/switchWaterNotification"
-            android:layout_alignStart="@+id/switchWaterNotification"
-            android:text="Sun" />
-
-        <CheckBox
-            android:id="@+id/thuesday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tue"
-            android:layout_below="@+id/trainingStart"
-            android:layout_toRightOf="@+id/applyButton"
-            android:layout_toEndOf="@+id/applyButton" />
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignStart="@+id/gender"
+            android:layout_below="@+id/textView"
+            android:ems="10"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <Switch
             android:id="@+id/gender"
@@ -276,6 +211,17 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:text="Male" />
+
+        <EditText
+            android:id="@+id/trainingDays"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textView6"
+            android:layout_alignBottom="@+id/textView6"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:ems="10"
+            android:inputType="textPersonName" />
 
 
 </RelativeLayout>

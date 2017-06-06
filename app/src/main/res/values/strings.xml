@@ -2,4 +2,6 @@
     <string name="app_name">Fat Burner</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string name="items">Items</string>
+    <string name="ok">OK</string>
 </resources>
