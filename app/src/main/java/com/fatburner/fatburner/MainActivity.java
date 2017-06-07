@@ -23,12 +23,15 @@ public class MainActivity extends Menu {
         final Button startButton = (Button) findViewById(R.id.start_btn);
         startButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
+                /*
                 if(startButton.getText().equals("Start"))
                 {startButton.setText("Done");}
                 else
                 {startButton.setText("Start");}
+                */
 
-                    Intent intent = new Intent(MainActivity.this, Settings.class);
+                    Intent intent = new Intent(MainActivity.this, MyPrograms.class);
                     startActivity(intent);
 
             }

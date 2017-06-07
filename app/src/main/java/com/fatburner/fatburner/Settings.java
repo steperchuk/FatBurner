@@ -6,10 +6,9 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Configuration;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -40,14 +40,31 @@ public class Settings extends Menu {
     EditText dayStartTime;
     EditText trainingStart;
     EditText trainingDays;
+    EditText age;
+    EditText weight;
+    Switch gender;
+    Switch switchWaterNotification;
+    Switch switchFoodNotification;
+    Switch switchSleepNotification;
 
 
-    SettingsProvider settings;
+    SharedPreferences sPref;
+    String ageValue;
+    String weightValue;
+    boolean genderValue;
+    String dayStartTimeValue;
+    String trainingStartTimeValue;
+    String trainingDaysValue;
+    boolean waterNotificationValue;
+    boolean sleepNotificationValue;
+    boolean foodNotificationValue;
+    boolean isFirstStart;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        final DatabaseHandler db = new DatabaseHandler(this);
+
         super.onCreate(savedInstanceState);
 
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -55,18 +72,16 @@ public class Settings extends Menu {
         mDrawerLayout.addView(contentView, 0);
 
 
-
-
         final Button applyButton = (Button) findViewById(R.id.applyButton);
-        final Switch gender = (Switch) findViewById(R.id.gender);
-        final EditText age = (EditText) findViewById(R.id.age);
-        final EditText weight = (EditText) findViewById(R.id.weight);
+        gender = (Switch) findViewById(R.id.gender);
+        age = (EditText) findViewById(R.id.age);
+        weight = (EditText) findViewById(R.id.weight);
         dayStartTime = (EditText) findViewById(R.id.dayStart);
         trainingStart = (EditText) findViewById(R.id.trainingStart);
         trainingDays = (EditText) findViewById(R.id.trainingDays);
-        final Switch switchWaterNotification = (Switch) findViewById(R.id.switchWaterNotification);
-        final Switch switchFoodNotification = (Switch) findViewById(R.id.switchFoodNotification);
-        final Switch switchSleepNotification = (Switch) findViewById(R.id.switchSleepNotification);
+        switchWaterNotification = (Switch) findViewById(R.id.switchWaterNotification);
+        switchFoodNotification = (Switch) findViewById(R.id.switchFoodNotification);
+        switchSleepNotification = (Switch) findViewById(R.id.switchSleepNotification);
 
         dayStartTime.setInputType(InputType.TYPE_NULL);
         trainingStart.setInputType(InputType.TYPE_NULL);
@@ -100,53 +115,38 @@ public class Settings extends Menu {
             }
         });
 
+        loadSettings();
 
-
-        SettingsProvider initialSettings = db.getSettings();
-        settings = initialSettings;
-
-        age.setText(initialSettings.getAge());
-        weight.setText(initialSettings.getWeight());
         /*
-        ////////////////////////// values from db ////////////////
-
-        //switchFoodNotification.setChecked(initialSettings.getShowWaterNotification());
-        //switchFoodNotification.setChecked(initialSettings.getShowFoodNotification());
-        //switchFoodNotification.setChecked(initialSettings.getShowSleepNotification());
-        //gender.setChecked(initialSettings.getGender());
-
-        //////////////////////////
-         */
-
-        if (initialSettings._dayStartTime == null) {
+        if (isFirstStart) {
             applyButton.setText("Apply");
         }
-
+        */
 
         gender.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(gender.getText().equals("Male"))
                 {gender.setText("Female");}
                 else {gender.setText("Male");}
-                settings.setGender(isChecked);
+                genderValue = isChecked;
             }
         });
 
         switchWaterNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                settings.setShowWaterNotification(isChecked);
+                waterNotificationValue = isChecked;
             }
         });
 
         switchFoodNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                settings.setShowFoodNotification(isChecked);
+                foodNotificationValue = isChecked;
             }
         });
 
         switchSleepNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                settings.setShowSleepNotification(isChecked);
+                sleepNotificationValue = isChecked;
             }
         });
 
@@ -156,20 +156,22 @@ public class Settings extends Menu {
 
         applyButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
+                /*
                 if (applyButton.getText().equals("Apply")) {
                     applyButton.setText("Edit");
                 } else {
                     applyButton.setText("Apply");
                 }
+*/
 
-                settings.setAge(age.getText().toString());
-                settings.setWeight(weight.getText().toString());
-                settings.setTrainingDays(trainingDays.toString());
-                settings.setDayStartTime(dayStartTime.getText().toString());
-                settings.setTrainingStartTime(trainingStart.getText().toString());
+                ageValue = age.getText().toString();
+                weightValue = weight.getText().toString();
 
 
-                db.addSettings(settings);
+
+                isFirstStart = false;
+                saveSettings();
                 Intent intent = new Intent(Settings.this, MainActivity.class);
                 startActivity(intent);
 
@@ -178,6 +180,12 @@ public class Settings extends Menu {
 
 
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        saveSettings();
     }
 
     protected Dialog onCreateDialog(int id) {
@@ -206,7 +214,6 @@ public class Settings extends Menu {
         @Override
         public void onClick(DialogInterface dialog, int which, boolean isChecked) {
             ListView lv = ((AlertDialog) dialog).getListView();
-            //Log.d( "tag" , "which = " + which + ", isChecked = " + isChecked);
         }
     };
 
@@ -217,10 +224,10 @@ public class Settings extends Menu {
                 int key = sbArray.keyAt(i);
                 if (sbArray.get(key))
                     daysSelected = daysSelected + days[key].substring(0,3) + ", ";
-                    // Log.d("qwe", "checked: " + key);
             }
             daysSelected = daysSelected.substring(0, daysSelected.length() - 2);
-            trainingDays.setText(daysSelected);
+            trainingDaysValue = daysSelected;
+            trainingDays.setText(trainingDaysValue);
         }
     };
 
@@ -233,7 +240,8 @@ public class Settings extends Menu {
             {normalizedMinute = "0" + Integer.toString(myMinute);}
             else
             {normalizedMinute = Integer.toString(myMinute);}
-            dayStartTime.setText(Integer.toString(myHour) + ":" + normalizedMinute);
+            dayStartTimeValue = Integer.toString(myHour) + ":" + normalizedMinute;
+            dayStartTime.setText(dayStartTimeValue);
         }
     };
 
@@ -246,7 +254,8 @@ public class Settings extends Menu {
             {normalizedMinute = "0" + Integer.toString(myMinute);}
             else
             {normalizedMinute = Integer.toString(myMinute);}
-            trainingStart.setText(Integer.toString(myHour) + ":" + normalizedMinute);
+            trainingStartTimeValue = Integer.toString(myHour) + ":" + normalizedMinute;
+            trainingStart.setText(trainingStartTimeValue);
         }
     };
 
@@ -254,6 +263,51 @@ public class Settings extends Menu {
     public void hideKeyboard(View view) {
         InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Settings.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    void saveSettings() {
+        sPref = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor ed = sPref.edit();
+        ed.putString("AGE",ageValue);
+        ed.putString("WEIGHT", weightValue);
+        ed.putString("DAY_START", dayStartTimeValue);
+        ed.putString("TRAINING_START", trainingStartTimeValue);
+        ed.putString("TRAINING_DAYS", trainingDaysValue);
+        ed.putBoolean("IS_FIRST_RUN", isFirstStart);
+        ed.putBoolean("GENDER", genderValue);
+        ed.putBoolean("FOOD_NOTIFICATON", foodNotificationValue);
+        ed.putBoolean("SLEEP_NOTIFICATON", sleepNotificationValue);
+        ed.putBoolean("WATER_NOTIFICATON", waterNotificationValue);
+        ed.commit();
+        Toast.makeText(this, "Settings saved", Toast.LENGTH_SHORT).show();
+    }
+
+   public void loadSettings() {
+        sPref = getPreferences(MODE_PRIVATE);
+
+        ageValue = sPref.getString("AGE","");
+        weightValue = sPref.getString("WEIGHT","");
+        dayStartTimeValue = sPref.getString("DAY_START","");
+        trainingStartTimeValue = sPref.getString("TRAINING_START","");
+        trainingDaysValue = sPref.getString("TRAINING_DAYS","");
+        isFirstStart = sPref.getBoolean("IS_FIRST_RUN",false);
+        genderValue = sPref.getBoolean("GENDER", false);
+        foodNotificationValue = sPref.getBoolean("FOOD_NOTIFICATON", false);
+        sleepNotificationValue = sPref.getBoolean("SLEEP_NOTIFICATON", false);
+        waterNotificationValue = sPref.getBoolean("WATER_NOTIFICATON", false);
+
+
+        age.setText(ageValue);
+        weight.setText(weightValue);
+        dayStartTime.setText(dayStartTimeValue);
+        trainingStart.setText(trainingStartTimeValue);
+        trainingDays.setText(trainingDaysValue);
+        gender.setChecked(genderValue);
+        switchFoodNotification.setChecked(foodNotificationValue);
+        switchSleepNotification.setChecked(sleepNotificationValue);
+        switchWaterNotification.setChecked(waterNotificationValue);
+
+        Toast.makeText(this, "Settings loaded", Toast.LENGTH_SHORT).show();
     }
 
 }
