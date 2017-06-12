@@ -14,19 +14,6 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true">
 
-        <EditText
-            android:id="@+id/editText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Main Layout"
-            android:textAlignment="center"
-            android:textSize="24sp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
-
         <Button
             android:id="@+id/start_btn"
 
@@ -41,9 +28,9 @@
             android:text="Start"
             android:textColor="#FFFFFF"
             android:textSize="30sp"
+            android:layout_marginBottom="38dp"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="79dp" />
+            android:layout_centerHorizontal="true" />
 
         <TextView
             android:id="@+id/current_week"

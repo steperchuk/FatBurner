@@ -1,15 +1,12 @@
 package com.fatburner.fatburner;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
 public class Menu extends AppCompatActivity {
 
@@ -66,7 +63,7 @@ public class Menu extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 case R.id.nav_challange:
-                    intent = new Intent(Menu.this, CurrentChallange.class);
+                    intent = new Intent(Menu.this, TrainingsList.class);
                     startActivity(intent);
                     break;
                 case R.id.nav_calendar:
