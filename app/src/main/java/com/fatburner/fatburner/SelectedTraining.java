@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 public class SelectedTraining extends Menu {
 
+    int trainingId = 1;
 
     String training[] = {"Бег","Берпи","Отжимания","Приседания","Трастеры","Запрыгивания на тумбу", " ", " ", " ", " "};
     String scoreValue = "30";
@@ -28,12 +29,13 @@ public class SelectedTraining extends Menu {
         mDrawerLayout.addView(contentView, 0);
 
         Intent intent = getIntent();
-        String selectedTraining = intent.getStringExtra("selectedTraining");
-
+        final int selectedTraining = Integer.valueOf(intent.getStringExtra("selectedTraining"));
 
         Button startButton = (Button) findViewById(R.id.start_btn);
+        Button nextButton = (Button) findViewById(R.id.next_btn);
+        Button prevButton = (Button) findViewById(R.id.prev_btn);
 
-        TextView trainingLabel = (TextView) findViewById(R.id.trainingId);
+        final TextView trainingLabel = (TextView) findViewById(R.id.trainingId);
         TextView score = (TextView) findViewById(R.id.scoreLabel);
 
         TextView exercise1 = (TextView) findViewById(R.id.exercise_1);
@@ -47,9 +49,9 @@ public class SelectedTraining extends Menu {
         TextView exercise9 = (TextView) findViewById(R.id.exercise_9);
         TextView exercise10 = (TextView) findViewById(R.id.exercise_10);
 
-
-        trainingLabel.setText("Training: " + selectedTraining);
-        score.setText("Get " + scoreValue + " scores!");
+        trainingId = selectedTraining+1;
+        trainingLabel.setText("Training: " + trainingId);
+        score.setText("Score: " + scoreValue);
 
 
         exercise1.setText(training[0]);
@@ -64,17 +66,33 @@ public class SelectedTraining extends Menu {
         exercise10.setText(training[9]);
 
 
-
         startButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-
                     Intent intent = new Intent(SelectedTraining.this, Exercise.class);
                     intent.putExtra("training", training);
                     startActivity(intent);
-
                 }
             });
 
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if(trainingId < training.length)
+                {
+                    trainingLabel.setText("Training: " + (trainingId+1));
+                    trainingId++;
+                }
+            }
+        });
+
+        prevButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if(trainingId > 0)
+                {
+                    trainingLabel.setText("Training: " + (trainingId - 1));
+                    trainingId--;
+                }
+            }
+        });
 
         }
 

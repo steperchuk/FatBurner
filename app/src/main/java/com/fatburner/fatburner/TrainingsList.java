@@ -14,7 +14,6 @@ import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -49,20 +48,19 @@ public class TrainingsList extends Menu {
         Map<String, Object> m;
         for (int i = 0; i < load.length; i++) {
             m = new HashMap<String, Object>();
-            m.put(ATTRIBUTE_NAME_TEXT, "Training " + i + ": " + load[i] + "%");
+            m.put(ATTRIBUTE_NAME_TEXT, "Training " + i + "\n" + load[i] + "%");
             m.put(ATTRIBUTE_NAME_PB, load[i]);
             m.put(ATTRIBUTE_NAME_LL, load[i]);
             data.add(m);
         }
 
         // массив имен атрибутов, из которых будут читаться данные
-        String[] from = { ATTRIBUTE_NAME_TEXT, ATTRIBUTE_NAME_PB,
-                ATTRIBUTE_NAME_LL };
+        String[] from = { ATTRIBUTE_NAME_TEXT, ATTRIBUTE_NAME_PB, ATTRIBUTE_NAME_LL };
         // массив ID View-компонентов, в которые будут вставлять данные
         int[] to = { R.id.tvLoad, R.id.pbLoad, R.id.llLoad };
 
         // создаем адаптер
-        SimpleAdapter sAdapter = new SimpleAdapter(this, data, R.layout.item, from, to);
+        SimpleAdapter sAdapter = new SimpleAdapter(this, data, R.layout.list_view_item, from, to);
         // Указываем адаптеру свой биндер
         sAdapter.setViewBinder(new TrainingsList.MyViewBinder());
 

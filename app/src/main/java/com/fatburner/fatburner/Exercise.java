@@ -28,18 +28,18 @@ public class Exercise extends Menu {
 
 
         final TextView exerciseLabel = (TextView) findViewById(R.id.exercise_label);
-        Button doneBtn = (Button) findViewById(R.id.start_btn);
+        Button doneBtn = (Button) findViewById(R.id.done_btn);
         exerciseLabel.setText(currentExercise[0]);
 
         doneBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if(!currentExercise[i].equals(" ")) {
                     exerciseLabel.setText(currentExercise[i]);
-                    i = i + 1;
+                    i++;
                 }
                 else {
-                    exerciseLabel.setText(currentExercise[0]);
-                    i = 1;
+                    Intent intent = new Intent(Exercise.this, TrainingCompleted.class);
+                    startActivity(intent);
                 }
             }
         });

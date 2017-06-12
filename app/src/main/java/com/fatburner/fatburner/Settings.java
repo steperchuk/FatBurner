@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.SparseBooleanArray;
@@ -117,12 +118,6 @@ public class Settings extends Menu {
 
         loadSettings();
 
-        /*
-        if (isFirstStart) {
-            applyButton.setText("Apply");
-        }
-        */
-
         gender.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(gender.getText().equals("Male"))
@@ -157,17 +152,8 @@ public class Settings extends Menu {
         applyButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                /*
-                if (applyButton.getText().equals("Apply")) {
-                    applyButton.setText("Edit");
-                } else {
-                    applyButton.setText("Apply");
-                }
-*/
-
                 ageValue = age.getText().toString();
                 weightValue = weight.getText().toString();
-
 
 
                 isFirstStart = false;

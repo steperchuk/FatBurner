@@ -42,8 +42,7 @@ public class MyPrograms extends Menu {
         int load[] = { 12,  88 };
 
         // упаковываем данные в понятную для адаптера структуру
-        ArrayList<Map<String, Object>> data = new ArrayList<Map<String, Object>>(
-                load.length);
+        ArrayList<Map<String, Object>> data = new ArrayList<Map<String, Object>>(load.length);
         Map<String, Object> m;
         for (int i = 0; i < load.length; i++) {
             m = new HashMap<String, Object>();
@@ -54,13 +53,12 @@ public class MyPrograms extends Menu {
         }
 
         // массив имен атрибутов, из которых будут читаться данные
-        String[] from = { ATTRIBUTE_NAME_TEXT, ATTRIBUTE_NAME_PB,
-                ATTRIBUTE_NAME_LL };
+        String[] from = { ATTRIBUTE_NAME_TEXT, ATTRIBUTE_NAME_PB, ATTRIBUTE_NAME_LL };
         // массив ID View-компонентов, в которые будут вставлять данные
         int[] to = { R.id.tvLoad, R.id.pbLoad, R.id.llLoad };
 
         // создаем адаптер
-        SimpleAdapter sAdapter = new SimpleAdapter(this, data, R.layout.item, from, to);
+        SimpleAdapter sAdapter = new SimpleAdapter(this, data, R.layout.list_view_item, from, to);
         // Указываем адаптеру свой биндер
         sAdapter.setViewBinder(new MyViewBinder());
 
@@ -107,8 +105,7 @@ public class MyPrograms extends Menu {
 
         @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
         @Override
-        public boolean setViewValue(View view, Object data,
-        String textRepresentation) {
+        public boolean setViewValue(View view, Object data, String textRepresentation) {
         int i = 0;
         switch (view.getId()) {
         // LinearLayout

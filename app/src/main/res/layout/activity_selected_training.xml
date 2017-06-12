@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.fatburner.fatburner.SelectedTraining">>
+
+    <TextView
+        android:id="@+id/trainingId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:text="Training " />
+
+    <TextView
+        android:id="@+id/exercise_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/trainingId"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="15dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/exercise_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/exercise_1"
+        android:layout_alignStart="@+id/exercise_1"
+        android:layout_below="@+id/exercise_1"
+        android:layout_marginTop="15dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/exercise_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/exercise_2"
+        android:layout_alignStart="@+id/exercise_2"
+        android:layout_below="@+id/exercise_2"
+        android:layout_marginTop="15dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/exercise_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="TextView"
+        android:layout_below="@+id/exercise_3"
+        android:layout_alignLeft="@+id/exercise_3"
+        android:layout_alignStart="@+id/exercise_3" />
+
+    <TextView
+        android:id="@+id/exercise_5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/exercise_4"
+        android:layout_alignStart="@+id/exercise_4"
+        android:layout_below="@+id/exercise_4"
+        android:layout_marginTop="15dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/exercise_6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_below="@+id/exercise_5"
+        android:layout_alignLeft="@+id/exercise_5"
+        android:layout_alignStart="@+id/exercise_5"
+        android:layout_marginTop="15dp" />
+
+    <TextView
+        android:id="@+id/exercise_7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_below="@+id/exercise_6"
+        android:layout_alignLeft="@+id/exercise_6"
+        android:layout_alignStart="@+id/exercise_6"
+        android:layout_marginTop="15dp" />
+
+    <TextView
+        android:id="@+id/exercise_8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/exercise_7"
+        android:layout_alignRight="@+id/exercise_7"
+        android:layout_below="@+id/exercise_7"
+        android:layout_marginTop="15dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/exercise_9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/exercise_8"
+        android:layout_alignStart="@+id/exercise_8"
+        android:layout_below="@+id/exercise_8"
+        android:layout_marginTop="15dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/exercise_10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="TextView"
+        android:layout_below="@+id/exercise_9"
+        android:layout_alignLeft="@+id/exercise_9"
+        android:layout_alignStart="@+id/exercise_9"
+        />
+
+    <Button
+        android:id="@+id/start_btn"
+        android:onClick="buttonClicked"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#45A9D4"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:text="Start"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        android:layout_marginBottom="11dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        />
+
+    <Button
+        android:id="@+id/next_btn"
+        android:onClick="buttonClicked"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#45A9D4"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:text="Next"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:id="@+id/prev_btn"
+        android:onClick="buttonClicked"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#45A9D4"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:text="Prev"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/scoreLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="13dp"
+        android:layout_marginRight="13dp"
+        android:text="TextView"
+        android:layout_alignBaseline="@+id/trainingId"
+        android:layout_alignBottom="@+id/trainingId"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

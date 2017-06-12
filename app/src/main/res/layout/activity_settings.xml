@@ -8,12 +8,19 @@
 
         <Button
             android:id="@+id/applyButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:onClick="buttonClicked"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:background="@drawable/buttonshape"
+            android:shadowColor="#45A9D4"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:text="Apply"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="16dp"
-            android:text="Apply" />
+            android:layout_centerHorizontal="true" />
 
         <TextView
             android:id="@+id/textView"
