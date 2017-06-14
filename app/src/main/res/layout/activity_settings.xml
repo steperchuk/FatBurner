@@ -6,12 +6,13 @@
     android:layout_height="match_parent"
     tools:context="com.fatburner.fatburner.Settings">
 
-        <Button
+        <ImageButton
             android:id="@+id/applyButton"
+            android:src="@drawable/ic_down_chevron"
             android:onClick="buttonClicked"
-            android:layout_width="100dp"
+            android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@drawable/buttonshape"
+            android:background=""
             android:shadowColor="#45A9D4"
             android:shadowDx="0"
             android:shadowDy="0"
@@ -20,7 +21,8 @@
             android:textColor="#FFFFFF"
             android:textSize="20sp"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="13dp" />
 
         <TextView
             android:id="@+id/textView"
@@ -166,7 +168,9 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/weight"
             android:ems="10"
-            android:inputType="time" />
+            android:inputType="time"
+            android:layout_alignLeft="@+id/weight"
+            android:layout_alignStart="@+id/weight" />
 
         <EditText
             android:id="@+id/trainingStart"
@@ -177,7 +181,9 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:ems="10"
-            android:inputType="none" />
+            android:inputType="none"
+            android:layout_alignLeft="@+id/dayStart"
+            android:layout_alignStart="@+id/dayStart" />
 
         <EditText
             android:id="@+id/weight"
@@ -185,14 +191,14 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/textView3"
             android:layout_alignBottom="@+id/textView3"
-            android:layout_alignLeft="@+id/age"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignStart="@+id/age"
             android:ems="10"
             android:digits="0123456789."
             android:maxLength="4"
-            android:inputType="numberDecimal"/>
+            android:inputType="numberDecimal"
+            android:layout_alignLeft="@+id/gender"
+            android:layout_alignStart="@+id/gender" />
 
         <EditText
             android:id="@+id/age"
@@ -201,7 +207,7 @@
             android:inputType="numberDecimal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/gender"
+            android:layout_alignLeft="@+id/weight"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignStart="@+id/gender"
@@ -228,7 +234,8 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:layout_toEndOf="@+id/applyButton" />
 
 
 </RelativeLayout>

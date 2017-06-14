@@ -136,34 +136,34 @@
         android:layout_centerHorizontal="true"
         />
 
-    <Button
+    <ImageButton
         android:id="@+id/next_btn"
+        android:src="@drawable/ic_right_arrow"
         android:onClick="buttonClicked"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:background="@drawable/buttonshape"
+        android:background=""
         android:shadowColor="#45A9D4"
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        android:text="Next"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
-    <Button
+    <ImageButton
         android:id="@+id/prev_btn"
+        android:src="@drawable/ic_left_arrow"
         android:onClick="buttonClicked"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:background="@drawable/buttonshape"
+        android:background=""
         android:shadowColor="#45A9D4"
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        android:text="Prev"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         android:layout_alignParentBottom="true"
