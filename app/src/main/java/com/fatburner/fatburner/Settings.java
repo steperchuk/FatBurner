@@ -17,6 +17,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TimePicker;
@@ -73,7 +74,7 @@ public class Settings extends Menu {
         mDrawerLayout.addView(contentView, 0);
 
 
-        final Button applyButton = (Button) findViewById(R.id.applyButton);
+        final ImageButton applyButton = (ImageButton) findViewById(R.id.applyButton);
         gender = (Switch) findViewById(R.id.gender);
         age = (EditText) findViewById(R.id.age);
         weight = (EditText) findViewById(R.id.weight);

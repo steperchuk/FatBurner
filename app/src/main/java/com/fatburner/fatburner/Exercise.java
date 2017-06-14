@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.github.lzyzsd.circleprogress.DonutProgress;
+
 /**
  * Created by sergeyteperchuk on 6/12/17.
  */
@@ -28,7 +30,8 @@ public class Exercise extends Menu {
 
 
         final TextView exerciseLabel = (TextView) findViewById(R.id.exercise_label);
-        Button doneBtn = (Button) findViewById(R.id.done_btn);
+        DonutProgress doneBtn = (DonutProgress) findViewById(R.id.done_btn);
+
         exerciseLabel.setText(currentExercise[0]);
 
         doneBtn.setOnClickListener(new View.OnClickListener() {

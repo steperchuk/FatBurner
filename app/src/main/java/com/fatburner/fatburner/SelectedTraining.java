@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 /**
@@ -32,8 +33,8 @@ public class SelectedTraining extends Menu {
         final int selectedTraining = Integer.valueOf(intent.getStringExtra("selectedTraining"));
 
         Button startButton = (Button) findViewById(R.id.start_btn);
-        Button nextButton = (Button) findViewById(R.id.next_btn);
-        Button prevButton = (Button) findViewById(R.id.prev_btn);
+        ImageButton nextButton = (ImageButton) findViewById(R.id.next_btn);
+        ImageButton prevButton = (ImageButton) findViewById(R.id.prev_btn);
 
         final TextView trainingLabel = (TextView) findViewById(R.id.trainingId);
         TextView score = (TextView) findViewById(R.id.scoreLabel);

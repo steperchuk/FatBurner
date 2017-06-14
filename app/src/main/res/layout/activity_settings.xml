@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/White"
     tools:context="com.fatburner.fatburner.Settings">
 
         <ImageButton
@@ -12,7 +13,7 @@
             android:onClick="buttonClicked"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background=""
+            android:background="@color/White"
             android:shadowColor="#45A9D4"
             android:shadowDx="0"
             android:shadowDy="0"
