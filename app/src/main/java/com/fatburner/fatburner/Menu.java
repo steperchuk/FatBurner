@@ -1,6 +1,7 @@
 package com.fatburner.fatburner;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -8,7 +9,14 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Menu extends AppCompatActivity {
+
+    SharedPreferences sPref;
+    String trainingId;
+    Set<String> trainingSet = new HashSet<>();
 
     public DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToogle;
@@ -82,8 +90,24 @@ public class Menu extends AppCompatActivity {
                     intent = new Intent(Menu.this, Settings.class);
                     startActivity(intent);
                     break;
+                case R.id.nav_training:
+                    //intent = new Intent(Menu.this, SelectedTraining.class);
+                    //intent.putExtra("selectedTraining", loadTrainingId());
+                    //String training[] = trainingSet.toArray(new String[trainingSet.size()]);
+                    //intent.putExtra("training", training);
+                    //startActivity(intent);
+                    break;
             }
         }
+
+        /*
+    public String loadTrainingId() {
+        sPref = getPreferences(MODE_PRIVATE);
+        trainingId = sPref.getString("selectedTraining", "");
+        trainingSet = sPref.getStringSet("training", null);
+        return trainingId;
+    }
+    */
 
     }
 

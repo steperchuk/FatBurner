@@ -1,14 +1,20 @@
 package com.fatburner.fatburner;
 
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
+
+import com.github.lzyzsd.circleprogress.DonutProgress;
 
 public class MainActivity extends Menu {
 
+    DonutProgress startButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +26,10 @@ public class MainActivity extends Menu {
         mDrawerLayout.addView(contentView, 0);
 
 
-        final Button startButton = (Button) findViewById(R.id.start_btn);
+        startButton = (DonutProgress) findViewById(R.id.start_btn);
+        startButton.setText("Start");
+        startAnimation();
+
         startButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
@@ -37,6 +46,14 @@ public class MainActivity extends Menu {
             }
         });
 
+
+    }
+
+    void startAnimation ( ) {
+        AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(MainActivity.this, R.animator.progress_anim);
+        set.setInterpolator(new DecelerateInterpolator());
+        set.setTarget(startButton);
+        set.start();
 
     }
 

@@ -2,6 +2,7 @@ package com.fatburner.fatburner;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,11 +14,15 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 
 public class TrainingsList extends Menu {
+
 
     // имена атрибутов для Map
     final String ATTRIBUTE_NAME_TEXT = "text";
@@ -41,7 +46,7 @@ public class TrainingsList extends Menu {
         //add switch for selected programm and fill array according to selectedProgram
 
         // массив данных
-        int load[] = { 100, 100, 100, 100, 100, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        final int load[] = { 100, 100, 100, 100, 100, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
         // упаковываем данные в понятную для адаптера структуру
         ArrayList<Map<String, Object>> data = new ArrayList<Map<String, Object>>(load.length);
@@ -78,6 +83,7 @@ public class TrainingsList extends Menu {
                     Intent intent;
                     intent = new Intent(TrainingsList.this, SelectedTraining.class);
                     intent.putExtra("selectedTraining", Integer.toString(position));
+                    intent.putExtra("percentCompleted", load);
                     startActivity(intent);
                 }
             }
@@ -87,6 +93,9 @@ public class TrainingsList extends Menu {
 
 
     }
+
+
+
 
     class MyViewBinder implements SimpleAdapter.ViewBinder {
 

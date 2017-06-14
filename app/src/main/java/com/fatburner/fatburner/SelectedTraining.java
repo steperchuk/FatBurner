@@ -1,14 +1,26 @@
 package com.fatburner.fatburner;
 
 
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.github.lzyzsd.circleprogress.DonutProgress;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by sergeyteperchuk on 6/12/17.
@@ -16,14 +28,19 @@ import android.widget.TextView;
 
 public class SelectedTraining extends Menu {
 
+    SharedPreferences sPref;
+
+    DonutProgress startButton;
+
     int trainingId = 1;
+    int trainingCompletionPercent;
+    int loadArray[];
 
     String training[] = {"Бег","Берпи","Отжимания","Приседания","Трастеры","Запрыгивания на тумбу", " ", " ", " ", " "};
     String scoreValue = "30";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_selected_training);
 
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View contentView = inflater.inflate(R.layout.activity_selected_training, null, false);
@@ -31,8 +48,10 @@ public class SelectedTraining extends Menu {
 
         Intent intent = getIntent();
         final int selectedTraining = Integer.valueOf(intent.getStringExtra("selectedTraining"));
+        loadArray = intent.getIntArrayExtra("percentCompleted");
+        trainingCompletionPercent = loadArray[selectedTraining];
 
-        Button startButton = (Button) findViewById(R.id.start_btn);
+        startButton = (DonutProgress) findViewById(R.id.start_btn);
         ImageButton nextButton = (ImageButton) findViewById(R.id.next_btn);
         ImageButton prevButton = (ImageButton) findViewById(R.id.prev_btn);
 
@@ -50,7 +69,7 @@ public class SelectedTraining extends Menu {
         TextView exercise9 = (TextView) findViewById(R.id.exercise_9);
         TextView exercise10 = (TextView) findViewById(R.id.exercise_10);
 
-        trainingId = selectedTraining+1;
+        trainingId = selectedTraining;
         trainingLabel.setText("Training: " + trainingId);
         score.setText("Score: " + scoreValue);
 
@@ -66,11 +85,14 @@ public class SelectedTraining extends Menu {
         exercise9.setText(training[8]);
         exercise10.setText(training[9]);
 
+        setButtonLabel();
 
         startButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
+
                     Intent intent = new Intent(SelectedTraining.this, Exercise.class);
                     intent.putExtra("training", training);
+                    //saveSettings();
                     startActivity(intent);
                 }
             });
@@ -81,6 +103,8 @@ public class SelectedTraining extends Menu {
                 {
                     trainingLabel.setText("Training: " + (trainingId+1));
                     trainingId++;
+                    trainingCompletionPercent = loadArray[trainingId];
+                    setButtonLabel();
                 }
             }
         });
@@ -91,11 +115,47 @@ public class SelectedTraining extends Menu {
                 {
                     trainingLabel.setText("Training: " + (trainingId - 1));
                     trainingId--;
+                    trainingCompletionPercent = loadArray[trainingId];
+                    setButtonLabel();
                 }
             }
         });
 
         }
+
+    void startAnimation ( ) {
+        AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(SelectedTraining.this, R.animator.progress_anim);
+        set.setInterpolator(new DecelerateInterpolator());
+        set.setTarget(startButton);
+        set.start();
+
+    }
+
+    void setButtonLabel(){
+        switch (trainingCompletionPercent){
+            case 0:
+                startButton.setText("Start");
+                break;
+            case 100:
+                startButton.setText("Repeat");
+                break;
+            default:
+                startButton.setText("Continue");
+        }
+        startButton.setProgress(trainingCompletionPercent);
+    }
+
+    /*
+    void saveSettings() {
+        sPref = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor ed = sPref.edit();
+        ed.putString("selectedTraining",String.valueOf(trainingId));
+        Set<String> trainingSet = new HashSet<>();
+        Collections.addAll(trainingSet, training);
+        ed.putStringSet("training", trainingSet);
+        ed.commit();
+    }
+*/
 
     }
 

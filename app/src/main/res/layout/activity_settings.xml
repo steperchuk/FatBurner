@@ -224,7 +224,8 @@
             android:layout_above="@+id/age"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:text="Male" />
+            android:text="Male"
+            android:textSize="18sp" />
 
         <EditText
             android:id="@+id/trainingDays"

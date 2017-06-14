@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,7 +15,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
-        android:text="Training " />
+        android:text="Training "
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/exercise_1"
@@ -26,7 +28,8 @@
         android:layout_marginLeft="30dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="15dp"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/exercise_2"
@@ -36,7 +39,8 @@
         android:layout_alignStart="@+id/exercise_1"
         android:layout_below="@+id/exercise_1"
         android:layout_marginTop="15dp"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/exercise_3"
@@ -46,17 +50,19 @@
         android:layout_alignStart="@+id/exercise_2"
         android:layout_below="@+id/exercise_2"
         android:layout_marginTop="15dp"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/exercise_4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/exercise_3"
+        android:layout_alignStart="@+id/exercise_3"
+        android:layout_below="@+id/exercise_3"
         android:layout_marginTop="15dp"
         android:text="TextView"
-        android:layout_below="@+id/exercise_3"
-        android:layout_alignLeft="@+id/exercise_3"
-        android:layout_alignStart="@+id/exercise_3" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/exercise_5"
@@ -66,27 +72,30 @@
         android:layout_alignStart="@+id/exercise_4"
         android:layout_below="@+id/exercise_4"
         android:layout_marginTop="15dp"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/exercise_6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_below="@+id/exercise_5"
         android:layout_alignLeft="@+id/exercise_5"
         android:layout_alignStart="@+id/exercise_5"
-        android:layout_marginTop="15dp" />
+        android:layout_below="@+id/exercise_5"
+        android:layout_marginTop="15dp"
+        android:text="TextView"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/exercise_7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_below="@+id/exercise_6"
         android:layout_alignLeft="@+id/exercise_6"
         android:layout_alignStart="@+id/exercise_6"
-        android:layout_marginTop="15dp" />
+        android:layout_below="@+id/exercise_6"
+        android:layout_marginTop="15dp"
+        android:text="TextView"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/exercise_8"
@@ -96,7 +105,8 @@
         android:layout_alignRight="@+id/exercise_7"
         android:layout_below="@+id/exercise_7"
         android:layout_marginTop="15dp"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/exercise_9"
@@ -106,36 +116,33 @@
         android:layout_alignStart="@+id/exercise_8"
         android:layout_below="@+id/exercise_8"
         android:layout_marginTop="15dp"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/exercise_10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="TextView"
-        android:layout_below="@+id/exercise_9"
         android:layout_alignLeft="@+id/exercise_9"
         android:layout_alignStart="@+id/exercise_9"
-        />
+        android:layout_below="@+id/exercise_9"
+        android:layout_marginTop="15dp"
+        android:text="TextView"
+        android:textSize="18sp" />
 
-    <Button
+    <com.github.lzyzsd.circleprogress.DonutProgress
         android:id="@+id/start_btn"
-        android:onClick="buttonClicked"
+        custom:donut_progress="0"
+        custom:donut_text_size="36dp"
+        android:text="Start"
+        android:layout_marginLeft="50dp"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:background="@drawable/buttonshape"
-        android:shadowColor="#45A9D4"
-        android:shadowDx="0"
-        android:shadowDy="0"
-        android:shadowRadius="5"
-        android:text="Start"
-        android:textColor="#FFFFFF"
-        android:textSize="30sp"
-        android:layout_marginBottom="11dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_above="@+id/scoreLabel"
         />
+
 
     <ImageButton
         android:id="@+id/next_btn"
@@ -152,7 +159,10 @@
         android:textSize="20sp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/prev_btn"
+        android:layout_toRightOf="@+id/start_btn"
+        android:layout_toEndOf="@+id/start_btn" />
 
     <ImageButton
         android:id="@+id/prev_btn"
@@ -169,18 +179,21 @@
         android:textSize="20sp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/exercise_10"
+        android:layout_alignEnd="@+id/exercise_10" />
 
     <TextView
         android:id="@+id/scoreLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/trainingId"
+        android:layout_alignBottom="@+id/trainingId"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_marginEnd="13dp"
         android:layout_marginRight="13dp"
         android:text="TextView"
-        android:layout_alignBaseline="@+id/trainingId"
-        android:layout_alignBottom="@+id/trainingId"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:textSize="16dp" />
 
 </RelativeLayout>
