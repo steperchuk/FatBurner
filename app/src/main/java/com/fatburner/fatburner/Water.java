@@ -1,6 +1,7 @@
 package com.fatburner.fatburner;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,17 +24,18 @@ public class Water extends Menu implements View.OnClickListener {
     ImageButton biggest;
     CircleProgress waterProgress;
 
-    int progress = 0;
+    float progress;
     int waterDailyNorm = 2500;
-    int selectedAmount = 0;
-    int increment = 0;
+    int selectedAmount = 200;
+    float increment = 0;
+    int amount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View contentView = inflater.inflate(R.layout.activity_diet, null, false);
+        View contentView = inflater.inflate(R.layout.activity_water, null, false);
         mDrawerLayout.addView(contentView, 0);
 
         waterProgressLabel = (TextView) findViewById(R.id.waterAmount);
@@ -47,51 +49,67 @@ public class Water extends Menu implements View.OnClickListener {
         biggest = (ImageButton) findViewById(R.id.biggestWaterBtn);
         biggest.setOnClickListener(this);
 
+
+
         waterProgress = (CircleProgress) findViewById(R.id.waterProgress);
         waterProgress.setTextSize(36);
 
 
-        increment = (waterDailyNorm/selectedAmount * 100);
+
+
 
         waterProgress.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                amount = amount + selectedAmount;
+                float a = Math.round(selectedAmount);
+                float b = Math.round(waterDailyNorm);
+                float c = a/b;
+
+                increment = (c * 100);
                 progress = progress + increment;
-                waterProgress.setProgress(progress);
-                waterProgressLabel.setText(progress*100 + " / " + waterDailyNorm + " ml");
+
+                if(progress < 120 && progress > 100)
+                {
+                    waterProgress.setMax(Math.round(progress));
+                    waterProgress.setFinishedColor(Color.YELLOW);
+                    waterProgress.setTextColor(Color.BLACK);
+                }
+                if(progress > 120)
+                {
+                    waterProgress.setMax(Math.round(progress));
+                    waterProgress.setFinishedColor(Color.RED);
+                    waterProgress.setTextColor(Color.WHITE);
+                }
+
+                waterProgress.setProgress(Math.round(progress));
+                waterProgressLabel.setText(amount + " / " + waterDailyNorm + " ml");
             }
         });
 
-        if(progress < 120 && progress > 100)
-        {
-            waterProgress.setMax(progress);
-            waterProgress.setBackgroundColor(Color.YELLOW);
-        }
-        if(progress > 120)
-        {
-            waterProgress.setMax(progress);
-            waterProgress.setBackgroundColor(Color.RED);
-        }
 
     }
 
     public void onClick(View v) {
-
         switch (v.getId()) {
 
             case R.id.smallWaterBtn:
                 selectedAmount = 100;
+
                 break;
 
             case R.id.mediumWaterBtn:
                 selectedAmount = 200;
+
                 break;
 
             case R.id.bigWaterBtn:
                 selectedAmount = 300;
+
                 break;
 
             case R.id.biggestWaterBtn:
                 selectedAmount = 400;
+                
                 break;
         }
 

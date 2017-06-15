@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/White"
     xmlns:custom="http://schemas.android.com/apk/res-auto">
 
 
@@ -36,16 +37,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="59dp"
-        custom:srcCompat="@drawable/ic_glass_of_water_small"
+        android:src="@drawable/ic_glass_of_water_small"
         android:layout_below="@+id/activityLabel"
-        android:layout_toStartOf="@+id/mediumWaterBtn" />
+        android:layout_toStartOf="@+id/mediumWaterBtn"
+        android:layout_toLeftOf="@+id/mediumWaterBtn" />
 
     <ImageButton
         android:id="@+id/mediumWaterBtn"
         android:background="@color/White"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        custom:srcCompat="@drawable/ic_glass_of_water_medium"
+        android:src="@drawable/ic_glass_of_water_medium"
         android:layout_marginLeft="31dp"
         android:layout_marginStart="31dp"
         android:layout_alignBottom="@+id/smallWaterBtn"
@@ -57,7 +59,7 @@
         android:background="@color/White"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        custom:srcCompat="@drawable/ic_glass_of_water_medium"
+        android:src="@drawable/ic_glass_of_water_medium"
         android:layout_alignTop="@+id/mediumWaterBtn"
         android:layout_alignRight="@+id/waterProgress"
         android:layout_alignEnd="@+id/waterProgress"
@@ -69,7 +71,7 @@
         android:background="@color/White"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        custom:srcCompat="@drawable/ic_glass_of_water_biggest"
+        android:src="@drawable/ic_glass_of_water_biggest"
         android:layout_alignBottom="@+id/bigWaterBtn"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
