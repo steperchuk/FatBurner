@@ -74,7 +74,7 @@ public class Menu extends AppCompatActivity {
                     intent = new Intent(Menu.this, TrainingsList.class);
                     startActivity(intent);
                     break;
-                case R.id.nav_calendar:
+                case R.id.nav_meal_calendar:
                     intent = new Intent(Menu.this, MealCalendar.class);
                     startActivity(intent);
                     break;
@@ -88,6 +88,10 @@ public class Menu extends AppCompatActivity {
                     break;
                 case R.id.nav_settings:
                     intent = new Intent(Menu.this, Settings.class);
+                    startActivity(intent);
+                    break;
+                case R.id.nav_water:
+                    intent = new Intent(Menu.this, Water.class);
                     startActivity(intent);
                     break;
                 case R.id.nav_training:

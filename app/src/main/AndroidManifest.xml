@@ -33,6 +33,8 @@
             android:parentActivityName=".MainActivity"></activity>
         <activity android:name=".TrainingCompleted"
             android:parentActivityName=".MainActivity"></activity>
+        <activity android:name=".Water"
+            android:parentActivityName=".MainActivity"></activity>
     </application>
 
 </manifest>
