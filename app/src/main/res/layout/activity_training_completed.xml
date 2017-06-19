@@ -2,23 +2,43 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:background="@color/White">
 
-    <Button
-        android:id="@+id/ok_btn"
+    <com.github.lzyzsd.circleprogress.DonutProgress
+        android:id="@+id/done_btn"
+        custom:donut_progress="0"
+        custom:donut_text_size="36dp"
+        android:layout_marginLeft="50dp"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:background="@drawable/buttonshape"
-        android:shadowColor="#45A9D4"
-        android:shadowDx="0"
-        android:shadowDy="0"
-        android:shadowRadius="5"
-        android:text="OK"
-        android:textColor="#FFFFFF"
-        android:textSize="30sp"
-        android:layout_marginBottom="11dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_above="@+id/scoreLabel"/>
+        default_finished_color = "@android:color/holo_orange_dark"
+        android:layout_above="@+id/scoreLabel"
+        />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="57dp"
+        android:text="Training Completed!"
+        android:textColor="@android:color/holo_orange_dark"
+        android:textSize="36sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/scoreLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView10"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="27dp"
+        android:text="Score: 30"
+        android:textColor="@android:color/holo_orange_dark"
+        android:textSize="18sp" />
 
 </RelativeLayout>
