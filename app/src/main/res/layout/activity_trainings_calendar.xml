@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <CalendarView
+        android:id="@+id/trainingCalendarView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp" />
+
+    <TextView
+        android:id="@+id/trainingStatusLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/trainingCalendarView"
+        android:layout_alignStart="@+id/trainingCalendarView"
+        android:layout_below="@+id/trainingCalendarView"
+        android:layout_marginTop="30dp"
+        android:text="Training - Completed"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/dietStatusLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/trainingStatusLabel"
+        android:layout_alignStart="@+id/trainingStatusLabel"
+        android:layout_below="@+id/trainingStatusLabel"
+        android:layout_marginTop="23dp"
+        android:text="Diet - Passed"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/waterStatusLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/dietStatusLabel"
+        android:layout_alignStart="@+id/dietStatusLabel"
+        android:layout_below="@+id/dietStatusLabel"
+        android:layout_marginTop="22dp"
+        android:text="Water - Passed"
+        android:textSize="18sp" />
+</RelativeLayout>

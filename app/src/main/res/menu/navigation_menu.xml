@@ -3,7 +3,7 @@
 
     <item android:id="@+id/nav_training"
         android:title="Current Training"
-        android:icon="@mipmap/ic_person_black_24dp" />
+        android:icon= "@drawable/ic_working_out" />
 
     <item android:id="@+id/nav_challange"
         android:title="Current Challange"
@@ -13,7 +13,7 @@
         android:title="My Programms"
         android:icon="@mipmap/ic_list_black_24dp"/>
 
-    <item android:id="@+id/trainings_calendar"
+    <item android:id="@+id/nav_trainings_calendar"
         android:title="Trainings Calendar"
         android:icon="@mipmap/ic_perm_contact_calendar_black_24dp"/>
 
@@ -27,15 +27,11 @@
 
     <item android:id="@+id/nav_meal_calendar"
         android:title="Meal Calendar"
-        android:icon="@mipmap/ic_perm_contact_calendar_black_24dp"/>
-
-    <item android:id="@+id/meal_settings"
-        android:title="Meal Settings"
-        android:icon="@mipmap/ic_perm_contact_calendar_black_24dp"/>
+        android:icon="@drawable/ic_time"/>
 
     <item android:id="@+id/products_list"
         android:title="Products List"
-        android:icon="@mipmap/ic_perm_contact_calendar_black_24dp"/>
+        android:icon="@drawable/ic_dish"/>
 
     <item android:id="@+id/nav_achivements"
         android:title="My achievements"

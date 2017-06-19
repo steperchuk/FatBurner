@@ -94,6 +94,10 @@ public class Menu extends AppCompatActivity {
                     intent = new Intent(Menu.this, Water.class);
                     startActivity(intent);
                     break;
+                case R.id.nav_trainings_calendar:
+                    intent = new Intent(Menu.this, TrainingsCalendar.class);
+                    startActivity(intent);
+                    break;
                 case R.id.nav_training:
                     //intent = new Intent(Menu.this, SelectedTraining.class);
                     //intent.putExtra("selectedTraining", loadTrainingId());

@@ -35,6 +35,8 @@
             android:parentActivityName=".MainActivity"></activity>
         <activity android:name=".Water"
             android:parentActivityName=".MainActivity"></activity>
+        <activity android:name=".TrainingsCalendar"
+            android:parentActivityName=".MainActivity"></activity>
     </application>
 
 </manifest>
