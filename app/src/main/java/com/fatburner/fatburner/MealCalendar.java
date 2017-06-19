@@ -1,17 +1,13 @@
 package com.fatburner.fatburner;
 
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
 
 import static com.fatburner.fatburner.MealCalendar.PAGE_COUNT;
 
@@ -58,8 +54,37 @@ public class MealCalendar extends FragmentActivity {
         }
 
         @Override
+        public CharSequence getPageTitle(int position) {
+            String day = "";
+            switch (position){
+                case 1:
+                    day = "Mo";
+                    break;
+                case 2:
+                    day = "Tu";
+                    break;
+                case 3:
+                    day = "We";
+                    break;
+                case 4:
+                    day = "Th";
+                    break;
+                case 5:
+                    day = "Fr";
+                    break;
+                case 6:
+                    day = "Sa";
+                    break;
+                case 7:
+                    day = "Su";
+                    break;
+            }
+            return day;
+        }
+
+        @Override
         public Fragment getItem(int position) {
-            return PageFragment.newInstance(position);
+            return MealCalendarPageFragment.newInstance(position);
         }
 
         @Override

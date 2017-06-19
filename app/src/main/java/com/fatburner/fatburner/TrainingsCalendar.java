@@ -35,7 +35,7 @@ public class TrainingsCalendar extends Menu {
         trainingCalendarView = (CalendarView) findViewById(R.id.trainingCalendarView);
 
 
-         
+
 
 
 
