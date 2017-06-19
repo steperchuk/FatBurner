@@ -9,4 +9,5 @@
     <color name="Green">#3300FF00</color>
     <color name="Black">#000000</color>
     <color name="White">#FFFFFF</color>
+    <color name="OrangeDark">#FFA500</color>
 </resources>

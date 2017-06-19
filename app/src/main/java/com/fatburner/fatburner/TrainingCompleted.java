@@ -5,7 +5,9 @@ import android.animation.AnimatorSet;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
@@ -32,6 +34,8 @@ public class TrainingCompleted extends Menu {
 
         doneBtn = (DonutProgress) findViewById(R.id.done_btn);
         doneBtn.setText("Got It");
+        doneBtn.setTextColor(R.color.OrangeDark);
+        doneBtn.setFinishedStrokeColor(R.color.OrangeDark);
         startAnimation ();
 
         doneBtn.setOnClickListener(new View.OnClickListener() {

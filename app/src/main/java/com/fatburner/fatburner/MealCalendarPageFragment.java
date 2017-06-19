@@ -4,40 +4,36 @@ package com.fatburner.fatburner;
  * Created by sete on 6/15/2017.
  */
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.Color;
+import android.app.TimePickerDialog;
+import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
-import android.widget.TextClock;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
-import java.util.List;
-import java.util.Set;
 
-import static android.content.ContentValues.TAG;
-import static android.content.Context.MODE_PRIVATE;
+public class MealCalendarPageFragment extends Fragment implements View.OnClickListener {
 
-public class MealCalendarPageFragment extends Fragment {
+    int hour;
+    int min;
 
-    List<String[]> mealCalendar;
-    String[] mon = {"01:00","01:00","01:00","01:00","01:00"};
-    String[] thu = {"02:00","02:00","02:00","02:00","02:00"};
-    String[] wen = {"03:00","03:00","03:00","03:00","03:00"};
-    String[] the = {"04:00","04:00","04:00","04:00","04:00"};
-    String[] fri = {"05:00","05:00","05:00","05:00","05:00"};
-    String[] sat = {"06:00","06:00","06:00","06:00","06:00"};
-    String[] sun = {"07:00","07:00","07:00","07:00","07:00"};
+    Spinner breakfestShema;
+    Spinner secondBreakfestShema;
+    Spinner lunchShema;
+    Spinner secondLunchShema;
+    Spinner dinnerShema;
 
-    TextClock breakfestTime;
-    TextClock secondBreakfestTime;
-    TextClock lunchTime;
-    TextClock secondLunchTime;
-    TextClock dinnerTime;
+    TextView breakfestTime;
+    TextView secondBreakfestTime;
+    TextView lunchTime;
+    TextView secondLunchTime;
+    TextView dinnerTime;
 
     ImageButton applyButton;
 
@@ -59,14 +55,6 @@ public class MealCalendarPageFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mealCalendar.add(mon);
-        mealCalendar.add(thu);
-        mealCalendar.add(wen);
-        mealCalendar.add(the);
-        mealCalendar.add(fri);
-        mealCalendar.add(sat);
-        mealCalendar.add(sun);
-
         pageNumber = getArguments().getInt(ARGUMENT_PAGE_NUMBER);
 
         int savedPageNumber = -1;
@@ -81,27 +69,27 @@ public class MealCalendarPageFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment, null);
 
-        applyButton = (ImageButton) view.findViewById(R.id.applyButton);
+        applyButton = (ImageButton) view.findViewById(R.id.applyMealCalendarBtn);
+        applyButton.setOnClickListener(this);
 
-        breakfestTime = (TextClock) view.findViewById(R.id.breakfestTime);
-        secondBreakfestTime = (TextClock) view.findViewById(R.id.secondBreakfestTime);
-        lunchTime = (TextClock) view.findViewById(R.id.lunchTime);
-        secondLunchTime = (TextClock) view.findViewById(R.id.secondLunchTime);
-        dinnerTime = (TextClock) view.findViewById(R.id.dinnerTime);
+        breakfestTime = (TextView) view.findViewById(R.id.breakfestTime);
+        breakfestTime.setOnClickListener(this);
+        secondBreakfestTime = (TextView) view.findViewById(R.id.secondBreakfestTime);
+        secondBreakfestTime.setOnClickListener(this);
+        lunchTime = (TextView) view.findViewById(R.id.lunchTime);
+        lunchTime.setOnClickListener(this);
+        secondLunchTime = (TextView) view.findViewById(R.id.secondLunchTime);
+        secondLunchTime.setOnClickListener(this);
+        dinnerTime = (TextView) view.findViewById(R.id.dinnerTime);
+        dinnerTime.setOnClickListener(this);
 
-        TextView tvPage = (TextView) view.findViewById(R.id.tvPage);
-        tvPage.setBackgroundColor(Color.WHITE);
+        breakfestShema = (Spinner) view.findViewById(R.id.breakfestShema);
+        secondBreakfestShema = (Spinner) view.findViewById(R.id.secondBreakfestShema);
+        lunchShema = (Spinner) view.findViewById(R.id.lunchShema);
+        secondLunchShema = (Spinner) view.findViewById(R.id.secondLunchShema);
+        dinnerShema = (Spinner) view.findViewById(R.id.dinnerShema);
 
-        setMealCalendar(pageNumber);
-
-
-
-        applyButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                putMealCalendar(pageNumber);
-            }
-        });
+        setMealShemas();
 
         return view;
     }
@@ -117,24 +105,85 @@ public class MealCalendarPageFragment extends Fragment {
         super.onDestroy();
     }
 
-    private void setMealCalendar(int pageNumber){
-        breakfestTime.setText(mealCalendar.get(pageNumber-1)[0]);
-        secondBreakfestTime.setText(mealCalendar.get(pageNumber-1)[1]);
-        lunchTime.setText(mealCalendar.get(pageNumber-1)[2]);
-        secondLunchTime.setText(mealCalendar.get(pageNumber-1)[3]);
-        dinnerTime.setText(mealCalendar.get(pageNumber-1)[4]);
+
+    private void setMealShemas(){
+        String breakfestItems[] = {"1М + 1К", "1П + 1К","1П + 1Ф", "1M + 1O"};
+        String secondBreakFestItems[] = {"1M", "1Ф + 0.5О", "1К"};
+        String lunchItems[] = {"3К + 1П", "2К + 1П + 1Ф + 1Ж", "2К + 1М + 1П", "2К + 1П + 1О", "2К + 1П + 2Ж", "1К + 2Ф + 1Ж + 1П", "1К + 1Ф + 1М + 1П", "1К + 1Ф + 1П + 1О"};
+        String secondLunchItems[] = {"1M", "1Ф + 0.5О", "1К"};
+        String dinnerItems[] = lunchItems;
+
+        ArrayAdapter<String> adapter;
+        adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, breakfestItems);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        breakfestShema.setAdapter(adapter);
+
+        adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, secondBreakFestItems);
+        secondBreakfestShema.setAdapter(adapter);
+
+        adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, lunchItems);
+        lunchShema.setAdapter(adapter);
+
+        adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, secondLunchItems);
+        secondLunchShema.setAdapter(adapter);
+
+        adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, dinnerItems);
+        dinnerShema.setAdapter(adapter);
+
     }
 
-    private void putMealCalendar(int pageNumber){
-        String tmpArr[] = { breakfestTime.getText().toString(),
-                secondBreakfestTime.getText().toString(),
-                lunchTime.getText().toString(),
-                secondLunchTime.getText().toString(),
-                dinnerTime.getText().toString()};
 
-        mealCalendar.set(pageNumber-1,tmpArr);
+
+    public void onClick(View v) {
+
+        Calendar calendar = Calendar.getInstance();
+
+        switch (v.getId()){
+            case R.id.breakfestTime:
+                new TimePickerDialog(getActivity(), onStartTimeListener, calendar
+                        .get(Calendar.HOUR), calendar.get(Calendar.MINUTE), false).show();
+                break;
+            case R.id.secondBreakfestTime:
+                new TimePickerDialog(getActivity(), onStartTimeListener, calendar
+                        .get(Calendar.HOUR), calendar.get(Calendar.MINUTE), false).show();
+                break;
+            case R.id.lunchTime:
+                new TimePickerDialog(getActivity(), onStartTimeListener, calendar
+                        .get(Calendar.HOUR), calendar.get(Calendar.MINUTE), false).show();
+                break;
+            case R.id.secondLunchTime:
+                new TimePickerDialog(getActivity(), onStartTimeListener, calendar
+                        .get(Calendar.HOUR), calendar.get(Calendar.MINUTE), false).show();
+                break;
+            case R.id.dinnerTime:
+                new TimePickerDialog(getActivity(), onStartTimeListener, calendar
+                        .get(Calendar.HOUR), calendar.get(Calendar.MINUTE), false).show();
+                break;
+
+            case R.id.applyMealCalendarBtn:
+                break;
+        }
     }
 
+    TimePickerDialog.OnTimeSetListener onStartTimeListener = new TimePickerDialog.OnTimeSetListener() {
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.HOUR, hourOfDay);
+            calendar.set(Calendar.MINUTE, minute);
+            hour = hourOfDay;
+            min = minute;
+
+            setTimeValues();
+        }
+    };
 
 
-}
+    private void setTimeValues(){
+        String AM_PM = "AM";
+        if(hour > 11)
+        {AM_PM = "PM";}
+        breakfestTime.setText(hour + " : " + min + " " + AM_PM);
+    }
+
+    }
+

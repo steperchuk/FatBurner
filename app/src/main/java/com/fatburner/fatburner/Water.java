@@ -109,7 +109,7 @@ public class Water extends Menu implements View.OnClickListener {
 
             case R.id.biggestWaterBtn:
                 selectedAmount = 400;
-                
+
                 break;
         }
 

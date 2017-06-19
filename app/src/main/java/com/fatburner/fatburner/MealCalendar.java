@@ -53,30 +53,31 @@ public class MealCalendar extends FragmentActivity {
             super(fm);
         }
 
+
         @Override
         public CharSequence getPageTitle(int position) {
             String day = "";
             switch (position){
+                case 0:
+                    day = "Mon";
+                    break;
                 case 1:
-                    day = "Mo";
+                    day = "Tue";
                     break;
                 case 2:
-                    day = "Tu";
+                    day = "Wen";
                     break;
                 case 3:
-                    day = "We";
+                    day = "The";
                     break;
                 case 4:
-                    day = "Th";
+                    day = "Fri";
                     break;
                 case 5:
-                    day = "Fr";
+                    day = "Sat";
                     break;
                 case 6:
-                    day = "Sa";
-                    break;
-                case 7:
-                    day = "Su";
+                    day = "Sun";
                     break;
             }
             return day;
