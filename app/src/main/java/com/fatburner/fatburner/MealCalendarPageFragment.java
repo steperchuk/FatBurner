@@ -22,6 +22,7 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
 
     int hour;
     int min;
+    int timerIdForApply;
 
     Spinner breakfestShema;
     Spinner secondBreakfestShema;
@@ -142,22 +143,27 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
             case R.id.breakfestTime:
                 new TimePickerDialog(getActivity(), onStartTimeListener, calendar
                         .get(Calendar.HOUR), calendar.get(Calendar.MINUTE), false).show();
+                timerIdForApply = 1;
                 break;
             case R.id.secondBreakfestTime:
                 new TimePickerDialog(getActivity(), onStartTimeListener, calendar
                         .get(Calendar.HOUR), calendar.get(Calendar.MINUTE), false).show();
+                timerIdForApply = 2;
                 break;
             case R.id.lunchTime:
                 new TimePickerDialog(getActivity(), onStartTimeListener, calendar
                         .get(Calendar.HOUR), calendar.get(Calendar.MINUTE), false).show();
+                timerIdForApply = 3;
                 break;
             case R.id.secondLunchTime:
                 new TimePickerDialog(getActivity(), onStartTimeListener, calendar
                         .get(Calendar.HOUR), calendar.get(Calendar.MINUTE), false).show();
+                timerIdForApply = 4;
                 break;
             case R.id.dinnerTime:
                 new TimePickerDialog(getActivity(), onStartTimeListener, calendar
                         .get(Calendar.HOUR), calendar.get(Calendar.MINUTE), false).show();
+                timerIdForApply = 5;
                 break;
 
             case R.id.applyMealCalendarBtn:
@@ -172,7 +178,6 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
             calendar.set(Calendar.MINUTE, minute);
             hour = hourOfDay;
             min = minute;
-
             setTimeValues();
         }
     };
@@ -180,9 +185,32 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
 
     private void setTimeValues(){
         String AM_PM = "AM";
+        String h = String.valueOf(hour);
+        String m = String.valueOf(min);
         if(hour > 11)
         {AM_PM = "PM";}
-        breakfestTime.setText(hour + " : " + min + " " + AM_PM);
+        if(hour < 10)
+        {h = "0" + h;}
+        if(min < 10)
+        {m = "0" + m;}
+        switch (timerIdForApply){
+            case 1:
+                breakfestTime.setText(h + ":" + m + " " + AM_PM);
+                break;
+            case 2:
+                secondBreakfestTime.setText(h + ":" + m + " " + AM_PM);
+                break;
+            case 3:
+                lunchTime.setText(h + ":" + m + " " + AM_PM);
+                break;
+            case 4:
+                secondLunchTime.setText(h + ":" + m + " " + AM_PM);
+                break;
+            case 5:
+                dinnerTime.setText(h + ":" + m + " " + AM_PM);
+                break;
+        }
+
     }
 
     }
