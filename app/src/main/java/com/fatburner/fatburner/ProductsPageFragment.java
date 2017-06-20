@@ -70,7 +70,7 @@ public class ProductsPageFragment extends Fragment implements View.OnClickListen
         //false -  simple (w/o buttons)
         //.setVisibility(View.GONE);
         //.setVisibility(View.VISIBLE);
-        if(!dietListViewMode){
+        if(dietListViewMode){
             applyButton.setVisibility(View.GONE);
             product1.setVisibility(View.GONE);
             product1.setVisibility(View.GONE);

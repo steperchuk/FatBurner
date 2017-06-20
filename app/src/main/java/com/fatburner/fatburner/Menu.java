@@ -11,6 +11,7 @@ import android.view.MenuItem;
 
 import java.util.HashSet;
 import java.util.Set;
+import static com.fatburner.fatburner.GlobalVariables.dietListViewMode;
 
 public class Menu extends AppCompatActivity {
 
@@ -75,10 +76,12 @@ public class Menu extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 case R.id.nav_meal_calendar:
+                    dietListViewMode = false;
                     intent = new Intent(Menu.this, MealCalendar.class);
                     startActivity(intent);
                     break;
                 case R.id.products_list:
+                    dietListViewMode = true;
                     intent = new Intent(Menu.this, Products.class);
                     startActivity(intent);
                     break;
