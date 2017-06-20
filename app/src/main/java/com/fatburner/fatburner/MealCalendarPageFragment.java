@@ -5,6 +5,7 @@ package com.fatburner.fatburner;
  */
 
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,12 +18,18 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import static com.fatburner.fatburner.GlobalVariables.dietListViewMode;
+
 
 public class MealCalendarPageFragment extends Fragment implements View.OnClickListener {
+
+    Intent intent;
 
     int hour;
     int min;
     int timerIdForApply;
+
+    String legend = " П - мясо/рыба/яйца \n К - крупы \n М - молочные \n Ф - фрукты/ягоды \n О - орехи \n Ж - масла/жиры";
 
     Spinner breakfestShema;
     Spinner secondBreakfestShema;
@@ -35,8 +42,14 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
     TextView lunchTime;
     TextView secondLunchTime;
     TextView dinnerTime;
+    TextView legendLabel;
 
     ImageButton applyButton;
+    ImageButton breakfestButton;
+    ImageButton secondBreakfestButton;
+    ImageButton lunchButton;
+    ImageButton secondLunchButton;
+    ImageButton dinnerButton;
 
 
     static final String ARGUMENT_PAGE_NUMBER = "arg_page_number";
@@ -73,6 +86,19 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
         applyButton = (ImageButton) view.findViewById(R.id.applyMealCalendarBtn);
         applyButton.setOnClickListener(this);
 
+        breakfestButton = (ImageButton) view.findViewById(R.id.breakfestBtn);
+        breakfestButton.setOnClickListener(this);
+        secondBreakfestButton = (ImageButton) view.findViewById(R.id.secondBreakfestBtn);
+        secondBreakfestButton.setOnClickListener(this);
+        lunchButton = (ImageButton) view.findViewById(R.id.lunchBtn);
+        lunchButton.setOnClickListener(this);
+        secondLunchButton = (ImageButton) view.findViewById(R.id.secondLunchBtn);
+        secondLunchButton.setOnClickListener(this);
+        dinnerButton = (ImageButton) view.findViewById(R.id.dinnerBtn);
+        dinnerButton.setOnClickListener(this);
+
+
+
         breakfestTime = (TextView) view.findViewById(R.id.breakfestTime);
         breakfestTime.setOnClickListener(this);
         secondBreakfestTime = (TextView) view.findViewById(R.id.secondBreakfestTime);
@@ -83,6 +109,10 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
         secondLunchTime.setOnClickListener(this);
         dinnerTime = (TextView) view.findViewById(R.id.dinnerTime);
         dinnerTime.setOnClickListener(this);
+
+        legendLabel = (TextView) view.findViewById(R.id.legendLabel);
+        legendLabel.setText(legend);
+
 
         breakfestShema = (Spinner) view.findViewById(R.id.breakfestShema);
         secondBreakfestShema = (Spinner) view.findViewById(R.id.secondBreakfestShema);
@@ -138,7 +168,7 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
     public void onClick(View v) {
 
         Calendar calendar = Calendar.getInstance();
-
+        dietListViewMode = false;
         switch (v.getId()){
             case R.id.breakfestTime:
                 new TimePickerDialog(getActivity(), onStartTimeListener, calendar
@@ -165,8 +195,39 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
                         .get(Calendar.HOUR), calendar.get(Calendar.MINUTE), false).show();
                 timerIdForApply = 5;
                 break;
+            case R.id.breakfestBtn:
+                //code for defining parameters of view
+
+                intent = new Intent(getActivity(), Products.class);
+                startActivity(intent);
+                break;
+            case R.id.secondBreakfestBtn:
+                //code for defining parameters of view
+
+                intent = new Intent(getActivity(), Products.class);
+                startActivity(intent);
+                break;
+            case R.id.lunchBtn:
+                //code for defining parameters of view
+
+                intent = new Intent(getActivity(), Products.class);
+                startActivity(intent);
+                break;
+            case R.id.secondLunchBtn:
+                //code for defining parameters of view
+
+                intent = new Intent(getActivity(), Products.class);
+                startActivity(intent);
+                break;
+            case R.id.dinnerBtn:
+                //code for defining parameters of view
+
+                intent = new Intent(getActivity(), Products.class);
+                startActivity(intent);
+                break;
 
             case R.id.applyMealCalendarBtn:
+                //code for saving preferences
                 break;
         }
     }

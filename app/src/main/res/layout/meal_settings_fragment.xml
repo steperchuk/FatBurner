@@ -6,6 +6,7 @@
     android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/White"
     android:orientation="vertical">
 
     <TextView
@@ -19,7 +20,7 @@
         android:layout_marginStart="26dp"
         android:layout_marginTop="18dp"
         android:text="Завтрак"
-        android:textColor="@android:color/holo_blue_dark"
+        android:textColor="@color/Black"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -32,7 +33,7 @@
         android:layout_below="@+id/breakfestTime"
         android:layout_marginTop="15dp"
         android:text="Перекус"
-        android:textColor="@android:color/holo_blue_dark"
+        android:textColor="@android:color/black"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -45,7 +46,7 @@
         android:layout_below="@+id/secondBreakfestTime"
         android:layout_marginTop="14dp"
         android:text="Обед"
-        android:textColor="@android:color/holo_blue_dark"
+        android:textColor="@android:color/black"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -58,7 +59,7 @@
         android:layout_below="@+id/lunchTime"
         android:layout_marginTop="15dp"
         android:text="Перекус"
-        android:textColor="@android:color/holo_blue_dark"
+        android:textColor="@android:color/black"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -66,14 +67,14 @@
         android:id="@+id/dinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/secondLunchLabel"
+        android:layout_alignStart="@+id/secondLunchLabel"
+        android:layout_below="@+id/secondLunchShema"
         android:layout_marginTop="17dp"
         android:text="Ужин"
-        android:textColor="@android:color/holo_blue_dark"
+        android:textColor="@android:color/black"
         android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_below="@+id/secondLunchShema"
-        android:layout_alignLeft="@+id/secondLunchLabel"
-        android:layout_alignStart="@+id/secondLunchLabel" />
+        android:textStyle="bold" />
 
     <ImageButton
         android:id="@+id/applyMealCalendarBtn"
@@ -92,113 +93,111 @@
         android:id="@+id/breakfestCalLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text= "500 cal"
-        android:textSize="18sp"
         android:layout_alignBaseline="@+id/breakfestLabel"
         android:layout_alignBottom="@+id/breakfestLabel"
+        android:layout_alignEnd="@+id/breakfestShema"
         android:layout_alignRight="@+id/breakfestShema"
-        android:layout_alignEnd="@+id/breakfestShema" />
+        android:text="500 cal"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/secondBreakfestCalLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="200 cal"
-        android:textSize="18sp"
         android:layout_alignBaseline="@+id/secondBreakfestLabel"
         android:layout_alignBottom="@+id/secondBreakfestLabel"
+        android:layout_alignEnd="@+id/secondBreakfestShema"
         android:layout_alignRight="@+id/secondBreakfestShema"
-        android:layout_alignEnd="@+id/secondBreakfestShema" />
+        android:text="200 cal"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/lunchCalLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="500 cal"
-        android:textSize="18sp"
         android:layout_alignBaseline="@+id/lunchLabel"
         android:layout_alignBottom="@+id/lunchLabel"
+        android:layout_alignEnd="@+id/secondBreakfestShema"
         android:layout_alignRight="@+id/secondBreakfestShema"
-        android:layout_alignEnd="@+id/secondBreakfestShema" />
+        android:text="500 cal"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/secondLunchCalLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="200 cal"
-        android:textSize="18sp"
         android:layout_alignBaseline="@+id/secondLunchLabel"
         android:layout_alignBottom="@+id/secondLunchLabel"
         android:layout_alignLeft="@+id/lunchCalLabel"
-        android:layout_alignStart="@+id/lunchCalLabel" />
+        android:layout_alignStart="@+id/lunchCalLabel"
+        android:text="200 cal"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/dinnerCalLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="500 cal"
-        android:textSize="18sp"
         android:layout_alignBaseline="@+id/dinner"
         android:layout_alignBottom="@+id/dinner"
         android:layout_alignLeft="@+id/secondLunchCalLabel"
-        android:layout_alignStart="@+id/secondLunchCalLabel" />
+        android:layout_alignStart="@+id/secondLunchCalLabel"
+        android:text="500 cal"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/breakfestTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="7:30 AM"
-        android:textSize="18sp"
-        android:layout_below="@+id/breakfestCalLabel"
         android:layout_alignLeft="@+id/secondBreakfestTime"
         android:layout_alignStart="@+id/secondBreakfestTime"
-        android:layout_marginTop="16dp" />
+        android:layout_below="@+id/breakfestCalLabel"
+        android:layout_marginTop="16dp"
+        android:text="7:30"
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/secondBreakfestTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="10:30 AM"
-        android:textSize="18sp"
-        android:layout_marginTop="17dp"
-        android:layout_below="@+id/secondBreakfestCalLabel"
         android:layout_alignLeft="@+id/lunchTime"
-        android:layout_alignStart="@+id/lunchTime" />
+        android:layout_alignStart="@+id/lunchTime"
+        android:layout_below="@+id/secondBreakfestCalLabel"
+        android:layout_marginTop="17dp"
+        android:text="10:30"
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/lunchTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1:30 PM"
-        android:textSize="18sp"
-        android:layout_below="@+id/lunchCalLabel"
         android:layout_alignLeft="@+id/secondLunchTime"
         android:layout_alignStart="@+id/secondLunchTime"
-        android:layout_marginTop="18dp" />
+        android:layout_below="@+id/lunchCalLabel"
+        android:layout_marginTop="18dp"
+        android:text="1:30"
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/secondLunchTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="14:30 PM"
-        android:textSize="18sp"
-        android:layout_alignTop="@+id/secondLunchShema"
+        android:text="14:30"
+        android:textSize="24sp"
+        android:layout_above="@+id/view2"
         android:layout_alignLeft="@+id/dinnerTime"
-        android:layout_alignStart="@+id/dinnerTime"
-        android:layout_alignBottom="@+id/secondLunchShema" />
+        android:layout_alignStart="@+id/dinnerTime" />
 
     <TextView
         android:id="@+id/dinnerTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="17:30 PM"
-        android:textSize="18sp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginLeft="33dp"
+        android:layout_marginStart="33dp"
+        android:text="17:30"
+        android:textSize="24sp"
         android:layout_alignBottom="@+id/dinnerShema"
-        android:layout_toRightOf="@+id/breakfestShema"
-        android:layout_toEndOf="@+id/breakfestShema"
-        android:layout_alignTop="@+id/dinnerShema" />
+        android:layout_toRightOf="@+id/dinnerShema"
+        android:layout_toEndOf="@+id/dinnerShema" />
 
     <Spinner
         android:id="@+id/breakfestShema"
@@ -249,5 +248,139 @@
         android:textSize="18sp"
         android:layout_alignLeft="@+id/dinner"
         android:layout_alignStart="@+id/dinner" />
+
+    <ImageButton
+        android:id="@+id/breakfestBtn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_right_arrow"
+        android:background="@color/White"
+        android:layout_alignTop="@+id/breakfestLabel"
+        android:layout_alignLeft="@+id/applyMealCalendarBtn"
+        android:layout_alignStart="@+id/applyMealCalendarBtn" />
+
+    <ImageButton
+        android:id="@+id/secondBreakfestBtn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_right_arrow"
+        android:background="@color/White"
+        android:layout_alignTop="@+id/secondBreakfestCalLabel"
+        android:layout_alignLeft="@+id/breakfestBtn"
+        android:layout_alignStart="@+id/breakfestBtn" />
+
+    <ImageButton
+        android:id="@+id/lunchBtn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_right_arrow"
+        android:background="@color/White"
+        android:layout_alignTop="@+id/lunchCalLabel"
+        android:layout_alignLeft="@+id/secondBreakfestBtn"
+        android:layout_alignStart="@+id/secondBreakfestBtn" />
+
+    <ImageButton
+        android:id="@+id/secondLunchBtn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_right_arrow"
+        android:background="@color/White"
+        android:layout_alignTop="@+id/secondLunchCalLabel"
+        android:layout_alignLeft="@+id/lunchBtn"
+        android:layout_alignStart="@+id/lunchBtn" />
+
+    <ImageButton
+        android:id="@+id/dinnerBtn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_right_arrow"
+        android:background="@color/White"
+        android:layout_alignTop="@+id/dinnerCalLabel"
+        android:layout_alignLeft="@+id/secondLunchBtn"
+        android:layout_alignStart="@+id/secondLunchBtn" />
+
+    <TextView
+        android:id="@+id/legendLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="TextView"
+        android:layout_below="@+id/view"
+        android:layout_alignLeft="@+id/dinnerShema"
+        android:layout_alignStart="@+id/dinnerShema" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/Blue"
+        android:layout_above="@+id/breakfestCalLabel"
+        android:visibility="visible"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/Blue"
+        android:layout_below="@+id/breakfestShema"
+        android:visibility="visible"
+        android:layout_marginTop="7dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/Blue"
+        android:layout_below="@+id/secondBreakfestShema"
+        android:visibility="visible"
+        android:layout_marginTop="7dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/Blue"
+        android:layout_below="@+id/lunchShema"
+        android:visibility="visible"
+        android:layout_marginTop="7dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/Blue"
+        android:layout_below="@+id/secondLunchShema"
+        android:visibility="visible"
+        android:layout_marginTop="7dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/view2" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/Blue"
+        android:layout_below="@+id/dinnerShema"
+        android:visibility="visible"
+        android:layout_marginTop="7dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/view" />
 
 </RelativeLayout>

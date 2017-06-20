@@ -130,10 +130,10 @@
             android:text="Notify about sleep"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:layout_marginBottom="24dp"
-            android:layout_above="@+id/applyBtn"
+            android:layout_below="@+id/switchFoodNotification"
             android:layout_alignLeft="@+id/textView8"
-            android:layout_alignStart="@+id/textView8" />
+            android:layout_alignStart="@+id/textView8"
+            android:layout_marginTop="11dp" />
 
         <Switch
             android:id="@+id/switchSleepNotification"
@@ -168,6 +168,7 @@
             android:ems="10"
             android:inputType="time"
             android:textSize="18sp"
+            android:textAlignment="textEnd"
             android:layout_alignBottom="@+id/textView4"
             android:layout_alignLeft="@+id/weight"
             android:layout_alignStart="@+id/weight"
@@ -182,6 +183,7 @@
             android:layout_alignBottom="@+id/textView5"
             android:ems="10"
             android:inputType="none"
+            android:textAlignment="textEnd"
             android:textSize="18sp"
             android:layout_alignLeft="@+id/dayStart"
             android:layout_alignStart="@+id/dayStart"
@@ -198,9 +200,9 @@
             android:digits="0123456789."
             android:maxLength="4"
             android:textSize="18sp"
+            android:textAlignment="textEnd"
             android:inputType="numberDecimal"
-            android:layout_alignLeft="@+id/gender"
-            android:layout_alignStart="@+id/gender"
+
             android:layout_alignRight="@+id/age"
             android:layout_alignEnd="@+id/age" />
 
@@ -215,10 +217,9 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_above="@+id/textView3"
-            android:layout_alignLeft="@+id/gender"
-            android:layout_alignStart="@+id/gender"
-            android:layout_alignRight="@+id/diet_type"
-            android:layout_alignEnd="@+id/diet_type" />
+            android:textAlignment="textEnd"
+            android:layout_alignRight="@+id/phase"
+             />
 
         <Switch
             android:id="@+id/gender"
@@ -237,6 +238,7 @@
             android:layout_alignBaseline="@+id/textView6"
             android:layout_alignBottom="@+id/textView6"
             android:ems="10"
+            android:textAlignment="textEnd"
             android:textSize="18sp"
             android:inputType="textPersonName"
             android:layout_alignRight="@+id/trainingStart"
@@ -270,11 +272,12 @@
             android:id="@+id/phase"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/switchWaterNotification"
+            android:layout_alignRight="@+id/switchWaterNotification"
             android:layout_alignTop="@+id/textView16"
             android:layout_toRightOf="@+id/applyBtn"
-            android:textSize="18sp"
-            android:layout_alignRight="@+id/switchWaterNotification"
-            android:layout_alignEnd="@+id/switchWaterNotification" />
+            android:textAlignment="center"
+            android:textSize="18sp" />
 
         <Switch
             android:id="@+id/diet_type"
@@ -284,9 +287,7 @@
             android:layout_alignRight="@+id/switchWaterNotification"
             android:layout_alignTop="@+id/textView17"
             android:textSize="18sp"
-            android:text="Протеиновая"
-            android:textOff="Протеиновая"
-            android:textOn="Углеводная" />
+            android:text="Белковая" />
 
 
 </RelativeLayout>

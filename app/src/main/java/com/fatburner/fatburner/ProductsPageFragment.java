@@ -6,6 +6,7 @@ package com.fatburner.fatburner;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Layout;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,10 +22,14 @@ import static com.fatburner.fatburner.GlobalVariables.dietListViewMode;
 
 public class ProductsPageFragment extends Fragment implements View.OnClickListener {
 
+    ArrayAdapter<CharSequence> adapter = null;
 
     ImageButton applyButton;
     TextView product1;
     TextView product2;
+    TextView product3;
+    TextView product4;
+    TextView textView15;
     ListView lvMain;
     String[] names;
 
@@ -33,6 +38,7 @@ public class ProductsPageFragment extends Fragment implements View.OnClickListen
     static final String SAVE_PAGE_NUMBER = "save_page_number";
 
     int pageNumber;
+    int listLayout = android.R.layout.simple_list_item_multiple_choice;
 
     static ProductsPageFragment newInstance(int page) {
         ProductsPageFragment pageFragment = new ProductsPageFragment();
@@ -64,6 +70,9 @@ public class ProductsPageFragment extends Fragment implements View.OnClickListen
         applyButton = (ImageButton) view.findViewById(R.id.applyBtn);
         product1 = (TextView) view.findViewById(R.id.product1);
         product2 = (TextView) view.findViewById(R.id.product2);
+        product3 = (TextView) view.findViewById(R.id.product3);
+        product4 = (TextView) view.findViewById(R.id.product4);
+        textView15 = (TextView) view.findViewById(R.id.textView15);
 
         /// Code which determines which list mode is need to show depending on Shared Preferences
         //true - extended (with button)
@@ -71,31 +80,22 @@ public class ProductsPageFragment extends Fragment implements View.OnClickListen
         //.setVisibility(View.GONE);
         //.setVisibility(View.VISIBLE);
         if(dietListViewMode){
+            textView15.setVisibility(View.GONE);
             applyButton.setVisibility(View.GONE);
             product1.setVisibility(View.GONE);
-            product1.setVisibility(View.GONE);
+            product2.setVisibility(View.GONE);
+            product3.setVisibility(View.GONE);
+            product4.setVisibility(View.GONE);
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.MATCH_PARENT,
                     RelativeLayout.LayoutParams.MATCH_PARENT
             );
             params.setMargins(0, 0, 0, 0); //left,top,right,bottom
+            listLayout = android.R.layout.simple_list_item_1;
             lvMain.setChoiceMode(ListView.CHOICE_MODE_NONE);
             lvMain.setLayoutParams(params);
         }
 
-        ///
-
-        /*
-        //code for apply button and list filling
-        lvMain = (ListView) view.findViewById(R.id.lvSimple);
-        // устанавливаем режим выбора пунктов списка
-        lvMain.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        // Создаем адаптер, используя массив из файла ресурсов
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                getActivity(), R.array.names,
-                android.R.layout.simple_list_item_single_choice);
-        lvMain.setAdapter(adapter);
-        */
 
         //загружаем списки
         loadLists(pageNumber, view);
@@ -132,7 +132,6 @@ public class ProductsPageFragment extends Fragment implements View.OnClickListen
 
     private void loadLists(int pageNumber, View view){
         String list[] = null;
-        ArrayAdapter<CharSequence> adapter = null;
         // устанавливаем режим выбора пунктов списка
         lvMain.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         // Создаем адаптер, используя массив из файла ресурсов
@@ -140,28 +139,28 @@ public class ProductsPageFragment extends Fragment implements View.OnClickListen
         switch (pageNumber){
             case 0: //"П"
                 // получаем массив из файла ресурсов
-                adapter = ArrayAdapter.createFromResource(getActivity(), R.array.meat_fish_eggs, android.R.layout.simple_list_item_multiple_choice);
+                adapter = ArrayAdapter.createFromResource(getActivity(), R.array.meat_fish_eggs, listLayout);
                 list = getResources().getStringArray(R.array.meat_fish_eggs);
                 break;
             case 1: //"К"
                 // получаем массив из файла ресурсов
-                adapter = ArrayAdapter.createFromResource(getActivity(), R.array.grain, android.R.layout.simple_list_item_multiple_choice);
+                adapter = ArrayAdapter.createFromResource(getActivity(), R.array.grain, listLayout);
                 list = getResources().getStringArray(R.array.grain);
                 break;
             case 2: //"М"
-                adapter = ArrayAdapter.createFromResource(getActivity(), R.array.milk, android.R.layout.simple_list_item_multiple_choice);
+                adapter = ArrayAdapter.createFromResource(getActivity(), R.array.milk, listLayout);
                 list = getResources().getStringArray(R.array.milk);
                 break;
             case 3: //"Ф"
-                adapter = ArrayAdapter.createFromResource(getActivity(), R.array.fruits, android.R.layout.simple_list_item_multiple_choice);
+                adapter = ArrayAdapter.createFromResource(getActivity(), R.array.fruits, listLayout);
                 list = getResources().getStringArray(R.array.fruits);
                 break;
             case 4: //"О"
-                adapter = ArrayAdapter.createFromResource(getActivity(), R.array.nuts, android.R.layout.simple_list_item_multiple_choice);
+                adapter = ArrayAdapter.createFromResource(getActivity(), R.array.nuts, listLayout);
                 list = getResources().getStringArray(R.array.nuts);
                 break;
             case 5: //"Ж"
-                adapter = ArrayAdapter.createFromResource(getActivity(), R.array.oils, android.R.layout.simple_list_item_multiple_choice);
+                adapter = ArrayAdapter.createFromResource(getActivity(), R.array.oils, listLayout);
                 list = getResources().getStringArray(R.array.oils);
                 break;
             // etc.

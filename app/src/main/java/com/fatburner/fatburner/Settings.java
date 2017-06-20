@@ -13,6 +13,7 @@ import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -24,7 +25,12 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
+
+import static com.fatburner.fatburner.R.id.parent;
+import static com.fatburner.fatburner.R.id.phase;
 
 
 public class Settings extends Menu {
@@ -58,6 +64,7 @@ public class Settings extends Menu {
     String ageValue;
     String weightValue;
     boolean genderValue;
+    int phaseValue;
     String dayStartTimeValue;
     String trainingStartTimeValue;
     String trainingDaysValue;
@@ -126,6 +133,10 @@ public class Settings extends Menu {
 
         loadSettings();
 
+        if(dietTypeValue){
+            switchDietType.setText("Углеводная");
+        }
+
         gender.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(gender.getText().equals("Male"))
@@ -155,6 +166,9 @@ public class Settings extends Menu {
 
         switchDietType.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(switchDietType.getText().equals("Белковая"))
+                {switchDietType.setText("Углеводная");}
+                else {switchDietType.setText("Белковая");}
                 dietTypeValue = isChecked;
             }
         });
@@ -164,6 +178,22 @@ public class Settings extends Menu {
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, phases);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         phase.setAdapter(adapter);
+        phase.setSelection(phaseValue);
+
+        phase.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                String selectedItem = phase.getSelectedItem().toString();
+                List<String> wordList = Arrays.asList(phases);
+                phaseValue = wordList.indexOf(selectedItem);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });
 
 
         applyButton.setOnClickListener(new View.OnClickListener() {
@@ -277,7 +307,7 @@ public class Settings extends Menu {
         ed.putString("DAY_START", dayStartTimeValue);
         ed.putString("TRAINING_START", trainingStartTimeValue);
         ed.putString("TRAINING_DAYS", trainingDaysValue);
-        ed.putInt("PHASE",phase.getSelectedItemPosition());
+        ed.putInt("PHASE", phaseValue);
         ed.putBoolean("IS_FIRST_RUN", isFirstStart);
         ed.putBoolean("GENDER", genderValue);
         ed.putBoolean("DIET_TYPE", dietTypeValue);
@@ -303,9 +333,9 @@ public class Settings extends Menu {
         waterNotificationValue = sPref.getBoolean("WATER_NOTIFICATON", false);
 
        dietTypeValue = sPref.getBoolean("DIET_TYPE", false);
-       int currentPhaseValue = sPref.getInt("PHASE",0);
+       phaseValue = sPref.getInt("PHASE",0);
 
-        age.setText(ageValue);
+       age.setText(ageValue);
         weight.setText(weightValue);
         dayStartTime.setText(dayStartTimeValue);
         trainingStart.setText(trainingStartTimeValue);
@@ -315,7 +345,6 @@ public class Settings extends Menu {
         switchFoodNotification.setChecked(foodNotificationValue);
         switchSleepNotification.setChecked(sleepNotificationValue);
         switchWaterNotification.setChecked(waterNotificationValue);
-        phase.setSelection(currentPhaseValue);
 
         Toast.makeText(this, "Settings loaded", Toast.LENGTH_SHORT).show();
     }
