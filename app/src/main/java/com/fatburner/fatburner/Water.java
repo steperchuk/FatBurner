@@ -71,7 +71,7 @@ public class Water extends Menu implements View.OnClickListener {
                 if(progress < 120 && progress > 100)
                 {
                     waterProgress.setMax(Math.round(progress));
-                    waterProgress.setFinishedColor(Color.YELLOW);
+                    waterProgress.setFinishedColor(R.color.Orange);
                     waterProgress.setTextColor(Color.BLACK);
                 }
                 if(progress > 120)
@@ -90,26 +90,35 @@ public class Water extends Menu implements View.OnClickListener {
     }
 
     public void onClick(View v) {
-        switch (v.getId()) {
+        TextView textView11 = (TextView) findViewById(R.id.textView11);
+        TextView textView12 = (TextView) findViewById(R.id.textView12);
+        TextView textView13 = (TextView) findViewById(R.id.textView13);
+        TextView textView14 = (TextView) findViewById(R.id.textView14);
 
+        textView11.setTextColor(Color.BLACK);
+        textView12.setTextColor(Color.BLACK);
+        textView13.setTextColor(Color.BLACK);
+        textView14.setTextColor(Color.BLACK);
+
+        switch (v.getId()) {
             case R.id.smallWaterBtn:
                 selectedAmount = 100;
-
+                textView11.setTextColor(Color.BLUE);
                 break;
 
             case R.id.mediumWaterBtn:
                 selectedAmount = 200;
-
+                textView12.setTextColor(Color.BLUE);
                 break;
 
             case R.id.bigWaterBtn:
                 selectedAmount = 300;
-
+                textView13.setTextColor(Color.BLUE);
                 break;
 
             case R.id.biggestWaterBtn:
                 selectedAmount = 400;
-
+                textView14.setTextColor(Color.BLUE);
                 break;
         }
 

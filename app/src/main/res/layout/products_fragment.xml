@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ListView
+        android:id="@+id/lvSimple"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:gravity="left"
+        android:layout_marginBottom="75dp"
+        android:textAlignment="gravity"></ListView>
+
+    <ImageButton
+        android:id="@+id/applyBtn"
+        android:src="@drawable/ic_down_chevron"
+        android:onClick="buttonClicked"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/White"
+        android:shadowColor="#45A9D4"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:text="Apply"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:layout_marginRight="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="13dp" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Выбраные продукты:"
+        android:layout_alignTop="@+id/applyBtn"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="17dp"
+        android:layout_marginStart="17dp" />
+
+    <TextView
+        android:id="@+id/product1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_alignLeft="@+id/textView15"
+        android:layout_alignStart="@+id/textView15"
+        android:layout_below="@+id/textView15"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/product2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_alignLeft="@+id/product1"
+        android:layout_alignStart="@+id/product1"
+        android:layout_below="@+id/product1"
+        android:text="TextView" />
+
+
+</RelativeLayout>

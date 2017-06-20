@@ -25,7 +25,7 @@ public class MealCalendar extends FragmentActivity {
         setContentView(R.layout.activity_meal_calendar);
 
         pager = (ViewPager) findViewById(R.id.pager);
-        pagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
+        pagerAdapter = new MealCalendarPagerAdapter(getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
 
         pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -47,12 +47,11 @@ public class MealCalendar extends FragmentActivity {
     }
 }
 
-    class MyFragmentPagerAdapter extends FragmentPagerAdapter {
+    class MealCalendarPagerAdapter extends FragmentPagerAdapter {
 
-        public MyFragmentPagerAdapter(FragmentManager fm) {
+        public MealCalendarPagerAdapter(FragmentManager fm) {
             super(fm);
         }
-
 
         @Override
         public CharSequence getPageTitle(int position) {

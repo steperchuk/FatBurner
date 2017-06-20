@@ -5,5 +5,6 @@ import android.app.Application;
 
 public class GlobalVariables extends Application{
 public static String selectedProgram;
+public static boolean dietListViewMode = true;
 
     }

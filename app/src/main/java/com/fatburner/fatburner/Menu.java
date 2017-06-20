@@ -78,10 +78,16 @@ public class Menu extends AppCompatActivity {
                     intent = new Intent(Menu.this, MealCalendar.class);
                     startActivity(intent);
                     break;
-                case R.id.nav_diet:
-                    intent = new Intent(Menu.this, Diet.class);
+                case R.id.products_list:
+                    intent = new Intent(Menu.this, Products.class);
                     startActivity(intent);
                     break;
+                /*
+                case R.id.nav_diet:
+                    intent = new Intent(Menu.this, Products.class);
+                    startActivity(intent);
+                    break;
+                    */
                 case R.id.nav_programs:
                     intent = new Intent(Menu.this, MyPrograms.class);
                     startActivity(intent);

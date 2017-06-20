@@ -4,4 +4,19 @@
     <string name="close">Close</string>
     <string name="items">Items</string>
     <string name="ok">OK</string>
+    <string-array name="names">
+        <item>Иван</item>
+        <item>Марья</item>
+        <item>Петр</item>
+        <item>Антон</item>
+        <item>Даша</item>
+        <item>Борис</item>
+        <item>Костя</item>
+        <item>Игорь</item>
+        <item>Анна</item>
+        <item>Денис</item>
+        <item>Вадим</item>
+        <item>Ольга</item>
+        <item>Сергей</item>
+    </string-array>
 </resources>

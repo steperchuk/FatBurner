@@ -19,7 +19,7 @@
                   android:parentActivityName=".MainActivity"/>
         <activity android:name=".MyPrograms"
                   android:parentActivityName=".MainActivity"/>
-        <activity android:name=".Diet"
+        <activity android:name=".Products"
                   android:parentActivityName=".MainActivity"/>
         <activity android:name=".Settings"
                   android:parentActivityName=".MainActivity"/>
