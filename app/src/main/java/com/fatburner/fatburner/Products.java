@@ -48,7 +48,7 @@ public class Products extends FragmentActivity {
 
 class ProductsListPagerAdapter extends FragmentPagerAdapter {
 
-    private static final int PAGES_COUNT = 7;
+    private static final int PAGES_COUNT = 6;
 
     public ProductsListPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -60,25 +60,22 @@ class ProductsListPagerAdapter extends FragmentPagerAdapter {
         String day = "";
         switch (position){
             case 0:
-                day = "Mon";
+                day = "П";
                 break;
             case 1:
-                day = "Tue";
+                day = "К";
                 break;
             case 2:
-                day = "Wen";
+                day = "М";
                 break;
             case 3:
-                day = "The";
+                day = "Ф";
                 break;
             case 4:
-                day = "Fri";
+                day = "О";
                 break;
             case 5:
-                day = "Sat";
-                break;
-            case 6:
-                day = "Sun";
+                day = "Ж";
                 break;
         }
         return day;

@@ -138,18 +138,31 @@ public class ProductsPageFragment extends Fragment implements View.OnClickListen
         // Создаем адаптер, используя массив из файла ресурсов
 
         switch (pageNumber){
-            case 1:
+            case 0: //"П"
                 // получаем массив из файла ресурсов
-                adapter = ArrayAdapter.createFromResource(getActivity(), R.array.names, android.R.layout.simple_list_item_multiple_choice);
-                list = getResources().getStringArray(R.array.names);
+                adapter = ArrayAdapter.createFromResource(getActivity(), R.array.meat_fish_eggs, android.R.layout.simple_list_item_multiple_choice);
+                list = getResources().getStringArray(R.array.meat_fish_eggs);
                 break;
-            case 2:
-                adapter = ArrayAdapter.createFromResource(getActivity(), R.array.names, android.R.layout.simple_list_item_multiple_choice);
-                list = getResources().getStringArray(R.array.names);
+            case 1: //"К"
+                // получаем массив из файла ресурсов
+                adapter = ArrayAdapter.createFromResource(getActivity(), R.array.grain, android.R.layout.simple_list_item_multiple_choice);
+                list = getResources().getStringArray(R.array.grain);
                 break;
-            case 3:
-                adapter = ArrayAdapter.createFromResource(getActivity(), R.array.names, android.R.layout.simple_list_item_multiple_choice);
-                list = getResources().getStringArray(R.array.names);
+            case 2: //"М"
+                adapter = ArrayAdapter.createFromResource(getActivity(), R.array.milk, android.R.layout.simple_list_item_multiple_choice);
+                list = getResources().getStringArray(R.array.milk);
+                break;
+            case 3: //"Ф"
+                adapter = ArrayAdapter.createFromResource(getActivity(), R.array.fruits, android.R.layout.simple_list_item_multiple_choice);
+                list = getResources().getStringArray(R.array.fruits);
+                break;
+            case 4: //"О"
+                adapter = ArrayAdapter.createFromResource(getActivity(), R.array.nuts, android.R.layout.simple_list_item_multiple_choice);
+                list = getResources().getStringArray(R.array.nuts);
+                break;
+            case 5: //"Ж"
+                adapter = ArrayAdapter.createFromResource(getActivity(), R.array.oils, android.R.layout.simple_list_item_multiple_choice);
+                list = getResources().getStringArray(R.array.oils);
                 break;
             // etc.
         }

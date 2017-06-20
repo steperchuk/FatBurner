@@ -68,7 +68,7 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment, null);
+        View view = inflater.inflate(R.layout.meal_settings_fragment, null);
 
         applyButton = (ImageButton) view.findViewById(R.id.applyMealCalendarBtn);
         applyButton.setOnClickListener(this);
@@ -184,7 +184,7 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
 
 
     private void setTimeValues(){
-        String AM_PM = "AM";
+        String AM_PM = "";
         String h = String.valueOf(hour);
         String m = String.valueOf(min);
         if(hour > 11)

@@ -4,19 +4,34 @@
     <string name="close">Close</string>
     <string name="items">Items</string>
     <string name="ok">OK</string>
-    <string-array name="names">
-        <item>Иван</item>
-        <item>Марья</item>
-        <item>Петр</item>
-        <item>Антон</item>
-        <item>Даша</item>
-        <item>Борис</item>
-        <item>Костя</item>
-        <item>Игорь</item>
-        <item>Анна</item>
-        <item>Денис</item>
-        <item>Вадим</item>
-        <item>Ольга</item>
-        <item>Сергей</item>
+    <string-array name="grain">
+        <item>grain 1</item>
+        <item>grain 2</item>
+        <item>grain 3</item>
+    </string-array>
+    <string-array name="milk">
+        <item>milk 1</item>
+        <item>milk 2</item>
+        <item>milk 3</item>
+    </string-array>
+    <string-array name="meat_fish_eggs">
+        <item>meat_fish_eggs 1</item>
+        <item>meat_fish_eggs 2</item>
+        <item>meat_fish_eggs 3</item>
+    </string-array>
+    <string-array name="nuts">
+        <item>nuts 1</item>
+        <item>nuts 2</item>
+        <item>nuts 3</item>
+    </string-array>
+    <string-array name="fruits">
+        <item>fruits 1</item>
+        <item>fruits 2</item>
+        <item>fruits 3</item>
+    </string-array>
+    <string-array name="oils">
+        <item>oil 1</item>
+        <item>oil 2</item>
+        <item>oil 3</item>
     </string-array>
 </resources>
