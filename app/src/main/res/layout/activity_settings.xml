@@ -43,25 +43,25 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textView"
-            android:layout_alignStart="@+id/textView"
-            android:layout_below="@+id/textView"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="14dp"
             android:text="Age"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_below="@+id/gender"
+            android:layout_alignLeft="@+id/textView"
+            android:layout_alignStart="@+id/textView" />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textView2"
-            android:layout_alignStart="@+id/textView2"
-            android:layout_below="@+id/textView2"
-            android:layout_marginTop="23dp"
+            android:layout_marginTop="14dp"
             android:text="Weight"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_below="@+id/textView2"
+            android:layout_alignLeft="@+id/textView2"
+            android:layout_alignStart="@+id/textView2" />
 
         <TextView
             android:id="@+id/textView4"
@@ -70,8 +70,8 @@
             android:text="Day start time"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:layout_alignBaseline="@+id/dayStart"
-            android:layout_alignBottom="@+id/dayStart"
+            android:layout_marginTop="14dp"
+            android:layout_below="@+id/textView3"
             android:layout_alignLeft="@+id/textView3"
             android:layout_alignStart="@+id/textView3" />
 
@@ -85,7 +85,7 @@
             android:layout_below="@+id/textView4"
             android:layout_alignLeft="@+id/textView4"
             android:layout_alignStart="@+id/textView4"
-            android:layout_marginTop="25dp" />
+            android:layout_marginTop="14dp" />
 
         <TextView
             android:id="@+id/textView6"
@@ -94,10 +94,10 @@
             android:text="Training days"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:layout_below="@+id/trainingStart"
+            android:layout_below="@+id/textView5"
             android:layout_alignLeft="@+id/textView5"
             android:layout_alignStart="@+id/textView5"
-            android:layout_marginTop="21dp" />
+            android:layout_marginTop="14dp" />
 
         <TextView
             android:id="@+id/textView7"
@@ -106,10 +106,10 @@
             android:text="Notify about water"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:layout_marginBottom="26dp"
-            android:layout_above="@+id/textView8"
-            android:layout_alignLeft="@+id/textView6"
-            android:layout_alignStart="@+id/textView6" />
+            android:layout_below="@+id/textView17"
+            android:layout_alignLeft="@+id/textView17"
+            android:layout_alignStart="@+id/textView17"
+            android:layout_marginTop="14dp" />
 
         <TextView
             android:id="@+id/textView8"
@@ -118,10 +118,10 @@
             android:text="Notify about food"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:layout_marginBottom="22dp"
-            android:layout_above="@+id/textView9"
+            android:layout_below="@+id/switchWaterNotification"
             android:layout_alignLeft="@+id/textView7"
-            android:layout_alignStart="@+id/textView7" />
+            android:layout_alignStart="@+id/textView7"
+            android:layout_marginTop="14dp" />
 
         <TextView
             android:id="@+id/textView9"
@@ -130,7 +130,7 @@
             android:text="Notify about sleep"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:layout_marginBottom="26dp"
+            android:layout_marginBottom="24dp"
             android:layout_above="@+id/applyBtn"
             android:layout_alignLeft="@+id/textView8"
             android:layout_alignStart="@+id/textView8" />
@@ -161,82 +161,132 @@
             android:layout_alignRight="@+id/switchFoodNotification"
             android:layout_alignTop="@+id/textView7" />
 
-        <EditText
+        <TextView
             android:id="@+id/dayStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/weight"
             android:ems="10"
             android:inputType="time"
+            android:textSize="18sp"
+            android:layout_alignBottom="@+id/textView4"
             android:layout_alignLeft="@+id/weight"
-            android:layout_alignStart="@+id/weight" />
+            android:layout_alignStart="@+id/weight"
+            android:layout_alignRight="@+id/weight"
+            android:layout_alignEnd="@+id/weight" />
 
-        <EditText
+        <TextView
             android:id="@+id/trainingStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/textView5"
             android:layout_alignBottom="@+id/textView5"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:ems="10"
             android:inputType="none"
+            android:textSize="18sp"
             android:layout_alignLeft="@+id/dayStart"
-            android:layout_alignStart="@+id/dayStart" />
+            android:layout_alignStart="@+id/dayStart"
+            android:layout_alignRight="@+id/dayStart"
+            android:layout_alignEnd="@+id/dayStart" />
 
-        <EditText
+        <TextView
             android:id="@+id/weight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/textView3"
             android:layout_alignBottom="@+id/textView3"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:ems="10"
             android:digits="0123456789."
             android:maxLength="4"
+            android:textSize="18sp"
             android:inputType="numberDecimal"
             android:layout_alignLeft="@+id/gender"
-            android:layout_alignStart="@+id/gender" />
+            android:layout_alignStart="@+id/gender"
+            android:layout_alignRight="@+id/age"
+            android:layout_alignEnd="@+id/age" />
 
-        <EditText
+        <TextView
             android:id="@+id/age"
             android:digits="0123456789"
             android:maxLength="2"
             android:inputType="numberDecimal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/weight"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignStart="@+id/gender"
-            android:layout_below="@+id/textView"
             android:ems="10"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_above="@+id/textView3"
+            android:layout_alignLeft="@+id/gender"
+            android:layout_alignStart="@+id/gender"
+            android:layout_alignRight="@+id/diet_type"
+            android:layout_alignEnd="@+id/diet_type" />
 
         <Switch
             android:id="@+id/gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/age"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:text="Male"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:layout_alignTop="@+id/textView"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
-        <EditText
+        <TextView
             android:id="@+id/trainingDays"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/textView6"
             android:layout_alignBottom="@+id/textView6"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:textSize="18sp"
+            android:inputType="textPersonName"
+            android:layout_alignRight="@+id/trainingStart"
+            android:layout_alignEnd="@+id/trainingStart" />
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textView6"
+            android:layout_alignStart="@+id/textView6"
+            android:layout_below="@+id/textView6"
+            android:layout_marginTop="14dp"
+            android:text="Phase"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textView16"
+            android:layout_alignStart="@+id/textView16"
+            android:layout_below="@+id/textView16"
+            android:layout_marginTop="15dp"
+            android:text="Diet Type"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/phase"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/textView16"
+            android:layout_toRightOf="@+id/applyBtn"
+            android:textSize="18sp"
+            android:layout_alignRight="@+id/switchWaterNotification"
+            android:layout_alignEnd="@+id/switchWaterNotification" />
+
+        <Switch
+            android:id="@+id/diet_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/switchWaterNotification"
+            android:layout_alignRight="@+id/switchWaterNotification"
+            android:layout_alignTop="@+id/textView17"
+            android:textSize="18sp"
+            android:text="Протеиновая"
+            android:textOff="Протеиновая"
+            android:textOn="Углеводная" />
 
 
 </RelativeLayout>

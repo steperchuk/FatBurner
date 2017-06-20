@@ -13,11 +13,14 @@ import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -28,6 +31,7 @@ public class Settings extends Menu {
 
     Calendar calander = Calendar.getInstance();
 
+    String phases[] = {"Фаза 1", "Фаза 2", "Фаза 3"};
     String days[] = { "Monday", "Thuesday", "Wensday", "Thursday", "Friday", "Saturday", "Sunday" };
     boolean chkd[] = { false, false, false, false, false, false, false };
     String daysSelected = "";
@@ -37,12 +41,14 @@ public class Settings extends Menu {
     final int DIALOG_DAYS = 3;
     int myHour =  calander.get(Calendar.HOUR);
     int myMinute = calander.get(Calendar.MINUTE);
-    EditText dayStartTime;
-    EditText trainingStart;
-    EditText trainingDays;
-    EditText age;
-    EditText weight;
+    TextView dayStartTime;
+    TextView trainingStart;
+    TextView trainingDays;
+    TextView age;
+    TextView weight;
+    Spinner phase;
     Switch gender;
+    Switch switchDietType;
     Switch switchWaterNotification;
     Switch switchFoodNotification;
     Switch switchSleepNotification;
@@ -55,6 +61,7 @@ public class Settings extends Menu {
     String dayStartTimeValue;
     String trainingStartTimeValue;
     String trainingDaysValue;
+    boolean dietTypeValue;
     boolean waterNotificationValue;
     boolean sleepNotificationValue;
     boolean foodNotificationValue;
@@ -74,19 +81,21 @@ public class Settings extends Menu {
 
         final ImageButton applyButton = (ImageButton) findViewById(R.id.applyBtn);
         gender = (Switch) findViewById(R.id.gender);
-        age = (EditText) findViewById(R.id.age);
-        weight = (EditText) findViewById(R.id.weight);
-        dayStartTime = (EditText) findViewById(R.id.dayStart);
-        trainingStart = (EditText) findViewById(R.id.trainingStart);
-        trainingDays = (EditText) findViewById(R.id.trainingDays);
+        age = (TextView) findViewById(R.id.age);
+        weight = (TextView) findViewById(R.id.weight);
+        dayStartTime = (TextView) findViewById(R.id.dayStart);
+        trainingStart = (TextView) findViewById(R.id.trainingStart);
+        trainingDays = (TextView) findViewById(R.id.trainingDays);
         switchWaterNotification = (Switch) findViewById(R.id.switchWaterNotification);
         switchFoodNotification = (Switch) findViewById(R.id.switchFoodNotification);
         switchSleepNotification = (Switch) findViewById(R.id.switchSleepNotification);
+        switchDietType = (Switch) findViewById(R.id.diet_type);
 
         dayStartTime.setInputType(InputType.TYPE_NULL);
         trainingStart.setInputType(InputType.TYPE_NULL);
         trainingDays.setInputType(InputType.TYPE_NULL);
 
+        phase = (Spinner) findViewById(R.id.phase);
 
         dayStartTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,8 +153,17 @@ public class Settings extends Menu {
             }
         });
 
+        switchDietType.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                dietTypeValue = isChecked;
+            }
+        });
 
 
+        ArrayAdapter<String> adapter;
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, phases);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        phase.setAdapter(adapter);
 
 
         applyButton.setOnClickListener(new View.OnClickListener() {
@@ -251,6 +269,7 @@ public class Settings extends Menu {
     }
 
     void saveSettings() {
+
         sPref = getPreferences(MODE_PRIVATE);
         SharedPreferences.Editor ed = sPref.edit();
         ed.putString("AGE",ageValue);
@@ -258,8 +277,10 @@ public class Settings extends Menu {
         ed.putString("DAY_START", dayStartTimeValue);
         ed.putString("TRAINING_START", trainingStartTimeValue);
         ed.putString("TRAINING_DAYS", trainingDaysValue);
+        ed.putInt("PHASE",phase.getSelectedItemPosition());
         ed.putBoolean("IS_FIRST_RUN", isFirstStart);
         ed.putBoolean("GENDER", genderValue);
+        ed.putBoolean("DIET_TYPE", dietTypeValue);
         ed.putBoolean("FOOD_NOTIFICATON", foodNotificationValue);
         ed.putBoolean("SLEEP_NOTIFICATON", sleepNotificationValue);
         ed.putBoolean("WATER_NOTIFICATON", waterNotificationValue);
@@ -281,6 +302,8 @@ public class Settings extends Menu {
         sleepNotificationValue = sPref.getBoolean("SLEEP_NOTIFICATON", false);
         waterNotificationValue = sPref.getBoolean("WATER_NOTIFICATON", false);
 
+       dietTypeValue = sPref.getBoolean("DIET_TYPE", false);
+       int currentPhaseValue = sPref.getInt("PHASE",0);
 
         age.setText(ageValue);
         weight.setText(weightValue);
@@ -288,9 +311,11 @@ public class Settings extends Menu {
         trainingStart.setText(trainingStartTimeValue);
         trainingDays.setText(trainingDaysValue);
         gender.setChecked(genderValue);
+        switchDietType.setChecked(dietTypeValue);
         switchFoodNotification.setChecked(foodNotificationValue);
         switchSleepNotification.setChecked(sleepNotificationValue);
         switchWaterNotification.setChecked(waterNotificationValue);
+        phase.setSelection(currentPhaseValue);
 
         Toast.makeText(this, "Settings loaded", Toast.LENGTH_SHORT).show();
     }

@@ -184,7 +184,8 @@
         android:textSize="18sp"
         android:layout_alignTop="@+id/secondLunchShema"
         android:layout_alignLeft="@+id/dinnerTime"
-        android:layout_alignStart="@+id/dinnerTime" />
+        android:layout_alignStart="@+id/dinnerTime"
+        android:layout_alignBottom="@+id/secondLunchShema" />
 
     <TextView
         android:id="@+id/dinnerTime"
@@ -196,13 +197,16 @@
         android:layout_marginStart="16dp"
         android:layout_alignBottom="@+id/dinnerShema"
         android:layout_toRightOf="@+id/breakfestShema"
-        android:layout_toEndOf="@+id/breakfestShema" />
+        android:layout_toEndOf="@+id/breakfestShema"
+        android:layout_alignTop="@+id/dinnerShema" />
 
     <Spinner
         android:id="@+id/breakfestShema"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/breakfestTime"
+        android:textSize="18sp"
+        android:layout_marginTop="21dp"
         android:layout_alignLeft="@+id/secondBreakfestLabel"
         android:layout_alignStart="@+id/secondBreakfestLabel" />
 
@@ -211,6 +215,8 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_above="@+id/lunchLabel"
+        android:textSize="18sp"
+        android:layout_marginTop="21dp"
         android:layout_alignLeft="@+id/secondBreakfestLabel"
         android:layout_alignStart="@+id/secondBreakfestLabel" />
 
@@ -218,6 +224,8 @@
         android:id="@+id/lunchShema"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_marginTop="21dp"
         android:layout_above="@+id/secondLunchLabel"
         android:layout_alignLeft="@+id/lunchLabel"
         android:layout_alignStart="@+id/lunchLabel" />
@@ -227,6 +235,7 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="21dp"
+        android:textSize="18sp"
         android:layout_below="@+id/secondLunchLabel"
         android:layout_alignLeft="@+id/dinner"
         android:layout_alignStart="@+id/dinner" />
@@ -235,8 +244,9 @@
         android:id="@+id/dinnerShema"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="21dp"
         android:layout_below="@+id/dinner"
+        android:textSize="18sp"
         android:layout_alignLeft="@+id/dinner"
         android:layout_alignStart="@+id/dinner" />
 
