@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import static com.fatburner.fatburner.GlobalVariables.PRODUCTS_PAGES_COUNT;
 import static com.fatburner.fatburner.GlobalVariables.dietListViewMode;
 
 

@@ -18,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import static com.fatburner.fatburner.GlobalVariables.PRODUCTS_PAGES_COUNT;
 import static com.fatburner.fatburner.GlobalVariables.dietListViewMode;
 
 
@@ -145,20 +146,20 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
         String dinnerItems[] = lunchItems;
 
         ArrayAdapter<String> adapter;
-        adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, breakfestItems);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        adapter = new ArrayAdapter<String>(getActivity(), R.layout.my_spinner_large_text, breakfestItems);
+        adapter.setDropDownViewResource(R.layout.my_spinner_large_text);
         breakfestShema.setAdapter(adapter);
 
-        adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, secondBreakFestItems);
+        adapter = new ArrayAdapter<String>(getActivity(), R.layout.my_spinner_large_text, secondBreakFestItems);
         secondBreakfestShema.setAdapter(adapter);
 
-        adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, lunchItems);
+        adapter = new ArrayAdapter<String>(getActivity(), R.layout.my_spinner_large_text, lunchItems);
         lunchShema.setAdapter(adapter);
 
-        adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, secondLunchItems);
+        adapter = new ArrayAdapter<String>(getActivity(), R.layout.my_spinner_large_text, secondLunchItems);
         secondLunchShema.setAdapter(adapter);
 
-        adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, dinnerItems);
+        adapter = new ArrayAdapter<String>(getActivity(), R.layout.my_spinner_large_text, dinnerItems);
         dinnerShema.setAdapter(adapter);
 
     }
@@ -169,6 +170,7 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
 
         Calendar calendar = Calendar.getInstance();
         dietListViewMode = false;
+        String shema = null;
         switch (v.getId()){
             case R.id.breakfestTime:
                 new TimePickerDialog(getActivity(), onStartTimeListener, calendar
@@ -197,31 +199,36 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
                 break;
             case R.id.breakfestBtn:
                 //code for defining parameters of view
-
+                shema = breakfestShema.getSelectedItem().toString();
+                Utils.applyShemaProductsList(shema);
                 intent = new Intent(getActivity(), Products.class);
                 startActivity(intent);
                 break;
             case R.id.secondBreakfestBtn:
                 //code for defining parameters of view
-
+                shema = secondBreakfestShema.getSelectedItem().toString();
+                Utils.applyShemaProductsList(shema);
                 intent = new Intent(getActivity(), Products.class);
                 startActivity(intent);
                 break;
             case R.id.lunchBtn:
                 //code for defining parameters of view
-
+                shema = lunchShema.getSelectedItem().toString();
+                Utils.applyShemaProductsList(shema);
                 intent = new Intent(getActivity(), Products.class);
                 startActivity(intent);
                 break;
             case R.id.secondLunchBtn:
                 //code for defining parameters of view
-
+                shema = secondLunchShema.getSelectedItem().toString();
+                Utils.applyShemaProductsList(shema);
                 intent = new Intent(getActivity(), Products.class);
                 startActivity(intent);
                 break;
             case R.id.dinnerBtn:
                 //code for defining parameters of view
-
+                shema = dinnerShema.getSelectedItem().toString();
+                Utils.applyShemaProductsList(shema);
                 intent = new Intent(getActivity(), Products.class);
                 startActivity(intent);
                 break;

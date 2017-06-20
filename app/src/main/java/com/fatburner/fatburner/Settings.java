@@ -175,8 +175,8 @@ public class Settings extends Menu {
 
 
         ArrayAdapter<String> adapter;
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, phases);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        adapter = new ArrayAdapter<String>(this, R.layout.my_spinner, phases);
+        adapter.setDropDownViewResource(R.layout.my_spinner);
         phase.setAdapter(adapter);
         phase.setSelection(phaseValue);
 

@@ -9,6 +9,9 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
 
+import static com.fatburner.fatburner.GlobalVariables.PRODUCTS_PAGES_COUNT;
+import static com.fatburner.fatburner.GlobalVariables.PRODUCS;
+
 public class Products extends FragmentActivity {
 
     static final String TAG = "myLogs";
@@ -48,37 +51,36 @@ public class Products extends FragmentActivity {
 
 class ProductsListPagerAdapter extends FragmentPagerAdapter {
 
-    private static final int PAGES_COUNT = 6;
+    //private static final int PAGES_COUNT = 6;
 
     public ProductsListPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
-
     @Override
     public CharSequence getPageTitle(int position) {
-        String day = "";
+        String product = "";
         switch (position){
             case 0:
-                day = "П";
+                product = PRODUCS[0];
                 break;
             case 1:
-                day = "К";
+                product = PRODUCS[1];
                 break;
             case 2:
-                day = "М";
+                product = PRODUCS[2];
                 break;
             case 3:
-                day = "Ф";
+                product = PRODUCS[3];
                 break;
             case 4:
-                day = "О";
+                product = PRODUCS[4];
                 break;
             case 5:
-                day = "Ж";
+                product = PRODUCS[5];
                 break;
         }
-        return day;
+        return product;
     }
 
     @Override
@@ -88,7 +90,7 @@ class ProductsListPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return PAGES_COUNT;
+        return PRODUCTS_PAGES_COUNT;
     }
 
 }

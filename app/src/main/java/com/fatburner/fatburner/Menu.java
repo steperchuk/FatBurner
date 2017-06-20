@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import java.util.HashSet;
 import java.util.Set;
 import static com.fatburner.fatburner.GlobalVariables.dietListViewMode;
+import static com.fatburner.fatburner.GlobalVariables.PRODUCS;
+import static com.fatburner.fatburner.GlobalVariables.PRODUCTS_PAGES_COUNT;
 
 public class Menu extends AppCompatActivity {
 
@@ -66,6 +68,7 @@ public class Menu extends AppCompatActivity {
 
     public void selectDrawerItem(MenuItem item){
             Intent intent;
+            String products[] = {"П", "К", "М", "Ф", "О", "Ж"};
             switch (item.getItemId()) {
                 case R.id.nav_achivements:
                     intent = new Intent(Menu.this, MyAchivement.class);
@@ -82,6 +85,8 @@ public class Menu extends AppCompatActivity {
                     break;
                 case R.id.products_list:
                     dietListViewMode = true;
+                    PRODUCTS_PAGES_COUNT = 6;
+                    PRODUCS = products;
                     intent = new Intent(Menu.this, Products.class);
                     startActivity(intent);
                     break;
