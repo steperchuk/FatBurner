@@ -21,6 +21,7 @@
             custom:donut_progress="0"
             custom:donut_text_size="36dp"
             android:layout_marginLeft="50dp"
+            android:layout_marginBottom="15dp"
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_alignParentBottom="true"
