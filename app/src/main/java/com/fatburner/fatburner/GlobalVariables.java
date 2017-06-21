@@ -9,6 +9,6 @@ public class GlobalVariables extends Application{
     public static String selectedDiet;
     public static boolean dietListViewMode = false;
     public static int PRODUCTS_PAGES_COUNT = 6;
-    public static String PRODUCS[] = {"П", "К", "М", "Ф", "О", "Ж"};
+    public static String PRODUCTS[] = {"П", "К", "М", "Ф", "О", "Ж"};
 
     }

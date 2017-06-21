@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import static com.fatburner.fatburner.GlobalVariables.PRODUCTS_PAGES_COUNT;
-import static com.fatburner.fatburner.GlobalVariables.PRODUCS;
+import static com.fatburner.fatburner.GlobalVariables.PRODUCTS;
 
 public class Products extends FragmentActivity {
 
@@ -62,22 +62,22 @@ class ProductsListPagerAdapter extends FragmentPagerAdapter {
         String product = "";
         switch (position){
             case 0:
-                product = PRODUCS[0];
+                product = PRODUCTS[0];
                 break;
             case 1:
-                product = PRODUCS[1];
+                product = PRODUCTS[1];
                 break;
             case 2:
-                product = PRODUCS[2];
+                product = PRODUCTS[2];
                 break;
             case 3:
-                product = PRODUCS[3];
+                product = PRODUCTS[3];
                 break;
             case 4:
-                product = PRODUCS[4];
+                product = PRODUCTS[4];
                 break;
             case 5:
-                product = PRODUCS[5];
+                product = PRODUCTS[5];
                 break;
         }
         return product;

@@ -12,7 +12,7 @@ import android.view.MenuItem;
 import java.util.HashSet;
 import java.util.Set;
 import static com.fatburner.fatburner.GlobalVariables.dietListViewMode;
-import static com.fatburner.fatburner.GlobalVariables.PRODUCS;
+import static com.fatburner.fatburner.GlobalVariables.PRODUCTS;
 import static com.fatburner.fatburner.GlobalVariables.PRODUCTS_PAGES_COUNT;
 
 public class Menu extends AppCompatActivity {
@@ -86,7 +86,7 @@ public class Menu extends AppCompatActivity {
                 case R.id.products_list:
                     dietListViewMode = true;
                     PRODUCTS_PAGES_COUNT = 6;
-                    PRODUCS = products;
+                    PRODUCTS = products;
                     intent = new Intent(Menu.this, Products.class);
                     startActivity(intent);
                     break;

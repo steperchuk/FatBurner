@@ -6,7 +6,6 @@ package com.fatburner.fatburner;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.Layout;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +16,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import static com.fatburner.fatburner.GlobalVariables.PRODUCTS_PAGES_COUNT;
+import static com.fatburner.fatburner.GlobalVariables.PRODUCTS;
 import static com.fatburner.fatburner.GlobalVariables.dietListViewMode;
 
 
@@ -136,31 +135,31 @@ public class ProductsPageFragment extends Fragment implements View.OnClickListen
         // устанавливаем режим выбора пунктов списка
         lvMain.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         // Создаем адаптер, используя массив из файла ресурсов
-
-        switch (pageNumber){
-            case 0: //"П"
+        //"П", "К", "М", "Ф", "О", "Ж"
+        switch (PRODUCTS[pageNumber]){
+            case "П":
                 // получаем массив из файла ресурсов
                 adapter = ArrayAdapter.createFromResource(getActivity(), R.array.meat_fish_eggs, listLayout);
                 list = getResources().getStringArray(R.array.meat_fish_eggs);
                 break;
-            case 1: //"К"
+            case "К":
                 // получаем массив из файла ресурсов
                 adapter = ArrayAdapter.createFromResource(getActivity(), R.array.grain, listLayout);
                 list = getResources().getStringArray(R.array.grain);
                 break;
-            case 2: //"М"
+            case "М":
                 adapter = ArrayAdapter.createFromResource(getActivity(), R.array.milk, listLayout);
                 list = getResources().getStringArray(R.array.milk);
                 break;
-            case 3: //"Ф"
+            case "Ф":
                 adapter = ArrayAdapter.createFromResource(getActivity(), R.array.fruits, listLayout);
                 list = getResources().getStringArray(R.array.fruits);
                 break;
-            case 4: //"О"
+            case "О":
                 adapter = ArrayAdapter.createFromResource(getActivity(), R.array.nuts, listLayout);
                 list = getResources().getStringArray(R.array.nuts);
                 break;
-            case 5: //"Ж"
+            case "Ж":
                 adapter = ArrayAdapter.createFromResource(getActivity(), R.array.oils, listLayout);
                 list = getResources().getStringArray(R.array.oils);
                 break;

@@ -2,9 +2,9 @@ package com.fatburner.fatburner;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
 import static com.fatburner.fatburner.GlobalVariables.PRODUCTS_PAGES_COUNT;
-import static com.fatburner.fatburner.GlobalVariables.PRODUCS;
+import static com.fatburner.fatburner.GlobalVariables.PRODUCTS;
 
 /**
  * Created by sergeyteperchuk on 6/20/17.
@@ -18,7 +18,7 @@ public class Utils {
 
     /*
     public static Map<String,String> normalizeSelectedShema(String Shema){
-        PRODUCS = null;
+        PRODUCTS = null;
         char[] charArray = Shema.toCharArray();
         String d = "";
         String l = "";
@@ -39,7 +39,7 @@ public class Utils {
 
         for (int i = 0; i < numsArray.size()-1; i++){
             shema.put(lettersArray.get(i), numsArray.get(i));
-            PRODUCS[i] = lettersArray.get(i);
+            PRODUCTS[i] = lettersArray.get(i);
         }
 
         PRODUCTS_PAGES_COUNT = lettersArray.size();
@@ -66,7 +66,7 @@ public class Utils {
         PRODUCTS_PAGES_COUNT = lettersArray.size();
         String products[] =  new String[lettersArray.size()];;
         products = lettersArray.toArray(products);
-        PRODUCS = products;
+        PRODUCTS = products;
     }
 
 }
