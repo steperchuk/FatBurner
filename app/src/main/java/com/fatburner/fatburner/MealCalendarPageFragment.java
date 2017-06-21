@@ -18,11 +18,20 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import static android.content.Context.MODE_PRIVATE;
 import static com.fatburner.fatburner.GlobalVariables.PRODUCTS_PAGES_COUNT;
 import static com.fatburner.fatburner.GlobalVariables.dietListViewMode;
+import static com.fatburner.fatburner.GlobalVariables.selectedDiet;
+import static com.fatburner.fatburner.GlobalVariables.selectedPhase;
 
 
 public class MealCalendarPageFragment extends Fragment implements View.OnClickListener {
+
+    String breakfestItems[];
+    String secondBreakFestItems[];
+    String lunchItems[];
+    String secondLunchItems[];
+    String dinnerItems[];
 
     Intent intent;
 
@@ -139,11 +148,67 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
 
 
     private void setMealShemas(){
+
+        //need to add reading from preferences in future.
+
+        if(selectedDiet){
+            switch (selectedPhase){
+                case 1:
+                    breakfestItems = getResources().getStringArray(R.array.carbohydratePhase1Meal1);
+                    secondBreakFestItems = getResources().getStringArray(R.array.carbohydratePhase1Meal2);
+                    lunchItems = getResources().getStringArray(R.array.carbohydratePhase1Meal3);
+                    secondLunchItems = secondBreakFestItems;
+                    dinnerItems = lunchItems;
+                    break;
+                case 2:
+                    breakfestItems = getResources().getStringArray(R.array.carbohydratePhase2Meal1);
+                    secondBreakFestItems = getResources().getStringArray(R.array.carbohydratePhase2Meal2);
+                    lunchItems = getResources().getStringArray(R.array.carbohydratePhase2Meal3);
+                    secondLunchItems = secondBreakFestItems;
+                    dinnerItems = lunchItems;
+                    break;
+                case 3:
+                    breakfestItems = getResources().getStringArray(R.array.carbohydratePhase3Meal1);
+                    secondBreakFestItems = getResources().getStringArray(R.array.carbohydratePhase3Meal2);
+                    lunchItems = getResources().getStringArray(R.array.carbohydratePhase3Meal3);
+                    secondLunchItems = secondBreakFestItems;
+                    dinnerItems = lunchItems;
+                    break;
+            }
+        }
+        else{
+            switch (selectedPhase){
+                case 1:
+                    breakfestItems = getResources().getStringArray(R.array.proteinPhase1Meal1);
+                    secondBreakFestItems = getResources().getStringArray(R.array.proteinPhase1Meal2);
+                    lunchItems = getResources().getStringArray(R.array.proteinPhase1Meal3);
+                    secondLunchItems = secondBreakFestItems;
+                    dinnerItems = lunchItems;
+                    break;
+                case 2:
+                    breakfestItems = getResources().getStringArray(R.array.proteinPhase2Meal1);
+                    secondBreakFestItems = getResources().getStringArray(R.array.proteinPhase2Meal2);
+                    lunchItems = getResources().getStringArray(R.array.proteinPhase2Meal3);
+                    secondLunchItems = secondBreakFestItems;
+                    dinnerItems = lunchItems;
+                    break;
+                case 3:
+                    breakfestItems = getResources().getStringArray(R.array.proteinPhase3Meal1);
+                    secondBreakFestItems = getResources().getStringArray(R.array.proteinPhase3Meal2);
+                    lunchItems = getResources().getStringArray(R.array.proteinPhase3Meal3);
+                    secondLunchItems = secondBreakFestItems;
+                    dinnerItems = lunchItems;
+                    break;
+            }
+        }
+
+        /*
         String breakfestItems[] = {"1М + 1К", "1П + 1К","1П + 1Ф", "1M + 1O"};
         String secondBreakFestItems[] = {"1M", "1Ф + 0.5О", "1К"};
         String lunchItems[] = {"3К + 1П", "2К + 1П + 1Ф + 1Ж", "2К + 1М + 1П", "2К + 1П + 1О", "2К + 1П + 2Ж", "1К + 2Ф + 1Ж + 1П", "1К + 1Ф + 1М + 1П", "1К + 1Ф + 1П + 1О"};
         String secondLunchItems[] = {"1M", "1Ф + 0.5О", "1К"};
         String dinnerItems[] = lunchItems;
+        */
 
         ArrayAdapter<String> adapter;
         adapter = new ArrayAdapter<String>(getActivity(), R.layout.my_spinner_large_text, breakfestItems);
@@ -161,7 +226,6 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
 
         adapter = new ArrayAdapter<String>(getActivity(), R.layout.my_spinner_large_text, dinnerItems);
         dinnerShema.setAdapter(adapter);
-
     }
 
 

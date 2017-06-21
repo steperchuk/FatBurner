@@ -16,7 +16,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -29,8 +28,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
-import static com.fatburner.fatburner.R.id.parent;
-import static com.fatburner.fatburner.R.id.phase;
+import static com.fatburner.fatburner.GlobalVariables.selectedPhase;
+import static com.fatburner.fatburner.GlobalVariables.selectedDiet;
 
 
 public class Settings extends Menu {
@@ -315,6 +314,10 @@ public class Settings extends Menu {
         ed.putBoolean("SLEEP_NOTIFICATON", sleepNotificationValue);
         ed.putBoolean("WATER_NOTIFICATON", waterNotificationValue);
         ed.commit();
+
+        selectedPhase = phaseValue;
+        selectedDiet = dietTypeValue;
+
         Toast.makeText(this, "Settings saved", Toast.LENGTH_SHORT).show();
     }
 
