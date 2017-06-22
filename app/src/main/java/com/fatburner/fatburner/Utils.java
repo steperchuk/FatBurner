@@ -1,8 +1,12 @@
 package com.fatburner.fatburner;
 
+import android.util.ArrayMap;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import static com.fatburner.fatburner.GlobalVariables.PRODUCTS_COUNT;
 import static com.fatburner.fatburner.GlobalVariables.PRODUCTS_PAGES_COUNT;
 import static com.fatburner.fatburner.GlobalVariables.PRODUCTS;
 
@@ -50,7 +54,7 @@ public class Utils {
 
     public static void applyShemaProductsList(String Shema){
         List<String> lettersArray = new ArrayList<String>();
-
+        Map<String,Integer> productsCount = new ArrayMap<>();
         for(int i = 0; i < Shema.length(); i++){
             if(Character.isLetter(Shema.charAt(i)))
             {
@@ -58,8 +62,9 @@ public class Utils {
                 if(!l.equals("+"))
                 {
 
+                    int index = 0 + Character.getNumericValue(Shema.charAt(i-1));
                     lettersArray.add(l);
-                    //l = "";
+                    productsCount.put(l,index);
                 }
             }
         }
@@ -67,6 +72,7 @@ public class Utils {
         String products[] =  new String[lettersArray.size()];;
         products = lettersArray.toArray(products);
         PRODUCTS = products;
+        PRODUCTS_COUNT = productsCount;
     }
 
 }

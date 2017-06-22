@@ -25,6 +25,7 @@ import java.util.Queue;
 import java.util.Set;
 
 import static com.fatburner.fatburner.GlobalVariables.PRODUCTS;
+import static com.fatburner.fatburner.GlobalVariables.PRODUCTS_COUNT;
 import static com.fatburner.fatburner.GlobalVariables.dietListViewMode;
 
 
@@ -42,7 +43,7 @@ public class ProductsPageFragment extends Fragment{
     String[] names;
 
     LinkedList<Integer> queue = new LinkedList<Integer>();
-    int keyToRemove;
+    int maxItemsAllowed;
 
 
     static final String ARGUMENT_PAGE_NUMBER = "arg_page_number";
@@ -111,7 +112,7 @@ public class ProductsPageFragment extends Fragment{
         //загружаем списки
         loadLists(pageNumber, view);
 
-        final int maxItemsAllowed = 4;
+        //final int maxItemsAllowed = 4;
         lvMain.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
@@ -203,32 +204,29 @@ public class ProductsPageFragment extends Fragment{
         //"П", "К", "М", "Ф", "О", "Ж"
         switch (PRODUCTS[pageNumber]){
             case "П":
-                // получаем массив из файла ресурсов
+                if(!dietListViewMode){maxItemsAllowed = PRODUCTS_COUNT.get("П");}
                 adapter = ArrayAdapter.createFromResource(getActivity(), R.array.meat_fish_eggs, listLayout);
-                list = getResources().getStringArray(R.array.meat_fish_eggs);
                 break;
             case "К":
-                // получаем массив из файла ресурсов
+                if(!dietListViewMode){maxItemsAllowed = PRODUCTS_COUNT.get("К");}
                 adapter = ArrayAdapter.createFromResource(getActivity(), R.array.grain, listLayout);
-                list = getResources().getStringArray(R.array.grain);
                 break;
             case "М":
+                if(!dietListViewMode){maxItemsAllowed = PRODUCTS_COUNT.get("М");}
                 adapter = ArrayAdapter.createFromResource(getActivity(), R.array.milk, listLayout);
-                list = getResources().getStringArray(R.array.milk);
                 break;
             case "Ф":
+                if(!dietListViewMode){maxItemsAllowed = PRODUCTS_COUNT.get("Ф");}
                 adapter = ArrayAdapter.createFromResource(getActivity(), R.array.fruits, listLayout);
-                list = getResources().getStringArray(R.array.fruits);
                 break;
             case "О":
+                if(!dietListViewMode){maxItemsAllowed = PRODUCTS_COUNT.get("О");}
                 adapter = ArrayAdapter.createFromResource(getActivity(), R.array.nuts, listLayout);
-                list = getResources().getStringArray(R.array.nuts);
                 break;
             case "Ж":
+                if(!dietListViewMode){maxItemsAllowed = PRODUCTS_COUNT.get("Ж");}
                 adapter = ArrayAdapter.createFromResource(getActivity(), R.array.oils, listLayout);
-                list = getResources().getStringArray(R.array.oils);
                 break;
-            // etc.
         }
 
         lvMain.setAdapter(adapter);
