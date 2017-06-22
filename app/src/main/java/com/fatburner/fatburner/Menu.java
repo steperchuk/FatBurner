@@ -20,10 +20,6 @@ import static com.fatburner.fatburner.GlobalVariables.PRODUCTS_PAGES_COUNT;
 
 public class Menu extends AppCompatActivity {
 
-    SharedPreferences sPref;
-    String trainingId;
-    Set<String> trainingSet = new HashSet<>();
-
     public DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToogle;
     private NavigationView mNavigationView;
@@ -98,12 +94,10 @@ public class Menu extends AppCompatActivity {
                     intent = new Intent(Menu.this, Water.class);
                     startActivity(intent);
                     break;
-                /*
                 case R.id.nav_diet:
-                    intent = new Intent(Menu.this, Products.class);
+                    intent = new Intent(Menu.this, Diet.class);
                     startActivity(intent);
                     break;
-                    */
                 case R.id.nav_meal_calendar:
                     dietListViewMode = false;
                     intent = new Intent(Menu.this, MealCalendar.class);
@@ -123,14 +117,6 @@ public class Menu extends AppCompatActivity {
             }
         }
 
-        /*
-    public String loadTrainingId() {
-        sPref = getPreferences(MODE_PRIVATE);
-        trainingId = sPref.getString("selectedTraining", "");
-        trainingSet = sPref.getStringSet("training", null);
-        return trainingId;
-    }
-    */
 
     }
 
