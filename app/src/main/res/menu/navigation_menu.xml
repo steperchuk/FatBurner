@@ -33,10 +33,6 @@
         android:title="Products List"
         android:icon="@drawable/ic_dish"/>
 
-    <item android:id="@+id/nav_achivements"
-        android:title="My achievements"
-        android:icon="@mipmap/ic_trending_up_black_24dp"/>
-
     <item android:id="@+id/nav_settings"
         android:title="Settings"
         android:icon="@mipmap/ic_settings_black_24dp"/>

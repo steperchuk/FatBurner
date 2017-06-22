@@ -25,8 +25,6 @@
                   android:parentActivityName=".MainActivity"/>
         <activity android:name=".MealCalendar"
                   android:parentActivityName=".MainActivity"/>
-        <activity android:name=".MyAchivement"
-                  android:parentActivityName=".MainActivity"></activity>
         <activity android:name=".SelectedTraining"
             android:parentActivityName=".MainActivity"></activity>
         <activity android:name=".Exercise"

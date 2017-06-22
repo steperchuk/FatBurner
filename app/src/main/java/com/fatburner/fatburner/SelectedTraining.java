@@ -22,6 +22,10 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.fatburner.fatburner.GlobalVariables.LOAD_ARRAY;
+import static com.fatburner.fatburner.GlobalVariables.TRAINING;
+import static com.fatburner.fatburner.GlobalVariables.TRAINING_ID;
+
 /**
  * Created by sergeyteperchuk on 6/12/17.
  */
@@ -47,8 +51,10 @@ public class SelectedTraining extends Menu {
         mDrawerLayout.addView(contentView, 0);
 
         Intent intent = getIntent();
-        final int selectedTraining = Integer.valueOf(intent.getStringExtra("selectedTraining"));
-        loadArray = intent.getIntArrayExtra("percentCompleted");
+        final int selectedTraining = TRAINING_ID;
+        loadArray = LOAD_ARRAY;
+        //final int selectedTraining = Integer.valueOf(intent.getStringExtra("selectedTraining"));
+        //loadArray = intent.getIntArrayExtra("percentCompleted");
         trainingCompletionPercent = loadArray[selectedTraining];
 
         startButton = (DonutProgress) findViewById(R.id.start_btn);
@@ -91,8 +97,10 @@ public class SelectedTraining extends Menu {
                 public void onClick(View v) {
 
                     Intent intent = new Intent(SelectedTraining.this, Exercise.class);
-                    intent.putExtra("training", training);
+                    //intent.putExtra("training", training);
                     //saveSettings();
+                    TRAINING = training;
+                    TRAINING_ID = trainingId;
                     startActivity(intent);
                 }
             });

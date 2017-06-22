@@ -22,6 +22,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Handler;
 
+import static com.fatburner.fatburner.GlobalVariables.TRAINING;
+import static com.fatburner.fatburner.GlobalVariables.TRAINING_ID;
 import static java.lang.Thread.sleep;
 
 /**
@@ -45,9 +47,11 @@ public class Exercise extends Menu {
         View contentView = inflater.inflate(R.layout.activity_exercise, null, false);
         mDrawerLayout.addView(contentView, 0);
 
-        Intent intent = getIntent();
-        final String currentExercise[] = intent.getStringArrayExtra("training");
+        //Intent intent = getIntent();
+        //final String currentExercise[] = intent.getStringArrayExtra("training");
 
+        final String currentExercise[] = TRAINING;
+        int trainingId = TRAINING_ID;
         for (int i = 0; i < currentExercise.length; i++) {
             if (!currentExercise[i].equals(" ")) {
                 exercisesCount++;

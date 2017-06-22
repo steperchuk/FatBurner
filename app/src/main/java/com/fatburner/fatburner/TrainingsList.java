@@ -20,6 +20,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import static com.fatburner.fatburner.GlobalVariables.LOAD_ARRAY;
+import static com.fatburner.fatburner.GlobalVariables.TRAINING_ID;
+
 
 public class TrainingsList extends Menu {
 
@@ -82,8 +85,10 @@ public class TrainingsList extends Menu {
                 if(position != -1) {
                     Intent intent;
                     intent = new Intent(TrainingsList.this, SelectedTraining.class);
-                    intent.putExtra("selectedTraining", Integer.toString(position));
-                    intent.putExtra("percentCompleted", load);
+                    TRAINING_ID = position;
+                    LOAD_ARRAY = load;
+                    //intent.putExtra("selectedTraining", Integer.toString(position));
+                    //intent.putExtra("percentCompleted", load);
                     startActivity(intent);
                 }
             }

@@ -9,12 +9,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.github.lzyzsd.circleprogress.DonutProgress;
+
+import static com.fatburner.fatburner.GlobalVariables.LOAD_ARRAY;
+import static com.fatburner.fatburner.GlobalVariables.TRAINING_ID;
 
 public class MainActivity extends Menu {
 
     DonutProgress startButton;
+    TextView currentTraining;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,22 +31,31 @@ public class MainActivity extends Menu {
         mDrawerLayout.addView(contentView, 0);
 
 
+        currentTraining = (TextView) findViewById(R.id.current_training);
+        currentTraining.setText("Training: " + TRAINING_ID);
+
         startButton = (DonutProgress) findViewById(R.id.start_btn);
-        startButton.setText("Start");
         startAnimation();
+
+                if(TRAINING_ID == 0)
+                {startButton.setText("Start");}
+                else {
+                    if (LOAD_ARRAY[TRAINING_ID] > 0) {
+                        startButton.setText("Continue");
+                    }
+                }
 
         startButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                /*
-                if(startButton.getText().equals("Start"))
-                {startButton.setText("Done");}
-                else
-                {startButton.setText("Start");}
-                */
-
+                    if(TRAINING_ID == 0){
                     Intent intent = new Intent(MainActivity.this, MyPrograms.class);
-                    startActivity(intent);
+                    startActivity(intent);}
+                else{
+                        Intent intent = new Intent(MainActivity.this, Exercise.class);
+                        startActivity(intent);
+                }
+
 
             }
         });

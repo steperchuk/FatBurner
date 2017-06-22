@@ -8,9 +8,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import static com.fatburner.fatburner.GlobalVariables.TRAINING;
 import static com.fatburner.fatburner.GlobalVariables.dietListViewMode;
 import static com.fatburner.fatburner.GlobalVariables.PRODUCTS;
 import static com.fatburner.fatburner.GlobalVariables.PRODUCTS_PAGES_COUNT;
@@ -70,14 +73,37 @@ public class Menu extends AppCompatActivity {
             Intent intent;
             String products[] = {"П", "К", "М", "Ф", "О", "Ж"};
             switch (item.getItemId()) {
-                case R.id.nav_achivements:
-                    intent = new Intent(Menu.this, MyAchivement.class);
+                case R.id.nav_training:
+                    intent = new Intent(Menu.this, Exercise.class);
+                    if(TRAINING != null){
                     startActivity(intent);
+                    }
+                    else{
+                        Toast.makeText(this, "You need to select training firts", Toast.LENGTH_SHORT).show();
+                    }
                     break;
                 case R.id.nav_challange:
-                    intent = new Intent(Menu.this, TrainingsList.class);
+                    intent = new Intent(Menu.this, SelectedTraining.class);
                     startActivity(intent);
                     break;
+                case R.id.nav_programs:
+                    intent = new Intent(Menu.this, MyPrograms.class);
+                    startActivity(intent);
+                    break;
+                case R.id.nav_trainings_calendar:
+                    intent = new Intent(Menu.this, TrainingsCalendar.class);
+                    startActivity(intent);
+                    break;
+                case R.id.nav_water:
+                    intent = new Intent(Menu.this, Water.class);
+                    startActivity(intent);
+                    break;
+                /*
+                case R.id.nav_diet:
+                    intent = new Intent(Menu.this, Products.class);
+                    startActivity(intent);
+                    break;
+                    */
                 case R.id.nav_meal_calendar:
                     dietListViewMode = false;
                     intent = new Intent(Menu.this, MealCalendar.class);
@@ -90,34 +116,9 @@ public class Menu extends AppCompatActivity {
                     intent = new Intent(Menu.this, Products.class);
                     startActivity(intent);
                     break;
-                /*
-                case R.id.nav_diet:
-                    intent = new Intent(Menu.this, Products.class);
-                    startActivity(intent);
-                    break;
-                    */
-                case R.id.nav_programs:
-                    intent = new Intent(Menu.this, MyPrograms.class);
-                    startActivity(intent);
-                    break;
                 case R.id.nav_settings:
                     intent = new Intent(Menu.this, Settings.class);
                     startActivity(intent);
-                    break;
-                case R.id.nav_water:
-                    intent = new Intent(Menu.this, Water.class);
-                    startActivity(intent);
-                    break;
-                case R.id.nav_trainings_calendar:
-                    intent = new Intent(Menu.this, TrainingsCalendar.class);
-                    startActivity(intent);
-                    break;
-                case R.id.nav_training:
-                    //intent = new Intent(Menu.this, SelectedTraining.class);
-                    //intent.putExtra("selectedTraining", loadTrainingId());
-                    //String training[] = trainingSet.toArray(new String[trainingSet.size()]);
-                    //intent.putExtra("training", training);
-                    //startActivity(intent);
                     break;
             }
         }
