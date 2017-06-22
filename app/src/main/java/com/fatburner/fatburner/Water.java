@@ -52,7 +52,7 @@ public class Water extends Menu implements View.OnClickListener {
 
 
         waterProgress = (CircleProgress) findViewById(R.id.waterProgress);
-        waterProgress.setTextSize(36);
+        waterProgress.setTextSize(100);
 
 
 
@@ -68,13 +68,7 @@ public class Water extends Menu implements View.OnClickListener {
                 increment = (c * 100);
                 progress = progress + increment;
 
-                if(progress < 120 && progress > 100)
-                {
-                    waterProgress.setMax(Math.round(progress));
-                    waterProgress.setFinishedColor(R.color.Orange);
-                    waterProgress.setTextColor(Color.BLACK);
-                }
-                if(progress > 120)
+                if(progress > 130)
                 {
                     waterProgress.setMax(Math.round(progress));
                     waterProgress.setFinishedColor(Color.RED);

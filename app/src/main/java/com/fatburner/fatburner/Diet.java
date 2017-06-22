@@ -9,7 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
 
-import static com.fatburner.fatburner.MealCalendar.PAGE_COUNT;
+import static com.fatburner.fatburner.Diet.PAGE_COUNT;
 
 public class Diet extends FragmentActivity {
 
@@ -25,7 +25,7 @@ public class Diet extends FragmentActivity {
         setContentView(R.layout.activity_diet);
 
         pager = (ViewPager) findViewById(R.id.pager);
-        pagerAdapter = new MealCalendarPagerAdapter(getSupportFragmentManager());
+        pagerAdapter = new DietPagerAdapter(getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
 
         pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -84,7 +84,7 @@ class DietPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return MealCalendarPageFragment.newInstance(position);
+        return DietPageFragment.newInstance(position);
     }
 
     @Override

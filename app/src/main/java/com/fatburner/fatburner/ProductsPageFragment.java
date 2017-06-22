@@ -10,17 +10,25 @@ import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
 
 import static com.fatburner.fatburner.GlobalVariables.PRODUCTS;
 import static com.fatburner.fatburner.GlobalVariables.dietListViewMode;
 
 
-public class ProductsPageFragment extends Fragment implements View.OnClickListener {
+public class ProductsPageFragment extends Fragment{
 
     ArrayAdapter<CharSequence> adapter = null;
 
@@ -32,6 +40,9 @@ public class ProductsPageFragment extends Fragment implements View.OnClickListen
     TextView textView15;
     ListView lvMain;
     String[] names;
+
+    LinkedList<Integer> queue = new LinkedList<Integer>();
+    int keyToRemove;
 
 
     static final String ARGUMENT_PAGE_NUMBER = "arg_page_number";
@@ -100,6 +111,58 @@ public class ProductsPageFragment extends Fragment implements View.OnClickListen
         //загружаем списки
         loadLists(pageNumber, view);
 
+        final int maxItemsAllowed = 4;
+        lvMain.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                String productsList[] = {" "," "," "," "};
+
+                if (lvMain.isItemChecked(position)) {
+
+                    if(queue.size() < 1)
+                    {queue.add(position);}
+                    else{
+                        if(!queue.contains(position))
+                        {
+                            queue.add(position);
+                        }
+                    }
+
+                    if (queue.size() > maxItemsAllowed) {
+
+                        lvMain.setItemChecked(queue.get(0), false);
+
+                        for (int i = 0; i < queue.size() - 1; i++) {
+                            queue.set(i, queue.get(i + 1));
+                        }
+
+                        queue.remove(maxItemsAllowed);
+                    }
+                }
+
+                LinkedList<String> products = new LinkedList<String>();
+                SparseBooleanArray sbArray = lvMain.getCheckedItemPositions();
+                for (int i = 0; i < sbArray.size(); i++)
+                {
+                    int key = sbArray.keyAt(i);
+                    if (sbArray.get(key))
+                    {
+                        String itemValue = (String) lvMain.getItemAtPosition(key);
+                        products.add(itemValue);
+                    }
+                }
+
+                    for (int i = 0; i < products.size(); i++) {
+                        productsList[i] = products.get(i);
+                    }
+
+                    product1.setText(productsList[0]);
+                    product2.setText(productsList[1]);
+                    product3.setText(productsList[2]);
+                    product4.setText(productsList[3]);
+                }
+        });
+
         return view;
     }
 
@@ -114,6 +177,7 @@ public class ProductsPageFragment extends Fragment implements View.OnClickListen
         super.onDestroy();
     }
 
+    /*
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.lvSimple:
@@ -129,6 +193,7 @@ public class ProductsPageFragment extends Fragment implements View.OnClickListen
                 break;
         }
     }
+    */
 
     private void loadLists(int pageNumber, View view){
         String list[] = null;
@@ -168,6 +233,7 @@ public class ProductsPageFragment extends Fragment implements View.OnClickListen
 
         lvMain.setAdapter(adapter);
     }
+
 
     }
 

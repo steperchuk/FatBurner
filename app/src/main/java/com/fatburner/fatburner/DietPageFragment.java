@@ -35,8 +35,8 @@ public class DietPageFragment extends Fragment {
 
     int pageNumber;
 
-    static MealCalendarPageFragment newInstance(int page) {
-        MealCalendarPageFragment pageFragment = new MealCalendarPageFragment();
+    static DietPageFragment newInstance(int page) {
+        DietPageFragment pageFragment = new DietPageFragment();
         Bundle arguments = new Bundle();
         arguments.putInt(ARGUMENT_PAGE_NUMBER, page);
         pageFragment.setArguments(arguments);

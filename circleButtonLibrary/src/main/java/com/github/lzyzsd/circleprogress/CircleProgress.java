@@ -20,7 +20,7 @@ public class CircleProgress extends View {
     private Paint textPaint;
     private RectF rectF = new RectF();
 
-    private float textSize;
+    private float textSize = 36;
     private int textColor;
     private int progress = 0;
     private int max;
@@ -59,7 +59,7 @@ public class CircleProgress extends View {
     public CircleProgress(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        default_text_size = Utils.sp2px(getResources(), 36);
+        default_text_size = Utils.sp2px(getResources(), 100);
         min_size = (int) Utils.dp2px(getResources(), 100);
 
         final TypedArray attributes = context.getTheme().obtainStyledAttributes(attrs, R.styleable.CircleProgress, defStyleAttr, 0);
@@ -209,6 +209,7 @@ public class CircleProgress extends View {
         float startAngle = 90 + angle;
         float sweepAngle = 360 - angle * 2;
         paint.setColor(getUnfinishedColor());
+        paint.setTextSize(36);
         canvas.drawArc(rectF, startAngle, sweepAngle, false, paint);
 
         canvas.save();

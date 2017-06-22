@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:gravity="left"
-        android:layout_marginBottom="75dp"
+        android:layout_marginBottom="120dp"
         android:textAlignment="gravity"></ListView>
 
     <ImageButton
@@ -44,54 +44,47 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Выбраные продукты:"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="10dp"
-        android:layout_alignTop="@+id/applyBtn"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+
+        android:layout_above="@+id/product1"
+        android:layout_alignLeft="@+id/product1"
+        android:layout_alignStart="@+id/product1"
+        android:layout_marginBottom="1dp" />
 
     <TextView
         android:id="@+id/product1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_alignLeft="@+id/textView15"
-        android:layout_alignStart="@+id/textView15"
-        android:layout_below="@+id/textView15"
-        android:text="TextView" />
+        android:layout_above="@+id/applyBtn"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="1dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="5dp" />
 
     <TextView
         android:id="@+id/product2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
         android:layout_alignLeft="@+id/product1"
         android:layout_alignStart="@+id/product1"
-        android:layout_below="@+id/product1"
-        android:text="TextView"
-        android:layout_alignRight="@+id/product1"
-        android:layout_alignEnd="@+id/product1" />
+        android:layout_below="@+id/product1" />
 
     <TextView
         android:id="@+id/product3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp"
-        android:text="TextView"
-        android:layout_alignBaseline="@+id/product1"
-        android:layout_alignBottom="@+id/product1"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignLeft="@+id/product2"
+        android:layout_alignStart="@+id/product2"
+        android:layout_below="@+id/product2" />
 
     <TextView
         android:id="@+id/product4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
         android:layout_alignLeft="@+id/product3"
         android:layout_alignStart="@+id/product3"
-        android:layout_alignTop="@+id/product2"
-        android:text="TextView" />
+        android:layout_below="@+id/product3" />
 
 
 </RelativeLayout>
