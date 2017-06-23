@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:id="@+id/productsList"
+        android:layout_marginBottom="120dp"
+        android:paddingLeft="10sp">
+
+        <TextView
+            android:id="@+id/productsName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/productWeight"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:autoLink="web"
+            android:gravity="center"
+            android:textSize="15sp" />
+        <TextView
+            android:id="@+id/productCaloricity"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:autoLink="web"
+            android:gravity="right"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

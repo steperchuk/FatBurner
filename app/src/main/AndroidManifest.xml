@@ -26,7 +26,7 @@
         <activity android:name=".MealCalendar"
                   android:parentActivityName=".MainActivity"/>
         <activity android:name=".SelectedTraining"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".TrainingsList"></activity>
         <activity android:name=".Exercise"
             android:parentActivityName=".MainActivity"></activity>
         <activity android:name=".TrainingCompleted"

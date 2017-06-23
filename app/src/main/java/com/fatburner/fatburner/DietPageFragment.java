@@ -25,6 +25,7 @@ import static com.fatburner.fatburner.GlobalVariables.dietListViewMode;
 import static com.fatburner.fatburner.GlobalVariables.selectedDiet;
 import static com.fatburner.fatburner.GlobalVariables.selectedPhase;
 import static com.fatburner.fatburner.R.id.textView;
+import static com.fatburner.fatburner.R.id.view;
 
 
 public class DietPageFragment extends Fragment {
@@ -32,6 +33,12 @@ public class DietPageFragment extends Fragment {
 
     static final String ARGUMENT_PAGE_NUMBER = "arg_page_number";
     static final String SAVE_PAGE_NUMBER = "save_page_number";
+
+    TextView meal1;
+    TextView meal2;
+    TextView meal3;
+    TextView meal4;
+    TextView meal5;
 
     int pageNumber;
 
@@ -54,14 +61,25 @@ public class DietPageFragment extends Fragment {
             savedPageNumber = savedInstanceState.getInt(SAVE_PAGE_NUMBER);
         }
 
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.diet_fragment, null);
+
+        meal1 = (TextView) view.findViewById(R.id.meal1);
+        meal2 = (TextView) view.findViewById(R.id.meal2);
+        meal3 = (TextView) view.findViewById(R.id.meal3);
+        meal4 = (TextView) view.findViewById(R.id.meal4);
+        meal5 = (TextView) view.findViewById(R.id.meal5);
+
+        String productsList = "Product 1 \n Product2 \n Product3  \n Product4  \n Product5";
+        meal1.setText(productsList);
+        meal2.setText(productsList);
+        meal3.setText(productsList);
+        meal4.setText(productsList);
+        meal5.setText(productsList);
 
 
         return view;

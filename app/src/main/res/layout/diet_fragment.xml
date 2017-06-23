@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,116 +13,134 @@
         android:id="@+id/getTotalItemsList"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginEnd="11dp"
-        android:layout_marginRight="11dp"
+        android:layout_marginEnd="13dp"
+        android:layout_marginRight="13dp"
         android:background="@color/White"
         android:shadowColor="#45A9D4"
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        android:src="@mipmap/ic_list_black_24dp"
+        android:src = "@drawable/ic_list"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="16dp" />
 
     <TextView
-        android:id="@+id/breakfestLbl"
+        android:id="@+id/textView19"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/getTotalItemsList"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="18dp"
-        android:layout_marginStart="18dp"
+        android:layout_centerHorizontal="true"
         android:text="Завтрак"
-        android:textAlignment="viewStart"
-        android:textAllCaps="false" />
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/meal1product1"
-        android:layout_width="110dp"
+        android:id="@+id/meal1"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/breakfestLbl"
-        android:layout_alignStart="@+id/breakfestLbl"
-        android:layout_below="@+id/breakfestLbl"
-        android:layout_marginTop="12dp"
+        android:layout_below="@+id/textView19"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:lines="6"
         android:text="TextView"
-        android:textAlignment="viewStart"
-        android:textSize="12sp" />
+        android:textAlignment="center" />
 
     <TextView
-        android:id="@+id/meal1product2"
-        android:layout_width="110dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/meal1product1"
-        android:layout_alignStart="@+id/meal1product1"
-        android:layout_below="@+id/meal1product1"
-        android:layout_marginTop="13dp"
-        android:text="TextView"
-        android:textAlignment="viewStart"
-        android:textSize="12sp" />
-
-    <TextView
-        android:id="@+id/meal1product3"
-        android:layout_width="110dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/meal1product1"
-        android:layout_alignBottom="@+id/meal1product1"
-        android:layout_marginLeft="14dp"
-        android:layout_marginStart="14dp"
-        android:layout_toEndOf="@+id/meal1product1"
-        android:layout_toRightOf="@+id/meal1product1"
-        android:text="TextView"
-        android:textAlignment="viewStart"
-        android:textSize="12sp" />
-
-    <TextView
-        android:id="@+id/meal1product4"
-        android:layout_width="110dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/meal1product2"
-        android:layout_alignBottom="@+id/meal1product2"
-        android:layout_alignLeft="@+id/meal1product3"
-        android:layout_alignStart="@+id/meal1product3"
-        android:text="TextView"
-        android:textAlignment="viewStart"
-        android:textSize="12sp" />
-
-    <TextView
-        android:id="@+id/meal1product5"
-        android:layout_width="110dp"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textAlignment="viewStart"
-        android:textSize="12sp"
-        android:layout_alignBaseline="@+id/meal1product3"
-        android:layout_alignBottom="@+id/meal1product3"
-        android:layout_alignRight="@+id/getTotalItemsList"
-        android:layout_alignEnd="@+id/getTotalItemsList" />
-
-    <TextView
-        android:id="@+id/meal1product6"
-        android:layout_width="110dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/meal1product4"
-        android:layout_alignBottom="@+id/meal1product4"
-        android:layout_alignLeft="@+id/meal1product5"
-        android:layout_alignStart="@+id/meal1product5"
-        android:text="TextView"
-        android:textAlignment="viewStart"
-        android:textSize="12sp" />
-
-    <TextView
-        android:id="@+id/secondBreakfestLbl"
+        android:id="@+id/textView20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/meal1product2"
-        android:layout_alignStart="@+id/meal1product2"
-        android:layout_below="@+id/meal1product2"
-        android:layout_marginTop="15dp"
+        android:layout_below="@+id/meal1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
         android:text="Перекус"
-        android:textAlignment="viewStart" />
-    
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/meal2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView20"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:lines="6"
+        android:text="TextView"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/meal2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:text="Обед"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/meal3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView21"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:lines="6"
+        android:text="TextView"
+        android:textAlignment="center"/>
+
+    <TextView
+        android:id="@+id/textView22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/meal3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:text="Перекус"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/meal4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView22"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:lines="6"
+        android:text="TextView"
+        android:textAlignment="center"/>
+
+    <TextView
+        android:id="@+id/textView23"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/meal4"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:text="Ужин"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/meal5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView23"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:lines="4"
+        android:text="TextView"
+        android:textAlignment="center"/>
+
 </RelativeLayout>
+</ScrollView>

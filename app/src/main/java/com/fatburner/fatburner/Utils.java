@@ -16,41 +16,6 @@ import static com.fatburner.fatburner.GlobalVariables.PRODUCTS;
 
 public class Utils {
 
-    //static List<String> numsArray;
-    //static List<String> lettersArray;
-    //static Map<String,String> shema;
-
-    /*
-    public static Map<String,String> normalizeSelectedShema(String Shema){
-        PRODUCTS = null;
-        char[] charArray = Shema.toCharArray();
-        String d = "";
-        String l = "";
-        for(int i = 0; i < charArray.length; i++){
-            if(Character.isDigit(Shema.charAt(i)))
-            {
-                d = "" + Shema.charAt(i);
-                numsArray.add(d);
-            }
-            if(Character.isLetter(Shema.charAt(i)))
-            {
-                l = "" + Shema.charAt(i);
-                if(!l.equals("+"))
-                {lettersArray.add(l);l = "";}
-            }
-        }
-
-
-        for (int i = 0; i < numsArray.size()-1; i++){
-            shema.put(lettersArray.get(i), numsArray.get(i));
-            PRODUCTS[i] = lettersArray.get(i);
-        }
-
-        PRODUCTS_PAGES_COUNT = lettersArray.size();
-
-        return shema;
-    }
-    */
 
     public static void applyShemaProductsList(String Shema){
         List<String> lettersArray = new ArrayList<String>();
@@ -75,4 +40,36 @@ public class Utils {
         PRODUCTS_COUNT = productsCount;
     }
 
+
+    //Пшеничная каша      - 60гр  - 81Ккал
+
+    public static ArrayList<ArrayList<String>> normalizeProductsList(String[] array)
+    {
+        ArrayList<String> productNames = new ArrayList<>();
+        ArrayList<String> productWeights = new ArrayList<>();
+        ArrayList<String> productCaloricitys = new ArrayList<>();
+
+        ArrayList<ArrayList<String>> parsedproductsList = new ArrayList<ArrayList<String>>();
+
+        for (int i=0; i< array.length; i++) {
+            String arrayItem = array[i];
+
+            arrayItem = arrayItem.trim();
+            String productName = arrayItem.substring(0, arrayItem.indexOf("-"));
+            arrayItem = arrayItem.replace(productName + "-", "");
+            String productWeight = arrayItem.substring(0, arrayItem.indexOf("-"));
+            arrayItem = arrayItem.replace(productName + "-", "");
+            String productCaloricity = arrayItem.substring(0, arrayItem.indexOf("-"));
+
+            productNames.add(productName);
+            productWeights.add(productWeight);
+            productCaloricitys.add(productCaloricity);
+        }
+
+        parsedproductsList.add(productNames);
+        parsedproductsList.add(productWeights);
+        parsedproductsList.add(productCaloricitys);
+
+        return parsedproductsList;
+    }
 }

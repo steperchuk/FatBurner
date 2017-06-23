@@ -24,6 +24,10 @@ public class Diet extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diet);
 
+
+
+
+
         pager = (ViewPager) findViewById(R.id.pager);
         pagerAdapter = new DietPagerAdapter(getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
