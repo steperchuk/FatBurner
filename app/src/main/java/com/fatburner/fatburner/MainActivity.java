@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.github.lzyzsd.circleprogress.DonutProgress;
@@ -19,7 +20,10 @@ import static com.fatburner.fatburner.GlobalVariables.TRAINING_ID;
 public class MainActivity extends Menu {
 
     DonutProgress startButton;
+    ImageButton playerButton;
     TextView currentTraining;
+
+    boolean playerStarted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,7 @@ public class MainActivity extends Menu {
         View contentView = inflater.inflate(R.layout.activity_main, null, false);
         mDrawerLayout.addView(contentView, 0);
 
+        playerButton = (ImageButton) findViewById(R.id.music_btn);
 
         currentTraining = (TextView) findViewById(R.id.current_training);
         currentTraining.setText("Training: " + TRAINING_ID);
@@ -57,6 +62,21 @@ public class MainActivity extends Menu {
                 }
 
 
+            }
+        });
+
+        playerButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if(!playerStarted)
+                {
+                    playerButton.setImageResource(R.drawable.ic_play_button);
+                    //invoke player here
+                }
+                else
+                    {
+                    //stop playing here
+                        playerButton.setImageResource(R.drawable.ic_pause_button);
+                    }
             }
         });
 
