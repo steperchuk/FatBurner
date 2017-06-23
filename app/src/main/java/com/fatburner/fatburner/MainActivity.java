@@ -4,7 +4,10 @@ import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
@@ -14,6 +17,8 @@ import android.widget.TextView;
 
 import com.github.lzyzsd.circleprogress.DonutProgress;
 
+import java.io.IOException;
+
 import static com.fatburner.fatburner.GlobalVariables.LOAD_ARRAY;
 import static com.fatburner.fatburner.GlobalVariables.TRAINING_ID;
 
@@ -22,6 +27,10 @@ public class MainActivity extends Menu {
     DonutProgress startButton;
     ImageButton playerButton;
     TextView currentTraining;
+
+    final String DATA_SD = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC) + "/music.mp3";
+    MediaPlayer mediaPlayer;
+    AudioManager am;
 
     boolean playerStarted = false;
 
@@ -65,22 +74,60 @@ public class MainActivity extends Menu {
             }
         });
 
+        am = (AudioManager) getSystemService(AUDIO_SERVICE);
+
+
         playerButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(!playerStarted)
-                {
+                releaseMP();
+            try {
+                if (!playerStarted) {
                     playerButton.setImageResource(R.drawable.ic_play_button);
-                    //invoke player here
+                    mediaPlayer = new MediaPlayer();
+                    mediaPlayer.setDataSource(DATA_SD);
+                    mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                    mediaPlayer.prepare();
+                    mediaPlayer.start();
                 }
-                else
-                    {
-                    //stop playing here
-                        playerButton.setImageResource(R.drawable.ic_pause_button);
-                    }
+
+                else {
+                    if (mediaPlayer.isPlaying())
+                        mediaPlayer.pause();
+                    playerButton.setImageResource(R.drawable.ic_pause_button);
+                }
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (mediaPlayer == null)
+                return;
             }
         });
 
+    }
 
+
+    protected void onPrepared(MediaPlayer mp) {
+
+        mp.start();
+    }
+    
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        releaseMP();
+    }
+
+    private void releaseMP() {
+        if (mediaPlayer != null) {
+            try {
+                mediaPlayer.release();
+                mediaPlayer = null;
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     void startAnimation ( ) {
