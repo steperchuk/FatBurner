@@ -38,6 +38,7 @@ public class Exercise extends Menu {
     float progress = 0;
     float exercisesCount = 0;
     DonutProgress doneBtn;
+    boolean animationFinished = true;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +76,8 @@ public class Exercise extends Menu {
         doneBtn.setProgress(progress);
         doneBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startAnimation(true);
+                if(animationFinished) {
+                    startAnimation(true);
                     if (!currentExercise[i].equals(" ")) {
                         exerciseLabel.setText(currentExercise[i]);
                         progress = progress + 100 / exercisesCount;
@@ -86,6 +88,7 @@ public class Exercise extends Menu {
                         Intent intent = new Intent(Exercise.this, TrainingCompleted.class);
                         startActivity(intent);
                     }
+                }
 
             }
         });
@@ -100,11 +103,12 @@ public class Exercise extends Menu {
             if (!timer) {
                 set.start();
             } else {
-                int counter = 0;
+                animationFinished = false;
                 new CountDownTimer(relaxTime, 1000) {
                     int counter = 0;
                     public void onFinish() {
-                        doneBtn.setText("Start");
+                        doneBtn.setText("Done");
+                        animationFinished = true;
                     }
 
                     public void onTick(long millisUntilFinished) {
