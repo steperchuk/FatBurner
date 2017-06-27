@@ -74,7 +74,7 @@ public class DietPageFragment extends Fragment {
         meal4 = (TextView) view.findViewById(R.id.meal4);
         meal5 = (TextView) view.findViewById(R.id.meal5);
 
-        String productsList = "Product 1 \n Product2 \n Product3  \n Product4  \n Product5";
+        String productsList = "Product 1 \nProduct2 \nProduct3  \nProduct4  \nProduct5";
         meal1.setText(productsList);
         meal2.setText(productsList);
         meal3.setText(productsList);

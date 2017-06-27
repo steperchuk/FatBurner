@@ -36,7 +36,7 @@
         android:layout_centerHorizontal="true"
         android:text="Завтрак"
         android:textAlignment="center"
-        android:textSize="16sp"
+        android:textSize="24sp"
         android:textStyle="bold" />
 
     <TextView
@@ -48,7 +48,8 @@
         android:layout_marginTop="5dp"
         android:lines="6"
         android:text="TextView"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/textView20"
@@ -59,7 +60,7 @@
         android:layout_marginTop="5dp"
         android:text="Перекус"
         android:textAlignment="center"
-        android:textSize="16sp"
+        android:textSize="24sp"
         android:textStyle="bold" />
 
     <TextView
@@ -71,6 +72,7 @@
         android:layout_marginTop="5dp"
         android:lines="6"
         android:text="TextView"
+        android:textSize="18sp"
         android:textAlignment="center" />
 
     <TextView
@@ -82,7 +84,7 @@
         android:layout_marginTop="5dp"
         android:text="Обед"
         android:textAlignment="center"
-        android:textSize="16sp"
+        android:textSize="24sp"
         android:textStyle="bold" />
 
     <TextView
@@ -94,6 +96,7 @@
         android:layout_marginTop="5dp"
         android:lines="6"
         android:text="TextView"
+        android:textSize="18sp"
         android:textAlignment="center"/>
 
     <TextView
@@ -105,7 +108,7 @@
         android:layout_marginTop="5dp"
         android:text="Перекус"
         android:textAlignment="center"
-        android:textSize="16sp"
+        android:textSize="26sp"
         android:textStyle="bold" />
 
     <TextView
@@ -117,6 +120,7 @@
         android:layout_marginTop="5dp"
         android:lines="6"
         android:text="TextView"
+        android:textSize="18sp"
         android:textAlignment="center"/>
 
     <TextView
@@ -128,7 +132,7 @@
         android:layout_marginTop="5dp"
         android:text="Ужин"
         android:textAlignment="center"
-        android:textSize="16sp"
+        android:textSize="24sp"
         android:textStyle="bold" />
 
     <TextView
@@ -140,6 +144,7 @@
         android:layout_marginTop="5dp"
         android:lines="4"
         android:text="TextView"
+        android:textSize="18sp"
         android:textAlignment="center"/>
 
 </RelativeLayout>

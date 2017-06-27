@@ -18,7 +18,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -47,21 +46,11 @@ public class ProductsPageFragment extends Fragment{
     int maxItemsAllowed;
 
 
-    //
-    ListViewAdapter lviewAdapter;
-
-    String productNames[] = {"a", "b", "c"};
-    String productWeights[] = {"1", "2", "3"};
-    String productCals[] = {"444", "555", "666"};
-
-    //
-
-
     static final String ARGUMENT_PAGE_NUMBER = "arg_page_number";
     static final String SAVE_PAGE_NUMBER = "save_page_number";
 
     int pageNumber;
-    int listLayout = R.layout.products_list;
+    int listLayout = android.R.layout.simple_list_item_multiple_choice;
 
     static ProductsPageFragment newInstance(int page) {
         ProductsPageFragment pageFragment = new ProductsPageFragment();
@@ -90,9 +79,6 @@ public class ProductsPageFragment extends Fragment{
         View view = inflater.inflate(R.layout.products_fragment, null);
 
         lvMain = (ListView) view.findViewById(R.id.lvSimple);
-
-        //lvMain.setAdapter(lviewAdapter);
-
         applyButton = (ImageButton) view.findViewById(R.id.applyBtn);
         product1 = (TextView) view.findViewById(R.id.product1);
         product2 = (TextView) view.findViewById(R.id.product2);
@@ -117,7 +103,7 @@ public class ProductsPageFragment extends Fragment{
                     RelativeLayout.LayoutParams.MATCH_PARENT
             );
             params.setMargins(0, 0, 0, 0); //left,top,right,bottom
-            listLayout = R.layout.products_list;
+            listLayout = android.R.layout.simple_list_item_1;
             lvMain.setChoiceMode(ListView.CHOICE_MODE_NONE);
             lvMain.setLayoutParams(params);
         }
@@ -163,10 +149,6 @@ public class ProductsPageFragment extends Fragment{
                     if (sbArray.get(key))
                     {
                         String itemValue = (String) lvMain.getItemAtPosition(key);
-                        //potential crash
-                        //potential fix below
-                        //TextView textView = (TextView) view.findViewById(R.id.productsName);
-                        //String itemValue = textView.getText().toString();
                         products.add(itemValue);
                     }
                 }
@@ -215,7 +197,7 @@ public class ProductsPageFragment extends Fragment{
     */
 
     private void loadLists(int pageNumber, View view){
-        ArrayList<ArrayList<String>> list = null;
+        String list[] = null;
         // устанавливаем режим выбора пунктов списка
         lvMain.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         // Создаем адаптер, используя массив из файла ресурсов
@@ -223,68 +205,31 @@ public class ProductsPageFragment extends Fragment{
         switch (PRODUCTS[pageNumber]){
             case "П":
                 if(!dietListViewMode){maxItemsAllowed = PRODUCTS_COUNT.get("П");}
-                //new <code>
-                list = Utils.normalizeProductsList(getResources().getStringArray(R.array.meat_fish_eggs));
-                productNames = list.get(0).toArray(new String[0]);
-                productWeights = list.get(1).toArray(new String[0]);
-                productCals = list.get(2).toArray(new String[0]);
-                lviewAdapter = new ListViewAdapter(getActivity(), productNames, productWeights, productCals); //newCode
-                //adapter = ArrayAdapter.createFromResource(getActivity(), R.array.meat_fish_eggs, listLayout);
+                adapter = ArrayAdapter.createFromResource(getActivity(), R.array.meat_fish_eggs, listLayout);
                 break;
             case "К":
                 if(!dietListViewMode){maxItemsAllowed = PRODUCTS_COUNT.get("К");}
-                //new code
-                list = Utils.normalizeProductsList(getResources().getStringArray(R.array.grain));
-                productNames = list.get(0).toArray(new String[0]);
-                productWeights = list.get(1).toArray(new String[0]);
-                productCals = list.get(2).toArray(new String[0]);
-                lviewAdapter = new ListViewAdapter(getActivity(), productNames, productWeights, productCals);
-                //adapter = ArrayAdapter.createFromResource(getActivity(), R.array.grain, listLayout);
+                adapter = ArrayAdapter.createFromResource(getActivity(), R.array.grain, listLayout);
                 break;
             case "М":
                 if(!dietListViewMode){maxItemsAllowed = PRODUCTS_COUNT.get("М");}
-                //new code
-                list = Utils.normalizeProductsList(getResources().getStringArray(R.array.milk));
-                productNames = list.get(0).toArray(new String[0]);
-                productWeights = list.get(1).toArray(new String[0]);
-                productCals = list.get(2).toArray(new String[0]);
-                lviewAdapter = new ListViewAdapter(getActivity(), productNames, productWeights, productCals);
-                //adapter = ArrayAdapter.createFromResource(getActivity(), R.array.milk, listLayout);
+                adapter = ArrayAdapter.createFromResource(getActivity(), R.array.milk, listLayout);
                 break;
             case "Ф":
                 if(!dietListViewMode){maxItemsAllowed = PRODUCTS_COUNT.get("Ф");}
-                //new code
-                list = Utils.normalizeProductsList(getResources().getStringArray(R.array.fruits));
-                productNames = list.get(0).toArray(new String[0]);
-                productWeights = list.get(1).toArray(new String[0]);
-                productCals = list.get(2).toArray(new String[0]);
-                lviewAdapter = new ListViewAdapter(getActivity(), productNames, productWeights, productCals);
-                //adapter = ArrayAdapter.createFromResource(getActivity(), R.array.fruits, listLayout);
+                adapter = ArrayAdapter.createFromResource(getActivity(), R.array.fruits, listLayout);
                 break;
             case "О":
                 if(!dietListViewMode){maxItemsAllowed = PRODUCTS_COUNT.get("О");}
-                //new code
-                list = Utils.normalizeProductsList(getResources().getStringArray(R.array.nuts));
-                productNames = list.get(0).toArray(new String[0]);
-                productWeights = list.get(1).toArray(new String[0]);
-                productCals = list.get(2).toArray(new String[0]);
-                lviewAdapter = new ListViewAdapter(getActivity(), productNames, productWeights, productCals);
-                //adapter = ArrayAdapter.createFromResource(getActivity(), R.array.nuts, listLayout);
+                adapter = ArrayAdapter.createFromResource(getActivity(), R.array.nuts, listLayout);
                 break;
             case "Ж":
                 if(!dietListViewMode){maxItemsAllowed = PRODUCTS_COUNT.get("Ж");}
-                //new code
-                list = Utils.normalizeProductsList(getResources().getStringArray(R.array.oils));
-                productNames = list.get(0).toArray(new String[0]);
-                productWeights = list.get(1).toArray(new String[0]);
-                productCals = list.get(2).toArray(new String[0]);
-                lviewAdapter = new ListViewAdapter(getActivity(), productNames, productWeights, productCals);
-                //adapter = ArrayAdapter.createFromResource(getActivity(), R.array.oils, listLayout);
+                adapter = ArrayAdapter.createFromResource(getActivity(), R.array.oils, listLayout);
                 break;
         }
 
-        lvMain.setAdapter(lviewAdapter);
-        //lvMain.setAdapter(adapter);
+        lvMain.setAdapter(adapter);
     }
 
 
