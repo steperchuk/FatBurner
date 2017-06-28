@@ -211,12 +211,12 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_above="@+id/lunchLabel"
-        android:textSize="18sp"
-        android:layout_marginTop="21dp"
         android:layout_alignLeft="@+id/secondBreakfestLabel"
         android:layout_alignStart="@+id/secondBreakfestLabel"
+        android:layout_marginTop="21dp"
         android:layout_toLeftOf="@+id/secondBreakfestTime"
-        android:layout_toStartOf="@+id/secondBreakfestTime" />
+        android:layout_toStartOf="@+id/secondBreakfestTime"
+        android:textSize="18sp" />
 
     <Spinner
         android:id="@+id/lunchShema"

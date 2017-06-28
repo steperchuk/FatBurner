@@ -3,6 +3,7 @@ package com.fatburner.fatburner;
 import android.util.ArrayMap;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -71,5 +72,29 @@ public class Utils {
         parsedproductsList.add(productCaloricitys);
 
         return parsedproductsList;
+    }
+
+    public static String[] normalizeProductsList(Map<Integer, List<String>> listOfProducts){
+
+        ArrayList<List<String>> list = new ArrayList<List<String>>();
+        List<String> normalizedList = new ArrayList<String>();
+        List<String> l = new ArrayList<String>();
+
+        for(int i = 0; i< listOfProducts.size(); i++){
+            list.add(listOfProducts.get(i));
+        }
+
+        for (int i = 0; i < list.size(); i++){
+            l = list.get(i);
+
+            for (String item : l) {
+                if(!item.equals(" ")){
+                    normalizedList.add(item);
+                }
+            }
+        }
+
+       return  normalizedList.toArray(new String[0]);
+
     }
 }

@@ -4,6 +4,7 @@ package com.fatburner.fatburner;
  * Created by sete on 6/15/2017.
  */
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.SparseBooleanArray;
@@ -18,8 +19,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
@@ -27,6 +31,10 @@ import java.util.Set;
 import static com.fatburner.fatburner.GlobalVariables.PRODUCTS;
 import static com.fatburner.fatburner.GlobalVariables.PRODUCTS_COUNT;
 import static com.fatburner.fatburner.GlobalVariables.dietListViewMode;
+import static com.fatburner.fatburner.GlobalVariables.listOfProducts;
+import static com.fatburner.fatburner.GlobalVariables.selectedDayId;
+import static com.fatburner.fatburner.GlobalVariables.selectedMealId;
+import static com.fatburner.fatburner.GlobalVariables.globalProductsMap;
 
 
 public class ProductsPageFragment extends Fragment{
@@ -44,6 +52,11 @@ public class ProductsPageFragment extends Fragment{
 
     LinkedList<Integer> queue = new LinkedList<Integer>();
     int maxItemsAllowed;
+
+    int day = selectedDayId;
+    int mealId = selectedMealId;
+
+    List<String> listP;
 
 
     static final String ARGUMENT_PAGE_NUMBER = "arg_page_number";
@@ -91,6 +104,7 @@ public class ProductsPageFragment extends Fragment{
         //false -  simple (w/o buttons)
         //.setVisibility(View.GONE);
         //.setVisibility(View.VISIBLE);
+
         if(dietListViewMode){
             textView15.setVisibility(View.GONE);
             applyButton.setVisibility(View.GONE);
@@ -157,15 +171,38 @@ public class ProductsPageFragment extends Fragment{
                         productsList[i] = products.get(i);
                     }
 
-                    product1.setText(productsList[0]);
+                    product1.setText(productsList[0].replace("\\n","").replace("\n",""));
                     product2.setText(productsList[1]);
                     product3.setText(productsList[2]);
                     product4.setText(productsList[3]);
+
+                    listP = Arrays.asList(product1.getText().toString(),product2.getText().toString(),
+                        product3.getText().toString(),product4.getText().toString());
+
+                pageNumber = getArguments().getInt(ARGUMENT_PAGE_NUMBER);
+                listOfProducts.put(pageNumber, listP);
                 }
+        });
+
+       ;
+
+        applyButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String normalizedList[] = Utils.normalizeProductsList(listOfProducts);
+                Map<Integer, String[]> mealProducts = new HashMap<Integer, String[]>();
+                Map<Integer, Map<Integer, String[]>> productsMap = new HashMap<Integer, Map<Integer, String[]>>();
+
+                mealProducts.put(mealId, normalizedList);
+                productsMap.put(day,mealProducts);
+                globalProductsMap = productsMap; // filling diet
+                getActivity().onBackPressed();
+            }
         });
 
         return view;
     }
+
+
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -178,23 +215,6 @@ public class ProductsPageFragment extends Fragment{
         super.onDestroy();
     }
 
-    /*
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.lvSimple:
-                //code to restrict selection
-
-                SparseBooleanArray sbArray = lvMain.getCheckedItemPositions();
-                for (int i = 0; i < sbArray.size(); i++) {
-                    int key = sbArray.keyAt(i);
-                    if (sbArray.get(key))
-                        product1.setText(names[key]);
-                }
-
-                break;
-        }
-    }
-    */
 
     private void loadLists(int pageNumber, View view){
         String list[] = null;
@@ -231,7 +251,6 @@ public class ProductsPageFragment extends Fragment{
 
         lvMain.setAdapter(adapter);
     }
-
 
     }
 

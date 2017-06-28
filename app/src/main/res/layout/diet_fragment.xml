@@ -46,7 +46,7 @@
         android:layout_below="@+id/textView19"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
-        android:lines="6"
+        android:lines="8"
         android:text="TextView"
         android:textAlignment="center"
         android:textSize="18sp" />

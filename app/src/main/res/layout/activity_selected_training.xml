@@ -180,9 +180,7 @@
         android:textSize="20sp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/exercise_10"
-        android:layout_alignEnd="@+id/exercise_10" />
+        android:layout_alignParentStart="true"/>
 
     <TextView
         android:id="@+id/scoreLabel"

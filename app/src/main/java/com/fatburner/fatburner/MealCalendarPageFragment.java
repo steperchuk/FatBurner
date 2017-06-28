@@ -23,6 +23,8 @@ import static com.fatburner.fatburner.GlobalVariables.PRODUCTS_PAGES_COUNT;
 import static com.fatburner.fatburner.GlobalVariables.dietListViewMode;
 import static com.fatburner.fatburner.GlobalVariables.selectedDiet;
 import static com.fatburner.fatburner.GlobalVariables.selectedPhase;
+import static com.fatburner.fatburner.GlobalVariables.selectedDayId;
+import static com.fatburner.fatburner.GlobalVariables.selectedMealId;
 
 
 public class MealCalendarPageFragment extends Fragment implements View.OnClickListener {
@@ -235,6 +237,11 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
         Calendar calendar = Calendar.getInstance();
         dietListViewMode = false;
         String shema = null;
+
+        pageNumber = getArguments().getInt(ARGUMENT_PAGE_NUMBER);
+        selectedDayId = pageNumber;
+        intent = new Intent(getActivity(), Products.class);
+
         switch (v.getId()){
             case R.id.breakfestTime:
                 new TimePickerDialog(getActivity(), onStartTimeListener, calendar
@@ -264,36 +271,36 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
             case R.id.breakfestBtn:
                 //code for defining parameters of view
                 shema = breakfestShema.getSelectedItem().toString();
+                selectedMealId = 0;
                 Utils.applyShemaProductsList(shema);
-                intent = new Intent(getActivity(), Products.class);
                 startActivity(intent);
                 break;
             case R.id.secondBreakfestBtn:
                 //code for defining parameters of view
                 shema = secondBreakfestShema.getSelectedItem().toString();
+                selectedMealId = 1;
                 Utils.applyShemaProductsList(shema);
-                intent = new Intent(getActivity(), Products.class);
                 startActivity(intent);
                 break;
             case R.id.lunchBtn:
                 //code for defining parameters of view
                 shema = lunchShema.getSelectedItem().toString();
+                selectedMealId = 2;
                 Utils.applyShemaProductsList(shema);
-                intent = new Intent(getActivity(), Products.class);
                 startActivity(intent);
                 break;
             case R.id.secondLunchBtn:
                 //code for defining parameters of view
                 shema = secondLunchShema.getSelectedItem().toString();
+                selectedMealId = 3;
                 Utils.applyShemaProductsList(shema);
-                intent = new Intent(getActivity(), Products.class);
                 startActivity(intent);
                 break;
             case R.id.dinnerBtn:
                 //code for defining parameters of view
                 shema = dinnerShema.getSelectedItem().toString();
+                selectedMealId = 4;
                 Utils.applyShemaProductsList(shema);
-                intent = new Intent(getActivity(), Products.class);
                 startActivity(intent);
                 break;
 

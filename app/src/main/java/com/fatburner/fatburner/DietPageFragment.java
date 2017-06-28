@@ -19,9 +19,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.util.Map;
+
 import static android.content.Context.MODE_PRIVATE;
 import static com.fatburner.fatburner.GlobalVariables.PRODUCTS_PAGES_COUNT;
 import static com.fatburner.fatburner.GlobalVariables.dietListViewMode;
+import static com.fatburner.fatburner.GlobalVariables.globalProductsMap;
 import static com.fatburner.fatburner.GlobalVariables.selectedDiet;
 import static com.fatburner.fatburner.GlobalVariables.selectedPhase;
 import static com.fatburner.fatburner.R.id.textView;
@@ -74,7 +77,26 @@ public class DietPageFragment extends Fragment {
         meal4 = (TextView) view.findViewById(R.id.meal4);
         meal5 = (TextView) view.findViewById(R.id.meal5);
 
-        String productsList = "Product 1 \nProduct2 \nProduct3  \nProduct4  \nProduct5";
+
+
+        //String productsList = "Product 1\nProduct2\nProduct3\nProduct4\nProduct5";
+
+
+        String productsList = " ";
+
+        if(globalProductsMap.size() > 0){
+            Map<Integer, String[]> mealProducts = globalProductsMap.get(0);
+            String products[] = mealProducts.get(0);
+
+
+            for(String product: products){
+                productsList = productsList + product + "\n";
+            }
+
+        }
+
+        else{productsList = "Product 1\nProduct2\nProduct3\nProduct4\nProduct5";}
+
         meal1.setText(productsList);
         meal2.setText(productsList);
         meal3.setText(productsList);
