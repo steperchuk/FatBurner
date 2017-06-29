@@ -11,7 +11,6 @@ import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -63,7 +62,7 @@ public class MainActivity extends Menu {
             public void onClick(View v) {
 
                     if(TRAINING_ID == 0){
-                    Intent intent = new Intent(MainActivity.this, MyPrograms.class);
+                    Intent intent = new Intent(MainActivity.this, ProgramsList.class);
                     startActivity(intent);}
                 else{
                         Intent intent = new Intent(MainActivity.this, Exercise.class);

@@ -18,7 +18,7 @@
         <activity android:name=".TrainingsList"
                   android:screenOrientation="portrait"
                   android:parentActivityName=".MainActivity"/>
-        <activity android:name=".MyPrograms"
+        <activity android:name=".ProgramsList"
                   android:screenOrientation="portrait"
                   android:parentActivityName=".MainActivity"/>
         <activity android:name=".Products"

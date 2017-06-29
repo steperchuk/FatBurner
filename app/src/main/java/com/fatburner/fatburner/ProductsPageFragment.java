@@ -130,6 +130,7 @@ public class ProductsPageFragment extends Fragment{
         lvMain.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
+
                 String productsList[] = {" "," "," "," "};
 
                 if (lvMain.isItemChecked(position)) {

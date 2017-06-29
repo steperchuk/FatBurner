@@ -28,11 +28,12 @@ public class TrainingsList extends Menu {
 
 
     // имена атрибутов для Map
-    final String ATTRIBUTE_NAME_TEXT = "text";
+    final String ATTRIBUTE_NAME_TITLE = "title";
+    final String ATTRIBUTE_NAME_INFO = "info";
+    final String ATTRIBUTE_NAME_PROGRESS = "progress";
     final String ATTRIBUTE_NAME_PB = "pb";
-    final String ATTRIBUTE_NAME_LL = "ll";
 
-    ListView lvSimple;
+    ListView trainings_list;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -49,32 +50,34 @@ public class TrainingsList extends Menu {
         //add switch for selected programm and fill array according to selectedProgram
 
         // массив данных
-        final int load[] = { 100, 100, 100, 100, 100, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        final int load[] = { 100, 10 };
+        String info[] = {"2 недели", "2 дня"};
 
         // упаковываем данные в понятную для адаптера структуру
         ArrayList<Map<String, Object>> data = new ArrayList<Map<String, Object>>(load.length);
         Map<String, Object> m;
         for (int i = 0; i < load.length; i++) {
             m = new HashMap<String, Object>();
-            m.put(ATTRIBUTE_NAME_TEXT, "Training " + i + "\n" + load[i] + "%");
+            m.put(ATTRIBUTE_NAME_TITLE, "Тренировка: " + (i+1));
+            m.put(ATTRIBUTE_NAME_INFO, info[i]);
+            m.put(ATTRIBUTE_NAME_PROGRESS, load[i] + "%");
             m.put(ATTRIBUTE_NAME_PB, load[i]);
-            m.put(ATTRIBUTE_NAME_LL, load[i]);
             data.add(m);
         }
 
         // массив имен атрибутов, из которых будут читаться данные
-        String[] from = { ATTRIBUTE_NAME_TEXT, ATTRIBUTE_NAME_PB, ATTRIBUTE_NAME_LL };
+        String[] from = { ATTRIBUTE_NAME_TITLE,ATTRIBUTE_NAME_INFO, ATTRIBUTE_NAME_PROGRESS, ATTRIBUTE_NAME_PB };
         // массив ID View-компонентов, в которые будут вставлять данные
-        int[] to = { R.id.tvLoad, R.id.pbLoad, R.id.llLoad };
+        int[] to = { R.id.title, R.id.info, R.id.progress, R.id.pbLoad };
 
         // создаем адаптер
-        SimpleAdapter sAdapter = new SimpleAdapter(this, data, R.layout.list_view_item, from, to);
+        SimpleAdapter sAdapter = new SimpleAdapter(this, data, R.layout.list_row, from, to);
         // Указываем адаптеру свой биндер
         sAdapter.setViewBinder(new TrainingsList.MyViewBinder());
 
         // определяем список и присваиваем ему адаптер
-        lvSimple = (ListView) findViewById(R.id.lvSimple);
-        lvSimple.setAdapter(sAdapter);
+        trainings_list = (ListView) findViewById(R.id.trainings_list);
+        trainings_list.setAdapter(sAdapter);
 
 
         AdapterView.OnItemClickListener mOnListClick = new AdapterView.OnItemClickListener(){
@@ -94,7 +97,7 @@ public class TrainingsList extends Menu {
             }
         };
 
-        lvSimple.setOnItemClickListener(mOnListClick);
+        trainings_list.setOnItemClickListener(mOnListClick);
 
 
     }
@@ -115,12 +118,6 @@ public class TrainingsList extends Menu {
                                     String textRepresentation) {
             int i = 0;
             switch (view.getId()) {
-                // LinearLayout
-                case R.id.llLoad:
-                    i = ((Integer) data).intValue();
-                    view.setBackgroundColor(white);
-                    return true;
-
                 // ProgressBar 
                 case R.id.pbLoad:
                     i = ((Integer) data).intValue();

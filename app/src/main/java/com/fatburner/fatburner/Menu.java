@@ -1,7 +1,6 @@
 package com.fatburner.fatburner;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -9,9 +8,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
-
-import java.util.HashSet;
-import java.util.Set;
 
 import static com.fatburner.fatburner.GlobalVariables.TRAINING;
 import static com.fatburner.fatburner.GlobalVariables.dietListViewMode;
@@ -83,7 +79,7 @@ public class Menu extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 case R.id.nav_programs:
-                    intent = new Intent(Menu.this, MyPrograms.class);
+                    intent = new Intent(Menu.this, ProgramsList.class);
                     startActivity(intent);
                     break;
                 case R.id.nav_trainings_calendar:

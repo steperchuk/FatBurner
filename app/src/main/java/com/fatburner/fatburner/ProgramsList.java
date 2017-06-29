@@ -17,14 +17,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MyPrograms extends Menu {
+public class ProgramsList extends Menu {
 
     // имена атрибутов для Map
-    final String ATTRIBUTE_NAME_TEXT = "text";
+    final String ATTRIBUTE_NAME_TITLE = "title";
+    final String ATTRIBUTE_NAME_INFO = "info";
+    final String ATTRIBUTE_NAME_PROGRESS = "progress";
     final String ATTRIBUTE_NAME_PB = "pb";
-    final String ATTRIBUTE_NAME_LL = "ll";
 
-    ListView lvSimple;
+    ListView programms_list;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -39,32 +40,35 @@ public class MyPrograms extends Menu {
 
         // массив данных
         String programs[] = {"Fat burn", "Gym training"};
+        String info[] = {"2 недели", "2 дня"};
+
         int load[] = { 12,  88 };
 
         // упаковываем данные в понятную для адаптера структуру
         ArrayList<Map<String, Object>> data = new ArrayList<Map<String, Object>>(load.length);
         Map<String, Object> m;
-        for (int i = 0; i < load.length; i++) {
+        for (int i = 0; i < programs.length; i++) {
             m = new HashMap<String, Object>();
-            m.put(ATTRIBUTE_NAME_TEXT, "Program " + programs[i] + ". Load: " + load[i] + "%");
+            m.put(ATTRIBUTE_NAME_TITLE, programs[i]);
+            m.put(ATTRIBUTE_NAME_INFO, info[i]);
+            m.put(ATTRIBUTE_NAME_PROGRESS, load[i] + "%");
             m.put(ATTRIBUTE_NAME_PB, load[i]);
-            m.put(ATTRIBUTE_NAME_LL, load[i]);
             data.add(m);
         }
 
         // массив имен атрибутов, из которых будут читаться данные
-        String[] from = { ATTRIBUTE_NAME_TEXT, ATTRIBUTE_NAME_PB, ATTRIBUTE_NAME_LL };
+        String[] from = { ATTRIBUTE_NAME_TITLE,ATTRIBUTE_NAME_INFO, ATTRIBUTE_NAME_PROGRESS, ATTRIBUTE_NAME_PB};
         // массив ID View-компонентов, в которые будут вставлять данные
-        int[] to = { R.id.tvLoad, R.id.pbLoad, R.id.llLoad };
+        int[] to = { R.id.title, R.id.info, R.id.progress, R.id.pbLoad};
 
         // создаем адаптер
-        SimpleAdapter sAdapter = new SimpleAdapter(this, data, R.layout.list_view_item, from, to);
+        SimpleAdapter sAdapter = new SimpleAdapter(this, data, R.layout.list_row, from, to);
         // Указываем адаптеру свой биндер
         sAdapter.setViewBinder(new MyViewBinder());
 
         // определяем список и присваиваем ему адаптер
-        lvSimple = (ListView) findViewById(R.id.lvSimple);
-        lvSimple.setAdapter(sAdapter);
+        programms_list = (ListView) findViewById(R.id.programms_list);
+        programms_list.setAdapter(sAdapter);
 
 
           AdapterView.OnItemClickListener mOnListClick = new AdapterView.OnItemClickListener(){
@@ -76,13 +80,13 @@ public class MyPrograms extends Menu {
                 switch(position){
                     case 0:
                         GlobalVariables.selectedProgram = "Home fat burner";
-                        intent = new Intent(MyPrograms.this, TrainingsList.class);
+                        intent = new Intent(ProgramsList.this, TrainingsList.class);
                         intent.putExtra("selectedProgram", "Home fat burner");
                         startActivity(intent);
                         break;
                     case 1:
                         GlobalVariables.selectedProgram = "Gym fat burner";
-                        intent = new Intent(MyPrograms.this, TrainingsList.class);
+                        intent = new Intent(ProgramsList.this, TrainingsList.class);
                         intent.putExtra("selectedProgram", "Gym fat burner");
                         startActivity(intent);
                         break;
@@ -91,7 +95,7 @@ public class MyPrograms extends Menu {
             }
         };
 
-        lvSimple.setOnItemClickListener(mOnListClick);
+        programms_list.setOnItemClickListener(mOnListClick);
 
 
     }
@@ -108,12 +112,6 @@ public class MyPrograms extends Menu {
         public boolean setViewValue(View view, Object data, String textRepresentation) {
         int i = 0;
         switch (view.getId()) {
-        // LinearLayout
-        case R.id.llLoad:
-        i = ((Integer) data).intValue();
-        view.setBackgroundColor(white);
-        return true;
-
             // ProgressBar 
         case R.id.pbLoad:
         i = ((Integer) data).intValue();
