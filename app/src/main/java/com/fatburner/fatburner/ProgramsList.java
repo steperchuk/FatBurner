@@ -1,7 +1,10 @@
 package com.fatburner.fatburner;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -12,12 +15,23 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
+import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ProgramsList extends Menu {
+
+
+    DatabaseHelper databaseHelper;
+    SQLiteDatabase db;
+    Cursor userCursor;
+
+    SimpleCursorAdapter userAdapter;
+
 
     // имена атрибутов для Map
     final String ATTRIBUTE_NAME_TITLE = "title";
@@ -38,21 +52,49 @@ public class ProgramsList extends Menu {
 
 
 
-        // массив данных
-        String programs[] = {"Fat burn", "Gym training"};
-        String info[] = {"2 недели", "2 дня"};
 
-        int load[] = { 12,  88 };
+
+        ///Work with DB
+        // открываем подключение
+        databaseHelper = new DatabaseHelper(getApplicationContext());
+        db = databaseHelper.open();
+
+
+
+        databaseHelper.TABLE = "PROGRAMMS";
+        //получаем данные из бд в виде курсора
+
+        final String currentProgramm = getCurrentProgramm();
+
+        userCursor =  db.rawQuery("select * from "+ DatabaseHelper.TABLE, null);
+        final List<String> programs = new ArrayList<>();
+        List<Integer> load = new ArrayList<>();
+        List<String> info = new ArrayList<>();
+
+        if (userCursor.moveToFirst()) {
+            do {
+                programs.add(userCursor.getString(userCursor.getColumnIndex(DatabaseHelper.COLUMN_NAME)) );
+                load.add(userCursor.getInt(userCursor.getColumnIndex(DatabaseHelper.COLUMN_COMPLETION_STATUS)));
+                info.add("Недели: " + userCursor.getInt(userCursor.getColumnIndex(DatabaseHelper.COLUMN_WEEKS)) +
+                        "  Дней в неделю: " + String.valueOf(userCursor.getInt(userCursor.getColumnIndex(DatabaseHelper.COLUMN_DAYS_PER_WEEK))) +
+                        "  Время: " + userCursor.getString(userCursor.getColumnIndex(DatabaseHelper.COLUMN_HOURS)));
+            } while (userCursor.moveToNext());
+        }
+
+
+
+        ////
+
 
         // упаковываем данные в понятную для адаптера структуру
-        ArrayList<Map<String, Object>> data = new ArrayList<Map<String, Object>>(load.length);
+        ArrayList<Map<String, Object>> data = new ArrayList<Map<String, Object>>(load.size());
         Map<String, Object> m;
-        for (int i = 0; i < programs.length; i++) {
+        for (int i = 0; i < programs.size(); i++) {
             m = new HashMap<String, Object>();
-            m.put(ATTRIBUTE_NAME_TITLE, programs[i]);
-            m.put(ATTRIBUTE_NAME_INFO, info[i]);
-            m.put(ATTRIBUTE_NAME_PROGRESS, load[i] + "%");
-            m.put(ATTRIBUTE_NAME_PB, load[i]);
+            m.put(ATTRIBUTE_NAME_TITLE, programs.get(i));
+            m.put(ATTRIBUTE_NAME_INFO, info.get(i));
+            m.put(ATTRIBUTE_NAME_PROGRESS, load.get(i) + "%");
+            m.put(ATTRIBUTE_NAME_PB, load.get(i));
             data.add(m);
         }
 
@@ -76,6 +118,15 @@ public class ProgramsList extends Menu {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                /*
+                db = databaseHelper.getWritableDatabase();
+                ContentValues cv = new ContentValues();
+                cv.put(DatabaseHelper.COLUMN_IS_CURRENT, Integer.parseInt("1"));
+
+                db.update(DatabaseHelper.TABLE, cv, DatabaseHelper.COLUMN_NAME + " = " , new String[]{String.valueOf(programs.get(position))});
+                String c = getCurrentProgramm();
+*/
+
                 Intent intent;
                 switch(position){
                     case 0:
@@ -91,6 +142,7 @@ public class ProgramsList extends Menu {
                         startActivity(intent);
                         break;
                 }
+                
 
             }
         };
@@ -100,12 +152,32 @@ public class ProgramsList extends Menu {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        db.close();
+        userCursor.close();
+    }
+
+    private String getCurrentProgramm() {
+        userCursor = db.rawQuery("select " + DatabaseHelper.COLUMN_NAME + " from " + DatabaseHelper.TABLE +
+                " where " + DatabaseHelper.COLUMN_IS_CURRENT + " = 1", null);
+
+        List<String> current = new ArrayList<>();
+        if (userCursor.moveToFirst()) {
+            do {
+                current.add(userCursor.getString(userCursor.getColumnIndex(DatabaseHelper.COLUMN_NAME)));
+            } while (userCursor.moveToNext());
+        }
+
+        return current.get(0);
+    }
+
     class MyViewBinder implements SimpleAdapter.ViewBinder {
 
         int red = getResources().getColor(R.color.Red);
         int orange = getResources().getColor(R.color.Orange);
         int green = getResources().getColor(R.color.Green);
-        int white = getResources().getColor(R.color.White);
 
         @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
         @Override

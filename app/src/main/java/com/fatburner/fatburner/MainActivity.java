@@ -4,6 +4,8 @@ import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -23,6 +25,10 @@ import static com.fatburner.fatburner.GlobalVariables.TRAINING_ID;
 
 public class MainActivity extends Menu {
 
+    DatabaseHelper databaseHelper;
+    SQLiteDatabase db;
+    Cursor userCursor;
+
     DonutProgress startButton;
     ImageButton playerButton;
     TextView currentTraining;
@@ -36,6 +42,13 @@ public class MainActivity extends Menu {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        databaseHelper = new DatabaseHelper(getApplicationContext());
+        // создаем базу данных
+        databaseHelper.create_db();
+        //db = databaseHelper.open();
+
 
         // Implements menu visibility
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -110,10 +123,13 @@ public class MainActivity extends Menu {
 
         mp.start();
     }
-    
+
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        db.close();
+        userCursor.close();
         releaseMP();
     }
 
