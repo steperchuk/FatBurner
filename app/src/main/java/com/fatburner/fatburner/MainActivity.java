@@ -44,10 +44,10 @@ public class MainActivity extends Menu {
         super.onCreate(savedInstanceState);
 
 
-        databaseHelper = new DatabaseHelper(getApplicationContext());
+
         // создаем базу данных
+        databaseHelper = new DatabaseHelper(getApplicationContext());
         databaseHelper.create_db();
-        //db = databaseHelper.open();
 
 
         // Implements menu visibility
@@ -91,37 +91,12 @@ public class MainActivity extends Menu {
 
         playerButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                releaseMP();
-            try {
-                if (!playerStarted) {
-                    playerButton.setImageResource(R.drawable.ic_play_button);
-                    mediaPlayer = new MediaPlayer();
-                    mediaPlayer.setDataSource(DATA_SD);
-                    mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                    mediaPlayer.prepare();
-                    mediaPlayer.start();
-                }
-
-                else {
-                    if (mediaPlayer.isPlaying())
-                        mediaPlayer.pause();
-                    playerButton.setImageResource(R.drawable.ic_pause_button);
-                }
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-            if (mediaPlayer == null)
-                return;
+                Intent intent = new Intent("android.intent.action.MUSIC_PLAYER");
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         });
 
-    }
-
-
-    protected void onPrepared(MediaPlayer mp) {
-
-        mp.start();
     }
 
 
@@ -130,7 +105,6 @@ public class MainActivity extends Menu {
         super.onDestroy();
         db.close();
         userCursor.close();
-        releaseMP();
     }
 
     private void releaseMP() {
