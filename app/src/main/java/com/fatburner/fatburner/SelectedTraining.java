@@ -6,6 +6,8 @@ import android.animation.AnimatorSet;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +34,9 @@ import static com.fatburner.fatburner.GlobalVariables.TRAINING_ID;
 
 public class SelectedTraining extends Menu {
 
-    SharedPreferences sPref;
+    DatabaseHelper databaseHelper;
+    SQLiteDatabase db;
+    Cursor userCursor;
 
     DonutProgress startButton;
 
@@ -49,6 +53,9 @@ public class SelectedTraining extends Menu {
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View contentView = inflater.inflate(R.layout.activity_selected_training, null, false);
         mDrawerLayout.addView(contentView, 0);
+
+
+
 
         Intent intent = getIntent();
         final int selectedTraining = TRAINING_ID;

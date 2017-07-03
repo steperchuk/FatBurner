@@ -254,7 +254,7 @@ public class Settings extends Menu {
 
             }
         });
-        
+
 
     }
 

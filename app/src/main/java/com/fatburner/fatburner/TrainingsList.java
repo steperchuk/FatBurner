@@ -52,6 +52,8 @@ public class TrainingsList extends Menu {
 
     ListView trainings_list;
 
+    List<Integer> trainings;
+
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +74,7 @@ public class TrainingsList extends Menu {
 
         // массив данных
         userCursor =  db.rawQuery("select * from "+ TABLE + " where " + COLUMN_PROGRAMM_NAME + " = ?", new String[]{getCurrentProgramm()});
-        final List<Integer> trainings = new ArrayList<>();
+        trainings = new ArrayList<>();
         List<Integer> load = new ArrayList<>();
         List<String> info = new ArrayList<>();
 
@@ -118,11 +120,16 @@ public class TrainingsList extends Menu {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+
+                databaseHelper.getWritableDatabase();
+                db = databaseHelper.open();
+
+
                 ContentValues cv = new ContentValues();
                 int selectedTraining = trainings.get(position);
-                cv.put(COLUMN_IS_CURRENT, 0);
+                cv.put("IS_CURRENT", 0);
                 db.update(TABLE, cv, null, null);
-                cv.put(COLUMN_IS_CURRENT, Integer.parseInt("1"));
+                cv.put("IS_CURRENT", 1);
                 db.update(TABLE, cv, COLUMN_TRAINING_ID + " = ?" , new String[]{String.valueOf(selectedTraining)});
 
                 db.close();

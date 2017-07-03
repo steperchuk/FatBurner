@@ -118,7 +118,7 @@ public class ProgramsList extends Menu {
                 String selectedProgramm = programs.get(position);
                 cv.put(DatabaseHelper.COLUMN_IS_CURRENT, 0);
                 db.update(DatabaseHelper.TABLE, cv, null, null);
-                cv.put(DatabaseHelper.COLUMN_IS_CURRENT, Integer.parseInt("1"));
+                cv.put(DatabaseHelper.COLUMN_IS_CURRENT, 1);
                 db.update(DatabaseHelper.TABLE, cv, DatabaseHelper.COLUMN_NAME + " = ?" , new String[]{selectedProgramm});
 
                 db.close();
