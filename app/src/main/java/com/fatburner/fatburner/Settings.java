@@ -3,10 +3,14 @@ package com.fatburner.fatburner;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.SparseBooleanArray;
@@ -24,6 +28,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -34,23 +39,26 @@ import static com.fatburner.fatburner.GlobalVariables.selectedDiet;
 
 public class Settings extends Menu {
 
-    Calendar calander = Calendar.getInstance();
+
+    DatabaseHelper databaseHelper;
+    SQLiteDatabase db;
+    Cursor userCursor;
+
 
     String phases[] = {"Фаза 1", "Фаза 2", "Фаза 3"};
     String days[] = { "Monday", "Thuesday", "Wensday", "Thursday", "Friday", "Saturday", "Sunday" };
+    String goals[] = {"Увеличение силы","Поддержание формы","Подготовительная","Набор Массы","Жиросжигание"};
+    String difficulties[] = {"Новичок","Любитель","Профессионал"};
     boolean chkd[] = { false, false, false, false, false, false, false };
     String daysSelected = "";
 
-    int DAY_START_TIME = 1;
-    int TRAIN_START_TIME = 2;
+
     final int DIALOG_DAYS = 3;
-    int myHour =  calander.get(Calendar.HOUR);
-    int myMinute = calander.get(Calendar.MINUTE);
-    TextView dayStartTime;
-    TextView trainingStart;
+    TextView waterDayNorm;
     TextView trainingDays;
-    TextView age;
-    TextView weight;
+    Spinner goal;
+    Spinner difficulty;
+    Switch switchUseCustomDiet;
     Spinner phase;
     Switch gender;
     Switch switchDietType;
@@ -59,14 +67,13 @@ public class Settings extends Menu {
     Switch switchSleepNotification;
 
 
-    SharedPreferences sPref;
-    String ageValue;
-    String weightValue;
     boolean genderValue;
+    boolean useCustomDietValue;
     int phaseValue;
-    String dayStartTimeValue;
-    String trainingStartTimeValue;
+    int goalValue;
+    int difficultyValue;
     String trainingDaysValue;
+    String waterNormValue;
     boolean dietTypeValue;
     boolean waterNotificationValue;
     boolean sleepNotificationValue;
@@ -84,41 +91,23 @@ public class Settings extends Menu {
         View contentView = inflater.inflate(R.layout.activity_settings, null, false);
         mDrawerLayout.addView(contentView, 0);
 
-
         final ImageButton applyButton = (ImageButton) findViewById(R.id.applyBtn);
-        gender = (Switch) findViewById(R.id.gender);
-        age = (TextView) findViewById(R.id.age);
-        weight = (TextView) findViewById(R.id.weight);
-        dayStartTime = (TextView) findViewById(R.id.dayStart);
-        trainingStart = (TextView) findViewById(R.id.trainingStart);
+
+        waterDayNorm = (TextView) findViewById(R.id.waterDayNorm);
         trainingDays = (TextView) findViewById(R.id.trainingDays);
+
+        goal = (Spinner) findViewById(R.id.goal);
+        difficulty = (Spinner) findViewById(R.id.difficulty);
+        phase = (Spinner) findViewById(R.id.phase);
+
+        gender = (Switch) findViewById(R.id.gender);
+        switchUseCustomDiet = (Switch) findViewById(R.id.customDietUsage);
         switchWaterNotification = (Switch) findViewById(R.id.switchWaterNotification);
         switchFoodNotification = (Switch) findViewById(R.id.switchFoodNotification);
         switchSleepNotification = (Switch) findViewById(R.id.switchSleepNotification);
         switchDietType = (Switch) findViewById(R.id.diet_type);
 
-        dayStartTime.setInputType(InputType.TYPE_NULL);
-        trainingStart.setInputType(InputType.TYPE_NULL);
         trainingDays.setInputType(InputType.TYPE_NULL);
-
-        phase = (Spinner) findViewById(R.id.phase);
-
-        dayStartTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideKeyboard(v);
-                showDialog(DAY_START_TIME);
-            }
-        });
-
-
-        trainingStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideKeyboard(v);
-                showDialog(TRAIN_START_TIME);
-            }
-        });
 
         trainingDays.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,12 +125,33 @@ public class Settings extends Menu {
             switchDietType.setText("Углеводная");
         }
 
+        if(switchUseCustomDiet.isChecked()){
+            switchUseCustomDiet.setText("Yes");
+            switchDietType.setVisibility(View.INVISIBLE);
+            phase.setVisibility(View.INVISIBLE);
+        }
+
         gender.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(gender.getText().equals("Male"))
                 {gender.setText("Female");}
                 else {gender.setText("Male");}
                 genderValue = isChecked;
+            }
+        });
+
+        switchUseCustomDiet.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(switchUseCustomDiet.getText().equals("No"))
+                {switchUseCustomDiet.setText("Yes");
+                    switchDietType.setVisibility(View.INVISIBLE);
+                    phase.setVisibility(View.INVISIBLE);
+                }
+                else {switchUseCustomDiet.setText("No");
+                    switchDietType.setVisibility(View.VISIBLE);
+                    phase.setVisibility(View.VISIBLE);
+                }
+                useCustomDietValue = isChecked;
             }
         });
 
@@ -179,6 +189,15 @@ public class Settings extends Menu {
         phase.setAdapter(adapter);
         phase.setSelection(phaseValue);
 
+
+        adapter = new ArrayAdapter<String>(this, R.layout.my_spinner, goals);
+        goal.setAdapter(adapter);
+        goal.setSelection(goalValue);
+
+        adapter = new ArrayAdapter<String>(this, R.layout.my_spinner, difficulties);
+        difficulty.setAdapter(adapter);
+        difficulty.setSelection(difficultyValue);
+
         phase.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -195,12 +214,38 @@ public class Settings extends Menu {
         });
 
 
+        difficulty.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                String selectedItem = difficulty.getSelectedItem().toString();
+                List<String> wordList = Arrays.asList(difficulties);
+                difficultyValue = wordList.indexOf(selectedItem);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });
+
+        goal.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                String selectedItem = goal.getSelectedItem().toString();
+                List<String> wordList = Arrays.asList(goals);
+                goalValue = wordList.indexOf(selectedItem);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });
+
         applyButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
-                ageValue = age.getText().toString();
-                weightValue = weight.getText().toString();
-
 
                 isFirstStart = false;
                 saveSettings();
@@ -209,8 +254,7 @@ public class Settings extends Menu {
 
             }
         });
-
-
+        
 
     }
 
@@ -223,14 +267,7 @@ public class Settings extends Menu {
     protected Dialog onCreateDialog(int id) {
         AlertDialog.Builder adb = new AlertDialog.Builder(this);
 
-        if (id == DAY_START_TIME) {
-            TimePickerDialog tpd = new TimePickerDialog(this, myCallBack, myHour, myMinute, false);
-            return tpd;
-        }
-        if (id == TRAIN_START_TIME) {
-            TimePickerDialog tpd = new TimePickerDialog(this, mySecondCallBack, myHour, myMinute, false);
-            return tpd;
-        }
+
         if (id == DIALOG_DAYS)
         {
             adb.setTitle(R.string.items);
@@ -263,93 +300,113 @@ public class Settings extends Menu {
         }
     };
 
-    TimePickerDialog.OnTimeSetListener myCallBack = new TimePickerDialog.OnTimeSetListener() {
-        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            myHour = hourOfDay;
-            myMinute = minute;
-            String normalizedMinute = "";
-            if(minute<10)
-            {normalizedMinute = "0" + Integer.toString(myMinute);}
-            else
-            {normalizedMinute = Integer.toString(myMinute);}
-            dayStartTimeValue = Integer.toString(myHour) + ":" + normalizedMinute;
-            dayStartTime.setText(dayStartTimeValue);
-        }
-    };
-
-    TimePickerDialog.OnTimeSetListener mySecondCallBack = new TimePickerDialog.OnTimeSetListener() {
-        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            myHour = hourOfDay;
-            myMinute = minute;
-            String normalizedMinute = "";
-            if(minute<9)
-            {normalizedMinute = "0" + Integer.toString(myMinute);}
-            else
-            {normalizedMinute = Integer.toString(myMinute);}
-            trainingStartTimeValue = Integer.toString(myHour) + ":" + normalizedMinute;
-            trainingStart.setText(trainingStartTimeValue);
-        }
-    };
-
 
     public void hideKeyboard(View view) {
         InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Settings.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    void saveSettings() {
+    void loadSettings() {
 
-        sPref = getPreferences(MODE_PRIVATE);
-        SharedPreferences.Editor ed = sPref.edit();
-        ed.putString("AGE",ageValue);
-        ed.putString("WEIGHT", weightValue);
-        ed.putString("DAY_START", dayStartTimeValue);
-        ed.putString("TRAINING_START", trainingStartTimeValue);
-        ed.putString("TRAINING_DAYS", trainingDaysValue);
-        ed.putInt("PHASE", phaseValue);
-        ed.putBoolean("IS_FIRST_RUN", isFirstStart);
-        ed.putBoolean("GENDER", genderValue);
-        ed.putBoolean("DIET_TYPE", dietTypeValue);
-        ed.putBoolean("FOOD_NOTIFICATON", foodNotificationValue);
-        ed.putBoolean("SLEEP_NOTIFICATON", sleepNotificationValue);
-        ed.putBoolean("WATER_NOTIFICATON", waterNotificationValue);
-        ed.commit();
+        databaseHelper = new DatabaseHelper(this);
+        databaseHelper.getWritableDatabase();
+        db = databaseHelper.open();
 
-        selectedPhase = phaseValue;
-        selectedDiet = dietTypeValue;
+        userCursor =  db.rawQuery("select * from APP_SETTINGS", null);
 
-        Toast.makeText(this, "Settings saved", Toast.LENGTH_SHORT).show();
-    }
+        userCursor.moveToFirst();
+        if(userCursor.getInt(0) == 1)
+        {isFirstStart = true;}
+        else{isFirstStart = false;}
 
-   public void loadSettings() {
-        sPref = getPreferences(MODE_PRIVATE);
+        if(userCursor.getInt(1) == 1)
+        {genderValue = true;}
+        else{genderValue = false;}
 
-        ageValue = sPref.getString("AGE","");
-        weightValue = sPref.getString("WEIGHT","");
-        dayStartTimeValue = sPref.getString("DAY_START","");
-        trainingStartTimeValue = sPref.getString("TRAINING_START","");
-        trainingDaysValue = sPref.getString("TRAINING_DAYS","");
-        isFirstStart = sPref.getBoolean("IS_FIRST_RUN",false);
-        genderValue = sPref.getBoolean("GENDER", false);
-        foodNotificationValue = sPref.getBoolean("FOOD_NOTIFICATON", false);
-        sleepNotificationValue = sPref.getBoolean("SLEEP_NOTIFICATON", false);
-        waterNotificationValue = sPref.getBoolean("WATER_NOTIFICATON", false);
+        goalValue = userCursor.getInt(2);
+        difficultyValue = userCursor.getInt(3);
+        trainingDaysValue = userCursor.getString(4);
+        waterNormValue = userCursor.getString(5);
 
-       dietTypeValue = sPref.getBoolean("DIET_TYPE", false);
-       phaseValue = sPref.getInt("PHASE",0);
+        if(userCursor.getInt(6) == 1)
+        {useCustomDietValue = true;}
+        else{useCustomDietValue = false;}
 
-       age.setText(ageValue);
-        weight.setText(weightValue);
-        dayStartTime.setText(dayStartTimeValue);
-        trainingStart.setText(trainingStartTimeValue);
+
+        if(userCursor.getInt(7) == 1)
+        {dietTypeValue = true;}
+        else{dietTypeValue = false;}
+
+        phaseValue = userCursor.getInt(8);
+
+        if(userCursor.getInt(9) == 1)
+        {foodNotificationValue = true;}
+        else{foodNotificationValue = false;}
+
+        if(userCursor.getInt(10) == 1)
+        {sleepNotificationValue = true;}
+        else{sleepNotificationValue = false;}
+
+
+        if(userCursor.getInt(11) == 1)
+        {waterNotificationValue = true;}
+        else{waterNotificationValue = false;}
+
+        userCursor.close();
+        db.close();
+
         trainingDays.setText(trainingDaysValue);
+        waterDayNorm.setText(waterNormValue);
         gender.setChecked(genderValue);
         switchDietType.setChecked(dietTypeValue);
+        switchUseCustomDiet.setChecked(useCustomDietValue);
         switchFoodNotification.setChecked(foodNotificationValue);
         switchSleepNotification.setChecked(sleepNotificationValue);
         switchWaterNotification.setChecked(waterNotificationValue);
 
+
+        selectedPhase = phaseValue;  //should be removed in future
+        selectedDiet = dietTypeValue; //should be removed in future
+
         Toast.makeText(this, "Settings loaded", Toast.LENGTH_SHORT).show();
+    }
+
+   public void saveSettings() {
+
+       databaseHelper = new DatabaseHelper(this);
+       databaseHelper.getWritableDatabase();
+       db = databaseHelper.open();
+
+       ContentValues cv = new ContentValues();
+       cv.put("FIRST_START", 1);
+       if(genderValue){cv.put("GENDER", 1);}
+       else{cv.put("GENDER", 0);}
+
+       cv.put("GOAL", goalValue);
+       cv.put("DIFFICULTY", difficultyValue);
+       cv.put("TRAINING_DAYS", trainingDaysValue);
+       cv.put("WATER_NORM", waterNormValue);
+       if(useCustomDietValue){cv.put("USE_CUSTOM_DIET", 1);}
+       else{cv.put("USE_CUSTOM_DIET", 0);}
+       if(dietTypeValue){ cv.put("DIET_TYPE", 1);}
+       else{cv.put("DIET_TYPE", 0);}
+       cv.put("PHASE", phaseValue);
+       if(foodNotificationValue){cv.put("FOOD_NOTIFICATON", 1);}
+       else{cv.put("FOOD_NOTIFICATON", 0);}
+       if(sleepNotificationValue){cv.put("SLEEP_NOTIFICATON", 1);}
+       else{cv.put("SLEEP_NOTIFICATON", 0);}
+       if(waterNotificationValue){cv.put("WATER_NOTIFICATON", 1);}
+       else{cv.put("WATER_NOTIFICATON", 0);}
+
+       db.update("APP_SETTINGS", cv, null, null);
+
+       userCursor.close();
+       db.close();
+
+       Toast.makeText(this, "Settings saved", Toast.LENGTH_SHORT).show();
+
+       selectedPhase = phaseValue;  //should be removed in future
+       selectedDiet = dietTypeValue; //should be removed in future
     }
 
 }
