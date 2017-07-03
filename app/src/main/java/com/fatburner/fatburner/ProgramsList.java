@@ -30,8 +30,7 @@ public class ProgramsList extends Menu {
     SQLiteDatabase db;
     Cursor userCursor;
 
-    SimpleCursorAdapter userAdapter;
-
+    List<String> programs;
 
     // имена атрибутов для Map
     final String ATTRIBUTE_NAME_TITLE = "title";
@@ -53,10 +52,10 @@ public class ProgramsList extends Menu {
 
 
 
-
         ///Work with DB
         // открываем подключение
-        databaseHelper = new DatabaseHelper(getApplicationContext());
+        databaseHelper = new DatabaseHelper(this);
+        databaseHelper.getWritableDatabase();
         db = databaseHelper.open();
 
 
@@ -64,10 +63,10 @@ public class ProgramsList extends Menu {
         databaseHelper.TABLE = "PROGRAMMS";
         //получаем данные из бд в виде курсора
 
-        final String currentProgramm = getCurrentProgramm();
-
         userCursor =  db.rawQuery("select * from "+ DatabaseHelper.TABLE, null);
-        final List<String> programs = new ArrayList<>();
+
+
+        programs = new ArrayList<>();
         List<Integer> load = new ArrayList<>();
         List<String> info = new ArrayList<>();
 
@@ -81,10 +80,7 @@ public class ProgramsList extends Menu {
             } while (userCursor.moveToNext());
         }
 
-
-
-        ////
-
+        userCursor.close();
 
         // упаковываем данные в понятную для адаптера структуру
         ArrayList<Map<String, Object>> data = new ArrayList<Map<String, Object>>(load.size());
@@ -118,32 +114,18 @@ public class ProgramsList extends Menu {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                /*
-                db = databaseHelper.getWritableDatabase();
                 ContentValues cv = new ContentValues();
+                String selectedProgramm = programs.get(position);
+                cv.put(DatabaseHelper.COLUMN_IS_CURRENT, 0);
+                db.update(DatabaseHelper.TABLE, cv, null, null);
                 cv.put(DatabaseHelper.COLUMN_IS_CURRENT, Integer.parseInt("1"));
+                db.update(DatabaseHelper.TABLE, cv, DatabaseHelper.COLUMN_NAME + " = ?" , new String[]{selectedProgramm});
 
-                db.update(DatabaseHelper.TABLE, cv, DatabaseHelper.COLUMN_NAME + " = " , new String[]{String.valueOf(programs.get(position))});
-                String c = getCurrentProgramm();
-*/
-
+                db.close();
+                databaseHelper.close();
                 Intent intent;
-                switch(position){
-                    case 0:
-                        GlobalVariables.selectedProgram = "Home fat burner";
-                        intent = new Intent(ProgramsList.this, TrainingsList.class);
-                        intent.putExtra("selectedProgram", "Home fat burner");
-                        startActivity(intent);
-                        break;
-                    case 1:
-                        GlobalVariables.selectedProgram = "Gym fat burner";
-                        intent = new Intent(ProgramsList.this, TrainingsList.class);
-                        intent.putExtra("selectedProgram", "Gym fat burner");
-                        startActivity(intent);
-                        break;
-                }
-                
-
+                intent = new Intent(ProgramsList.this, TrainingsList.class);
+                startActivity(intent);
             }
         };
 
@@ -159,19 +141,7 @@ public class ProgramsList extends Menu {
         userCursor.close();
     }
 
-    private String getCurrentProgramm() {
-        userCursor = db.rawQuery("select " + DatabaseHelper.COLUMN_NAME + " from " + DatabaseHelper.TABLE +
-                " where " + DatabaseHelper.COLUMN_IS_CURRENT + " = 1", null);
 
-        List<String> current = new ArrayList<>();
-        if (userCursor.moveToFirst()) {
-            do {
-                current.add(userCursor.getString(userCursor.getColumnIndex(DatabaseHelper.COLUMN_NAME)));
-            } while (userCursor.moveToNext());
-        }
-
-        return current.get(0);
-    }
 
     class MyViewBinder implements SimpleAdapter.ViewBinder {
 

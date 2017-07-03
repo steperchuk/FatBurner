@@ -52,7 +52,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             File file = new File(DB_PATH);
             if (!file.exists()) {
-                this.getReadableDatabase();
+                this.getWritableDatabase();
                 //получаем локальную бд как поток
                 myInput = myContext.getAssets().open(DB_NAME);
                 // Путь к новой бд

@@ -1,8 +1,11 @@
 package com.fatburner.fatburner;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -25,6 +29,19 @@ import static com.fatburner.fatburner.GlobalVariables.TRAINING_ID;
 
 
 public class TrainingsList extends Menu {
+
+    DatabaseHelper databaseHelper;
+    SQLiteDatabase db;
+    Cursor userCursor;
+
+
+    static final String TABLE = "TRAININGS";
+    static final String COLUMN_PROGRAMM_NAME = "PROGRAMM_NAME";
+    static final String COLUMN_TRAINING_ID = "TRAINING_ID";
+    static final String COLUMN_DAY = "DAY";
+    static final String COLUMN_PROGRESS = "PROGRESS";
+    static final String COLUMN_EXPECTED_TIME = "EXPECTED_TIME";
+    static final String COLUMN_IS_CURRENT = "IS_CURRENT";
 
 
     // имена атрибутов для Map
@@ -45,23 +62,39 @@ public class TrainingsList extends Menu {
         mDrawerLayout.addView(contentView, 0);
 
 
-        Intent intent = getIntent();
-        String selectedProgram = intent.getStringExtra("selectedProgram");
-        //add switch for selected programm and fill array according to selectedProgram
+        ///Work with DB
+        // открываем подключение
+        databaseHelper = new DatabaseHelper(this);
+        databaseHelper.getWritableDatabase();
+        db = databaseHelper.open();
+
+        //DatabaseHelper.TABLE = "TRAININGS";
 
         // массив данных
-        final int load[] = { 100, 10 };
-        String info[] = {"2 недели", "2 дня"};
+        userCursor =  db.rawQuery("select * from "+ TABLE + " where " + COLUMN_PROGRAMM_NAME + " = ?", new String[]{getCurrentProgramm()});
+        final List<Integer> trainings = new ArrayList<>();
+        List<Integer> load = new ArrayList<>();
+        List<String> info = new ArrayList<>();
+
+        if (userCursor.moveToFirst()) {
+            do {
+                trainings.add(userCursor.getInt(userCursor.getColumnIndex(COLUMN_TRAINING_ID)));
+                load.add(userCursor.getInt(userCursor.getColumnIndex(COLUMN_PROGRESS)));
+                info.add("Время выполнения:" + userCursor.getInt(userCursor.getColumnIndex(COLUMN_EXPECTED_TIME)));
+            } while (userCursor.moveToNext());
+        }
+
+        userCursor.close();
 
         // упаковываем данные в понятную для адаптера структуру
-        ArrayList<Map<String, Object>> data = new ArrayList<Map<String, Object>>(load.length);
+        ArrayList<Map<String, Object>> data = new ArrayList<Map<String, Object>>(trainings.size());
         Map<String, Object> m;
-        for (int i = 0; i < load.length; i++) {
+        for (int i = 0; i < trainings.size(); i++) {
             m = new HashMap<String, Object>();
-            m.put(ATTRIBUTE_NAME_TITLE, "Тренировка: " + (i+1));
-            m.put(ATTRIBUTE_NAME_INFO, info[i]);
-            m.put(ATTRIBUTE_NAME_PROGRESS, load[i] + "%");
-            m.put(ATTRIBUTE_NAME_PB, load[i]);
+            m.put(ATTRIBUTE_NAME_TITLE, "Тренировка: " + trainings.get(i));
+            m.put(ATTRIBUTE_NAME_INFO, info.get(i) + " мин");
+            m.put(ATTRIBUTE_NAME_PROGRESS, load.get(i) + "%");
+            m.put(ATTRIBUTE_NAME_PB, load.get(i));
             data.add(m);
         }
 
@@ -85,13 +118,19 @@ public class TrainingsList extends Menu {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                ContentValues cv = new ContentValues();
+                int selectedTraining = trainings.get(position);
+                cv.put(COLUMN_IS_CURRENT, 0);
+                db.update(TABLE, cv, null, null);
+                cv.put(COLUMN_IS_CURRENT, Integer.parseInt("1"));
+                db.update(TABLE, cv, COLUMN_TRAINING_ID + " = ?" , new String[]{String.valueOf(selectedTraining)});
+
+                db.close();
+                databaseHelper.close();
+
                 if(position != -1) {
                     Intent intent;
                     intent = new Intent(TrainingsList.this, SelectedTraining.class);
-                    TRAINING_ID = position;
-                    LOAD_ARRAY = load;
-                    //intent.putExtra("selectedTraining", Integer.toString(position));
-                    //intent.putExtra("percentCompleted", load);
                     startActivity(intent);
                 }
             }
@@ -103,6 +142,25 @@ public class TrainingsList extends Menu {
     }
 
 
+
+
+
+    private String getCurrentProgramm() {
+        db = databaseHelper.open();
+        userCursor = db.rawQuery("select " + DatabaseHelper.COLUMN_NAME + " from PROGRAMMS" +
+                " where " + DatabaseHelper.COLUMN_IS_CURRENT + " = 1", null);
+
+        List<String> current = new ArrayList<>();
+        if (userCursor.moveToFirst()) {
+            do {
+                current.add(userCursor.getString(userCursor.getColumnIndex(DatabaseHelper.COLUMN_NAME)));
+            } while (userCursor.moveToNext());
+        }
+
+        db.close();
+        userCursor.close();
+        return current.get(0);
+    }
 
 
     class MyViewBinder implements SimpleAdapter.ViewBinder {
