@@ -17,22 +17,23 @@
         android:layout_marginTop="15dp"
         android:layout_marginLeft="15dp"
         android:text="TextView"
+        android:textColor="@color/Blue"
         android:textAlignment="center"
         android:textSize="24sp"
         android:textStyle="bold" />
 
 
     <TextView
-        android:id="@+id/iterations"
+        android:id="@+id/repeats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
         android:textAlignment="center"
         android:textSize="18sp"
+        android:layout_alignBaseline="@+id/attempts"
+        android:layout_alignBottom="@+id/attempts"
         android:layout_toLeftOf="@+id/imageView"
-        android:layout_alignTop="@+id/attempts"
-        android:layout_alignLeft="@+id/info"
-        android:layout_alignStart="@+id/info" />
+        android:layout_toStartOf="@+id/imageView" />
 
     <TextView
         android:id="@+id/attempts"
@@ -41,10 +42,8 @@
         android:text="TextView"
         android:textAlignment="center"
         android:textSize="18sp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="33dp"
         android:layout_below="@+id/info"
-        android:layout_alignRight="@+id/info"
-        android:layout_alignEnd="@+id/info"
         android:layout_toRightOf="@+id/imageView"
         android:layout_toEndOf="@+id/imageView" />
 
@@ -70,8 +69,9 @@
         android:layout_height="150dp"
         android:layout_above="@+id/done_btn"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="14dp"
-        custom:srcCompat="@drawable/ic_working_out" />
+        android:layout_marginBottom="20dp"
+        android:background="@android:color/white"
+        android:src="@drawable/ic_working_out" />
 
     <com.github.lzyzsd.circleprogress.DonutProgress
         android:id="@+id/done_btn"
@@ -91,7 +91,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/White"
-        custom:srcCompat="@drawable/ic_information"
+        android:src="@drawable/ic_information"
         android:layout_alignTop="@+id/done_btn"
         android:layout_toLeftOf="@+id/imageView"
         android:layout_toStartOf="@+id/imageView"
@@ -103,7 +103,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/White"
-        custom:srcCompat="@drawable/ic_play_button"
+        android:src="@drawable/ic_play_button"
         android:layout_alignBottom="@+id/done_btn"
         android:layout_toRightOf="@+id/done_btn"
         android:layout_toEndOf="@+id/done_btn" />

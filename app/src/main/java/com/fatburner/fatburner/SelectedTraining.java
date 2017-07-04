@@ -48,9 +48,6 @@ public class SelectedTraining extends Menu {
     int trainingCompletionPercent;
     int loadArray[];
 
-    String training[] = {"Бег","Берпи","Отжимания","Приседания","Трастеры","Запрыгивания на тумбу", " ", " ", " ", " "};
-    String scoreValue = "30";
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -95,10 +92,12 @@ public class SelectedTraining extends Menu {
         }
 
         userCursor.close();
+        db.close();
 
         trainingCompletionPercent = progress;
 
         startButton = (DonutProgress) findViewById(R.id.start_btn);
+        startAnimation();
         ImageButton nextButton = (ImageButton) findViewById(R.id.next_btn);
         ImageButton prevButton = (ImageButton) findViewById(R.id.prev_btn);
 
@@ -210,17 +209,6 @@ public class SelectedTraining extends Menu {
         startButton.setProgress(trainingCompletionPercent);
     }
 
-    /*
-    void saveSettings() {
-        sPref = getPreferences(MODE_PRIVATE);
-        SharedPreferences.Editor ed = sPref.edit();
-        ed.putString("selectedTraining",String.valueOf(trainingId));
-        Set<String> trainingSet = new HashSet<>();
-        Collections.addAll(trainingSet, training);
-        ed.putStringSet("training", trainingSet);
-        ed.commit();
-    }
-*/
 
-    }
+}
 
