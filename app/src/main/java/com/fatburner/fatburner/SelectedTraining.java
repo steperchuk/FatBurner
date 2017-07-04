@@ -19,9 +19,11 @@ import android.widget.Toast;
 
 import com.github.lzyzsd.circleprogress.DonutProgress;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static com.fatburner.fatburner.GlobalVariables.LOAD_ARRAY;
@@ -33,6 +35,8 @@ import static com.fatburner.fatburner.GlobalVariables.TRAINING_ID;
  */
 
 public class SelectedTraining extends Menu {
+
+    String TABLE = "EXERCISES_LIST";
 
     DatabaseHelper databaseHelper;
     SQLiteDatabase db;
@@ -55,21 +59,50 @@ public class SelectedTraining extends Menu {
         mDrawerLayout.addView(contentView, 0);
 
 
+        ///Work with DB
+        // открываем подключение
+        databaseHelper = new DatabaseHelper(this);
+        databaseHelper.getWritableDatabase();
+        db = databaseHelper.open();
 
+        //DatabaseHelper.TABLE = "TRAININGS";
 
-        Intent intent = getIntent();
-        final int selectedTraining = TRAINING_ID;
-        loadArray = LOAD_ARRAY;
-        //final int selectedTraining = Integer.valueOf(intent.getStringExtra("selectedTraining"));
-        //loadArray = intent.getIntArrayExtra("percentCompleted");
-        trainingCompletionPercent = loadArray[selectedTraining];
+        // массив данных
+        userCursor = db.rawQuery("select DAY from TRAININGS where IS_CURRENT = 1", null);
+        userCursor.moveToFirst();
+        int day = userCursor.getInt(0);
+
+        userCursor = db.rawQuery("select PROGRESS from TRAININGS where IS_CURRENT = 1", null);
+        userCursor.moveToFirst();
+        int progress = userCursor.getInt(0);
+
+        userCursor = db.rawQuery("select TRAINING_ID from TRAININGS where IS_CURRENT = 1", null);
+        userCursor.moveToFirst();
+        int trainingId = userCursor.getInt(0);
+
+        userCursor =  db.rawQuery("select * from "+ TABLE + " where Day = " + day, null);
+        List<String> exercisesInfo = new ArrayList<>();
+
+        if (userCursor.moveToFirst()) {
+            do {
+                exercisesInfo.add(userCursor.getString(userCursor.getColumnIndex("EXERCISE")) + "\n" +
+                userCursor.getString(userCursor.getColumnIndex("EXERCISE_INFO")) + "\n" +
+                        "Подходов: " + userCursor.getString(userCursor.getColumnIndex("ATTEMPTS"))  +
+                 "   Повторений: " + userCursor.getString(userCursor.getColumnIndex("REPEATS")) + "   Отдых: " +
+                userCursor.getInt(userCursor.getColumnIndex("RELAX_TIME"))/60 + " мин");
+
+            } while (userCursor.moveToNext());
+        }
+
+        userCursor.close();
+
+        trainingCompletionPercent = progress;
 
         startButton = (DonutProgress) findViewById(R.id.start_btn);
         ImageButton nextButton = (ImageButton) findViewById(R.id.next_btn);
         ImageButton prevButton = (ImageButton) findViewById(R.id.prev_btn);
 
         final TextView trainingLabel = (TextView) findViewById(R.id.trainingId);
-        TextView score = (TextView) findViewById(R.id.scoreLabel);
 
         TextView exercise1 = (TextView) findViewById(R.id.exercise_1);
         TextView exercise2 = (TextView) findViewById(R.id.exercise_2);
@@ -82,36 +115,53 @@ public class SelectedTraining extends Menu {
         TextView exercise9 = (TextView) findViewById(R.id.exercise_9);
         TextView exercise10 = (TextView) findViewById(R.id.exercise_10);
 
-        trainingId = selectedTraining;
         trainingLabel.setText("Training: " + trainingId);
-        score.setText("Score: " + scoreValue);
 
-
-        exercise1.setText(training[0]);
-        exercise2.setText(training[1]);
-        exercise3.setText(training[2]);
-        exercise4.setText(training[3]);
-        exercise5.setText(training[4]);
-        exercise6.setText(training[5]);
-        exercise7.setText(training[6]);
-        exercise8.setText(training[7]);
-        exercise9.setText(training[8]);
-        exercise10.setText(training[9]);
-
+        for(int i = 0; i < exercisesInfo.size(); i++) {
+            switch (i) {
+                case 0:
+                exercise1.setText(exercisesInfo.get(0));
+                    break;
+                case 1:
+                exercise2.setText(exercisesInfo.get(1));
+                    break;
+                case 2:
+                exercise3.setText(exercisesInfo.get(2));
+                    break;
+                case 3:
+                exercise4.setText(exercisesInfo.get(3));
+                    break;
+                case 4:
+                exercise5.setText(exercisesInfo.get(4));
+                    break;
+                case 5:
+                exercise6.setText(exercisesInfo.get(5));
+                    break;
+                case 6:
+                exercise7.setText(exercisesInfo.get(6));
+                    break;
+                case 7:
+                exercise8.setText(exercisesInfo.get(7));
+                    break;
+                case 8:
+                exercise9.setText(exercisesInfo.get(8));
+                    break;
+                case 9:
+                exercise10.setText(exercisesInfo.get(9));
+                    break;
+            }
+        }
         setButtonLabel();
 
         startButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
 
                     Intent intent = new Intent(SelectedTraining.this, Exercise.class);
-                    //intent.putExtra("training", training);
-                    //saveSettings();
-                    TRAINING = training;
-                    TRAINING_ID = trainingId;
                     startActivity(intent);
                 }
             });
 
+        /*
         nextButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if(trainingId < training.length)
@@ -135,7 +185,7 @@ public class SelectedTraining extends Menu {
                 }
             }
         });
-
+*/
         }
 
     void startAnimation ( ) {
