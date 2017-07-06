@@ -121,9 +121,14 @@ public class Exercise extends Menu {
 
             dayLabel.setText("День: " + day);
 
-            userCursor = db.rawQuery("select * from EXERCISES_LIST where Day = " + day, null);
+        userCursor = db.rawQuery("select PROGRAMM_NAME from TRAININGS where IS_CURRENT = 1", null);
+        userCursor.moveToFirst();
+        String programmName = userCursor.getString(0);
 
-            if (userCursor.moveToFirst()) {
+        userCursor = db.query("EXERCISES_LIST", null, "DAY = ? AND PROGRAMM_NAME = ?", new String[] {String.valueOf(day), programmName}, null, null, null);
+
+
+        if (userCursor.moveToFirst()) {
                 do {
                     exercises.add(userCursor.getString(userCursor.getColumnIndex("EXERCISE")));
                     infos.add(userCursor.getString(userCursor.getColumnIndex("EXERCISE_INFO")));
