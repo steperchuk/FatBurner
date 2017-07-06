@@ -330,6 +330,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
+        android:layout_marginTop="30dp"
         android:layout_below="@+id/dinnerShema"
         android:layout_alignLeft="@+id/dinnerShema"
         android:layout_alignStart="@+id/dinnerShema" />

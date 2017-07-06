@@ -2,13 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <CalendarView
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/trainingCalendarView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp" />
+        app:mcv_showOtherDates="all"
+        app:mcv_selectionColor="#00F"
+        />
 
     <TextView
         android:id="@+id/trainingStatusLabel"
@@ -17,9 +18,10 @@
         android:layout_alignLeft="@+id/trainingCalendarView"
         android:layout_alignStart="@+id/trainingCalendarView"
         android:layout_below="@+id/trainingCalendarView"
-        android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
         android:text="Training - Completed"
-        android:textSize="18sp" />
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/dietStatusLabel"
@@ -28,9 +30,9 @@
         android:layout_alignLeft="@+id/trainingStatusLabel"
         android:layout_alignStart="@+id/trainingStatusLabel"
         android:layout_below="@+id/trainingStatusLabel"
-        android:layout_marginTop="23dp"
+        android:layout_marginTop="15dp"
         android:text="Diet - Passed"
-        android:textSize="18sp" />
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/waterStatusLabel"
@@ -39,7 +41,7 @@
         android:layout_alignLeft="@+id/dietStatusLabel"
         android:layout_alignStart="@+id/dietStatusLabel"
         android:layout_below="@+id/dietStatusLabel"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="15dp"
         android:text="Water - Passed"
-        android:textSize="18sp" />
+        android:textSize="14sp" />
 </RelativeLayout>

@@ -126,8 +126,6 @@ public class SelectedTraining extends Menu {
         SimpleAdapter sAdapter = new SimpleAdapter(this, data, R.layout.list_row_exercises, from, to);
         exercisesList.setAdapter(sAdapter);
 
-//        setButtonLabel();
-
         startLabel.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
 
@@ -136,31 +134,6 @@ public class SelectedTraining extends Menu {
                 }
             });
 
-        /*
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if(trainingId < training.length)
-                {
-                    trainingLabel.setText("Training: " + (trainingId+1));
-                    trainingId++;
-                    trainingCompletionPercent = loadArray[trainingId];
-                    setButtonLabel();
-                }
-            }
-        });
-
-        prevButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if(trainingId > 0)
-                {
-                    trainingLabel.setText("Training: " + (trainingId - 1));
-                    trainingId--;
-                    trainingCompletionPercent = loadArray[trainingId];
-                    setButtonLabel();
-                }
-            }
-        });
-*/
 
         AdapterView.OnItemClickListener mOnListClick = new AdapterView.OnItemClickListener(){
 
@@ -172,30 +145,6 @@ public class SelectedTraining extends Menu {
 
     }
 
-    /*
-    void startAnimation ( ) {
-        AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(SelectedTraining.this, R.animator.progress_anim);
-        set.setInterpolator(new DecelerateInterpolator());
-        set.setTarget(startButton);
-        set.start();
-
-    }
-*/
-    /*
-    void setButtonLabel(){
-        switch (trainingCompletionPercent){
-            case 0:
-                startButton.setText("Начать");
-                break;
-            case 100:
-                startButton.setText("Повторить");
-                break;
-            default:
-                startButton.setText("Продолжить");
-        }
-        startButton.setProgress(trainingCompletionPercent);
-    }
-*/
 
     private void blink(){
         final Handler handler = new Handler();
