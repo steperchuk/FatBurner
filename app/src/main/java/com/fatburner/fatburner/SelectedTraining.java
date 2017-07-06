@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
@@ -52,6 +53,7 @@ public class SelectedTraining extends Menu {
         View contentView = inflater.inflate(R.layout.activity_selected_training, null, false);
         mDrawerLayout.addView(contentView, 0);
 
+        blink();
 
         ///Work with DB
         // открываем подключение
@@ -97,10 +99,7 @@ public class SelectedTraining extends Menu {
 
         trainingCompletionPercent = progress; //need to get progress from db
 
-        startButton = (DonutProgress) findViewById(R.id.start_btn);
-        startAnimation();
-        ImageButton nextButton = (ImageButton) findViewById(R.id.next_btn);
-        ImageButton prevButton = (ImageButton) findViewById(R.id.prev_btn);
+        TextView startLabel = (TextView) findViewById(R.id.startLabel);
 
         ListView exercisesList = (ListView) findViewById(R.id.exercises);
 
@@ -127,9 +126,9 @@ public class SelectedTraining extends Menu {
         SimpleAdapter sAdapter = new SimpleAdapter(this, data, R.layout.list_row_exercises, from, to);
         exercisesList.setAdapter(sAdapter);
 
-        setButtonLabel();
+//        setButtonLabel();
 
-        startButton.setOnClickListener(new View.OnClickListener() {
+        startLabel.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
 
                     Intent intent = new Intent(SelectedTraining.this, Exercise.class);
@@ -173,6 +172,7 @@ public class SelectedTraining extends Menu {
 
     }
 
+    /*
     void startAnimation ( ) {
         AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(SelectedTraining.this, R.animator.progress_anim);
         set.setInterpolator(new DecelerateInterpolator());
@@ -180,7 +180,8 @@ public class SelectedTraining extends Menu {
         set.start();
 
     }
-
+*/
+    /*
     void setButtonLabel(){
         switch (trainingCompletionPercent){
             case 0:
@@ -193,6 +194,30 @@ public class SelectedTraining extends Menu {
                 startButton.setText("Продолжить");
         }
         startButton.setProgress(trainingCompletionPercent);
+    }
+*/
+
+    private void blink(){
+        final Handler handler = new Handler();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int timeToBlink = 1000;    //in milissegunds
+                try{Thread.sleep(timeToBlink);}catch (Exception e) {}
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        TextView txt = (TextView) findViewById(R.id.startLabel);
+                        if(txt.getVisibility() == View.VISIBLE){
+                            txt.setVisibility(View.INVISIBLE);
+                        }else{
+                            txt.setVisibility(View.VISIBLE);
+                        }
+                        blink();
+                    }
+                });
+            }
+        }).start();
     }
 
 
