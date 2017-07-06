@@ -5,36 +5,34 @@ import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.Button;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.lzyzsd.circleprogress.DonutProgress;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
-
-import static com.fatburner.fatburner.GlobalVariables.LOAD_ARRAY;
-import static com.fatburner.fatburner.GlobalVariables.TRAINING;
-import static com.fatburner.fatburner.GlobalVariables.TRAINING_ID;
+import java.util.Map;
 
 /**
  * Created by sergeyteperchuk on 6/12/17.
  */
 
 public class SelectedTraining extends Menu {
+
+    final String ATTRIBUTE_NAME = "name";
+    final String ATTRIBUTE_NAME_INFO = "info";
+    final String ATTRIBUTE_NAME_RELAX = "time";
 
     String TABLE = "EXERCISES_LIST";
 
@@ -78,78 +76,55 @@ public class SelectedTraining extends Menu {
         int trainingId = userCursor.getInt(0);
 
         userCursor =  db.rawQuery("select * from "+ TABLE + " where Day = " + day, null);
+        final List<String> exercises = new ArrayList<>();
         List<String> exercisesInfo = new ArrayList<>();
+        List<String> relaxTimeInfo = new ArrayList<>();
 
         if (userCursor.moveToFirst()) {
             do {
-                exercisesInfo.add(userCursor.getString(userCursor.getColumnIndex("EXERCISE")) + "\n" +
-                userCursor.getString(userCursor.getColumnIndex("EXERCISE_INFO")) + "\n" +
+                exercises.add(userCursor.getString(userCursor.getColumnIndex("EXERCISE")));
+                exercisesInfo.add(userCursor.getString(userCursor.getColumnIndex("EXERCISE_INFO")) + "\n" +
                         "Подходов: " + userCursor.getString(userCursor.getColumnIndex("ATTEMPTS"))  +
-                 "   Повторений: " + userCursor.getString(userCursor.getColumnIndex("REPEATS")) + "   Отдых: " +
-                userCursor.getInt(userCursor.getColumnIndex("RELAX_TIME"))/60 + " мин");
-
+                 "   Повторений: " + userCursor.getString(userCursor.getColumnIndex("REPEATS")));
+                relaxTimeInfo.add("Отдых: " + userCursor.getInt(userCursor.getColumnIndex("RELAX_TIME"))/60 + " мин");
             } while (userCursor.moveToNext());
         }
 
         userCursor.close();
         db.close();
 
-        trainingCompletionPercent = progress;
+        trainingCompletionPercent = progress; //need to get progress from db
 
         startButton = (DonutProgress) findViewById(R.id.start_btn);
         startAnimation();
         ImageButton nextButton = (ImageButton) findViewById(R.id.next_btn);
         ImageButton prevButton = (ImageButton) findViewById(R.id.prev_btn);
 
+        ListView exercisesList = (ListView) findViewById(R.id.exercises);
+
         final TextView trainingLabel = (TextView) findViewById(R.id.trainingId);
-
-        TextView exercise1 = (TextView) findViewById(R.id.exercise_1);
-        TextView exercise2 = (TextView) findViewById(R.id.exercise_2);
-        TextView exercise3 = (TextView) findViewById(R.id.exercise_3);
-        TextView exercise4 = (TextView) findViewById(R.id.exercise_4);
-        TextView exercise5 = (TextView) findViewById(R.id.exercise_5);
-        TextView exercise6 = (TextView) findViewById(R.id.exercise_6);
-        TextView exercise7 = (TextView) findViewById(R.id.exercise_7);
-        TextView exercise8 = (TextView) findViewById(R.id.exercise_8);
-        TextView exercise9 = (TextView) findViewById(R.id.exercise_9);
-        TextView exercise10 = (TextView) findViewById(R.id.exercise_10);
-
         trainingLabel.setText("Training: " + trainingId);
 
-        for(int i = 0; i < exercisesInfo.size(); i++) {
-            switch (i) {
-                case 0:
-                exercise1.setText(exercisesInfo.get(0));
-                    break;
-                case 1:
-                exercise2.setText(exercisesInfo.get(1));
-                    break;
-                case 2:
-                exercise3.setText(exercisesInfo.get(2));
-                    break;
-                case 3:
-                exercise4.setText(exercisesInfo.get(3));
-                    break;
-                case 4:
-                exercise5.setText(exercisesInfo.get(4));
-                    break;
-                case 5:
-                exercise6.setText(exercisesInfo.get(5));
-                    break;
-                case 6:
-                exercise7.setText(exercisesInfo.get(6));
-                    break;
-                case 7:
-                exercise8.setText(exercisesInfo.get(7));
-                    break;
-                case 8:
-                exercise9.setText(exercisesInfo.get(8));
-                    break;
-                case 9:
-                exercise10.setText(exercisesInfo.get(9));
-                    break;
-            }
+        // упаковываем данные в понятную для адаптера структуру
+        ArrayList<Map<String, Object>> data = new ArrayList<Map<String, Object>>(exercises.size());
+        Map<String, Object> m;
+        for (int i = 0; i < exercises.size(); i++) {
+            m = new HashMap<String, Object>();
+            m.put(ATTRIBUTE_NAME, exercises.get(i));
+            m.put(ATTRIBUTE_NAME_INFO, exercisesInfo.get(i));
+            m.put(ATTRIBUTE_NAME_RELAX, relaxTimeInfo.get(i));
+            data.add(m);
         }
+
+        // массив имен атрибутов, из которых будут читаться данные
+        String[] from = { ATTRIBUTE_NAME,ATTRIBUTE_NAME_INFO, ATTRIBUTE_NAME_RELAX};
+        // массив ID View-компонентов, в которые будут вставлять данные
+        int[] to = { R.id.title, R.id.time, R.id.info };
+
+        // создаем адаптер
+        SimpleAdapter sAdapter = new SimpleAdapter(this, data, R.layout.list_row_exercises, from, to);
+        exercisesList.setAdapter(sAdapter);
+
         setButtonLabel();
 
         startButton.setOnClickListener(new View.OnClickListener() {
@@ -185,7 +160,16 @@ public class SelectedTraining extends Menu {
             }
         });
 */
-        }
+
+        AdapterView.OnItemClickListener mOnListClick = new AdapterView.OnItemClickListener(){
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //add code
+            }
+        };
+
+    }
 
     void startAnimation ( ) {
         AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(SelectedTraining.this, R.animator.progress_anim);
@@ -198,13 +182,13 @@ public class SelectedTraining extends Menu {
     void setButtonLabel(){
         switch (trainingCompletionPercent){
             case 0:
-                startButton.setText("Start");
+                startButton.setText("Начать");
                 break;
             case 100:
-                startButton.setText("Repeat");
+                startButton.setText("Повторить");
                 break;
             default:
-                startButton.setText("Continue");
+                startButton.setText("Продолжить");
         }
         startButton.setProgress(trainingCompletionPercent);
     }

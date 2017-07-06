@@ -22,134 +22,18 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-
-    <ScrollView android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/scroll"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_below="@+id/trainingId"
+    <ListView
+        android:id="@+id/exercises"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/trainingId"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="14dp">
+        android:layout_alignParentStart="true">
+    </ListView>
 
 
-        <LinearLayout
-            android:id="@+id/list"
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/exercise_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                android:textAlignment="center"
-                android:layout_gravity="center"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/exercise_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="20dp"
-                android:textAlignment="center"
-                android:layout_gravity="center"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/exercise_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="20dp"
-                android:textAlignment="center"
-                android:layout_gravity="center"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/exercise_4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="20dp"
-                android:textAlignment="center"
-                android:layout_gravity="center"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/exercise_5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="20dp"
-                android:textAlignment="center"
-                android:layout_gravity="center"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/exercise_6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="20dp"
-                android:textAlignment="center"
-                android:layout_gravity="center"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/exercise_7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_gravity="center"
-                android:textSize="10sp" />
-
-            <TextView
-                android:id="@+id/exercise_8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="20dp"
-                android:textAlignment="center"
-                android:layout_gravity="center"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/exercise_9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="20dp"
-                android:textAlignment="center"
-                android:layout_gravity="center"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/exercise_10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="20dp"
-                android:textAlignment="center"
-                android:layout_gravity="center"
-                android:textSize="14sp" />
-
-        </LinearLayout>
-    </ScrollView>
 
     <LinearLayout
         android:id="@+id/buttons"
@@ -164,10 +48,11 @@
 
         <ImageButton
             android:id="@+id/prev_btn"
-            android:layout_width="125dp"
+            android:layout_width="150dp"
             android:layout_height="match_parent"
             android:background="@color/White"
             android:onClick="buttonClicked"
+            android:layout_marginBottom="15dp"
             android:shadowColor="#45A9D4"
             android:shadowDx="0"
             android:shadowDy="0"
@@ -180,17 +65,17 @@
         <com.github.lzyzsd.circleprogress.DonutProgress
             android:id="@+id/start_btn"
             custom:donut_progress="0"
-            custom:donut_text_size="36dp"
+            custom:donut_text_size="24dp"
             android:text="Start"
             android:layout_gravity="center"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
             android:layout_marginBottom="15dp"
-            android:layout_width="150dp"
-            android:layout_height="150dp"/>
+            android:layout_width="100dp"
+            android:layout_height="100dp"/>
 
         <ImageButton
             android:id="@+id/next_btn"
-            android:layout_width="125dp"
+            android:layout_width="150dp"
             android:layout_height="match_parent"
             android:background="@color/White"
             android:onClick="buttonClicked"
@@ -199,6 +84,7 @@
             android:shadowDy="0"
             android:shadowRadius="5"
             android:layout_gravity="right"
+            android:layout_marginBottom="15dp"
             android:src="@drawable/ic_right_arrow"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
