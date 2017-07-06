@@ -42,9 +42,8 @@ public class SelectedTraining extends Menu {
 
     DonutProgress startButton;
 
-    int trainingId = 1;
     int trainingCompletionPercent;
-    int loadArray[];
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,8 +59,6 @@ public class SelectedTraining extends Menu {
         databaseHelper.getWritableDatabase();
         db = databaseHelper.open();
 
-        //DatabaseHelper.TABLE = "TRAININGS";
-
         // массив данных
         userCursor = db.rawQuery("select DAY from TRAININGS where IS_CURRENT = 1", null);
         userCursor.moveToFirst();
@@ -75,7 +72,13 @@ public class SelectedTraining extends Menu {
         userCursor.moveToFirst();
         int trainingId = userCursor.getInt(0);
 
-        userCursor =  db.rawQuery("select * from "+ TABLE + " where Day = " + day, null);
+        userCursor = db.rawQuery("select PROGRAMM_NAME from TRAININGS where IS_CURRENT = 1", null);
+        userCursor.moveToFirst();
+        String programmName = userCursor.getString(0);
+
+
+        userCursor = db.query("EXERCISES_LIST", null, "DAY = ? AND PROGRAMM_NAME = ?", new String[] {String.valueOf(day), programmName}, null, null, null);
+
         final List<String> exercises = new ArrayList<>();
         List<String> exercisesInfo = new ArrayList<>();
         List<String> relaxTimeInfo = new ArrayList<>();
@@ -83,8 +86,7 @@ public class SelectedTraining extends Menu {
         if (userCursor.moveToFirst()) {
             do {
                 exercises.add(userCursor.getString(userCursor.getColumnIndex("EXERCISE")));
-                exercisesInfo.add(userCursor.getString(userCursor.getColumnIndex("EXERCISE_INFO")) + "\n" +
-                        "Подходов: " + userCursor.getString(userCursor.getColumnIndex("ATTEMPTS"))  +
+                exercisesInfo.add("Подходов: " + userCursor.getString(userCursor.getColumnIndex("ATTEMPTS"))  +
                  "   Повторений: " + userCursor.getString(userCursor.getColumnIndex("REPEATS")));
                 relaxTimeInfo.add("Отдых: " + userCursor.getInt(userCursor.getColumnIndex("RELAX_TIME"))/60 + " мин");
             } while (userCursor.moveToNext());

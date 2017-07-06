@@ -31,29 +31,22 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/Blue"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="5dp"
-        android:textSize="14dip"
+        android:textSize="12dip"
         android:text="relax time"
-        android:layout_above="@+id/info"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_toStartOf="@+id/imageView2" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/info"
+        android:layout_alignStart="@+id/info" />
 
     <TextView
         android:id="@+id/info"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/Blue"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="5dp"
-        android:textSize="14dip"
+        android:textSize="12dip"
         android:text="programm info"
-        android:layout_below="@+id/imageView2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_toLeftOf="@+id/imageView2"
-        android:layout_toStartOf="@+id/imageView2" />
+        android:layout_above="@+id/time"
+        android:layout_alignLeft="@+id/title"
+        android:layout_alignStart="@+id/title" />
 
 
     <!-- Rightend Arrow -->

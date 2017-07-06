@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -16,10 +17,13 @@ import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.lzyzsd.circleprogress.DonutProgress;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -80,96 +84,127 @@ public class Exercise extends Menu {
         List<String> repeats = new ArrayList<>();
         List<Integer> relaxTime = new ArrayList<>();
 
-        ///Work with DB
-        // открываем подключение
-        databaseHelper = new DatabaseHelper(this);
-        databaseHelper.getWritableDatabase();
-        db = databaseHelper.open();
 
 
-        userCursor = db.rawQuery("select DAY from TRAININGS where IS_CURRENT = 1", null);
-        userCursor.moveToFirst();
-        int day = userCursor.getInt(0);
-
-        dayLabel.setText("День: " + day);
-
-        userCursor =  db.rawQuery("select * from EXERCISES_LIST where Day = " + day, null);
-
-        if (userCursor.moveToFirst()) {
-            do {
-                exercises.add(userCursor.getString(userCursor.getColumnIndex("EXERCISE")));
-                infos.add(userCursor.getString(userCursor.getColumnIndex("EXERCISE_INFO")));
-                attempts.add(userCursor.getString(userCursor.getColumnIndex("ATTEMPTS")));
-                repeats.add(userCursor.getString(userCursor.getColumnIndex("REPEATS")));
-                relaxTime.add(userCursor.getInt(userCursor.getColumnIndex("RELAX_TIME")));
-            } while (userCursor.moveToNext());
+        ImageView imageView = (ImageView) findViewById(R.id.imageView) ;
+        String filename = "srspina.png";
+        InputStream inputStream = null;
+        try{
+            inputStream = getApplicationContext().getAssets().open(filename);
+            Drawable d = Drawable.createFromStream(inputStream, null);
+            imageView.setImageDrawable(d);
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         }
-
-        userCursor.close();
-        db.close();
-
-
-        final List<String> exerciseList = new ArrayList<>();
-        final List<String> infoList = new ArrayList<>();
-        final List<String> attemptsList = new ArrayList<>();
-        final List<String> repeatsList = new ArrayList<>();
-        final List<Integer> relaxTimeList = new ArrayList<>();
-
-
-        for(int i = 0; i < exercises.size(); i++){
-            for (int j = 0; j < Integer.parseInt(attempts.get(i)); j++){
-                exerciseList.add(exercises.get(i));
-                infoList.add(infos.get(i));
-                attemptsList.add(attempts.get(i));
-                repeatsList.add(repeats.get(i));
-                relaxTimeList.add(relaxTime.get(i));
-                exerciseList.add("Отдых");
-                infoList.add(" ");
-                attemptsList.add(" ");
-                repeatsList.add(" ");
-                relaxTimeList.add(relaxTime.get(i));
+        catch (IOException e){
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (inputStream != null)
+                    inputStream.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
         }
 
 
-        doneBtn = (DonutProgress) findViewById(R.id.done_btn);
+            ///Work with DB
+            // открываем подключение
+            databaseHelper = new DatabaseHelper(this);
+            databaseHelper.getWritableDatabase();
+            db = databaseHelper.open();
 
-        exerciseLabel.setText(exerciseList.get(0));
-        infoLabel.setText(infoList.get(0));
-        attemptsLabel.setText("Подходов: " + attemptsList.get(0));
-        repeatsLabel.setText("Повторений: " + repeatsList.get(0));
-        doneBtn.setText("Done");
-        startAnimation(false);
-        doneBtn.setProgress(progress);
-        doneBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if(animationFinished) {
-                    exerciseLabel.setText(exerciseList.get(i));
-                    infoLabel.setText(infoList.get(i));
-                    if(!exerciseList.get(i).equals("Отдых")){repeatsLabel.setText("Повторений: " + repeatsList.get(i));}
-                    else{repeatsLabel.setText(" ");}
 
-                    if(!exerciseList.get(i).equals("Отдых")){attemptsLabel.setText("Подходов: " + attemptsList.get(i));}
-                    else {attemptsLabel.setText(" ");}
-                    //relaxTimerValue = relaxTimeList.get(i) * 1000;    // comment this row for debug purposes
+            userCursor = db.rawQuery("select DAY from TRAININGS where IS_CURRENT = 1", null);
+            userCursor.moveToFirst();
+            int day = userCursor.getInt(0);
 
-                    if (!exerciseList.get(i).equals("Отдых")) {
+            dayLabel.setText("День: " + day);
 
-                        progress = progress + 100 / (exerciseList.size()/2);
-                        doneBtn.setText(String.valueOf(progress).substring(0, 2) + "%");
-                        doneBtn.setProgress(progress);
-                    } else {startAnimation(true);}
-                }
+            userCursor = db.rawQuery("select * from EXERCISES_LIST where Day = " + day, null);
 
-                if(i == exerciseList.size()-1)
-                {
-                    Intent intent = new Intent(Exercise.this, TrainingCompleted.class);
-                    startActivity(intent);
-                }
-
-                i++;
+            if (userCursor.moveToFirst()) {
+                do {
+                    exercises.add(userCursor.getString(userCursor.getColumnIndex("EXERCISE")));
+                    infos.add(userCursor.getString(userCursor.getColumnIndex("EXERCISE_INFO")));
+                    attempts.add(userCursor.getString(userCursor.getColumnIndex("ATTEMPTS")));
+                    repeats.add(userCursor.getString(userCursor.getColumnIndex("REPEATS")));
+                    relaxTime.add(userCursor.getInt(userCursor.getColumnIndex("RELAX_TIME")));
+                } while (userCursor.moveToNext());
             }
-        });
+
+            userCursor.close();
+            db.close();
+
+
+            final List<String> exerciseList = new ArrayList<>();
+            final List<String> infoList = new ArrayList<>();
+            final List<String> attemptsList = new ArrayList<>();
+            final List<String> repeatsList = new ArrayList<>();
+            final List<Integer> relaxTimeList = new ArrayList<>();
+
+
+            for (int i = 0; i < exercises.size(); i++) {
+                for (int j = 0; j < Integer.parseInt(attempts.get(i)); j++) {
+                    exerciseList.add(exercises.get(i));
+                    infoList.add(infos.get(i));
+                    attemptsList.add(attempts.get(i));
+                    repeatsList.add(repeats.get(i));
+                    relaxTimeList.add(relaxTime.get(i));
+                    exerciseList.add("Отдых");
+                    infoList.add(" ");
+                    attemptsList.add(" ");
+                    repeatsList.add(" ");
+                    relaxTimeList.add(relaxTime.get(i));
+                }
+            }
+
+
+            doneBtn = (DonutProgress) findViewById(R.id.done_btn);
+
+            exerciseLabel.setText(exerciseList.get(0));
+            infoLabel.setText(infoList.get(0));
+            attemptsLabel.setText("Подходов: " + attemptsList.get(0));
+            repeatsLabel.setText("Повторений: " + repeatsList.get(0));
+            doneBtn.setText("Done");
+            startAnimation(false);
+            doneBtn.setProgress(progress);
+            doneBtn.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    if (animationFinished) {
+                        exerciseLabel.setText(exerciseList.get(i));
+                        infoLabel.setText(infoList.get(i));
+                        if (!exerciseList.get(i).equals("Отдых")) {
+                            repeatsLabel.setText("Повторений: " + repeatsList.get(i));
+                        } else {
+                            repeatsLabel.setText(" ");
+                        }
+
+                        if (!exerciseList.get(i).equals("Отдых")) {
+                            attemptsLabel.setText("Подходов: " + attemptsList.get(i));
+                        } else {
+                            attemptsLabel.setText(" ");
+                        }
+                        //relaxTimerValue = relaxTimeList.get(i) * 1000;    // comment this row for debug purposes
+
+                        if (!exerciseList.get(i).equals("Отдых")) {
+
+                            progress = progress + 100 / (exerciseList.size() / 2);
+                            doneBtn.setText(String.valueOf(progress).substring(0, 2) + "%");
+                            doneBtn.setProgress(progress);
+                        } else {
+                            startAnimation(true);
+                        }
+                    }
+
+                    if (i == exerciseList.size() - 1) {
+                        Intent intent = new Intent(Exercise.this, TrainingCompleted.class);
+                        startActivity(intent);
+                    }
+
+                    i++;
+                }
+            });
 
     }
 
