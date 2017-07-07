@@ -19,6 +19,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
+
+
     <com.github.lzyzsd.circleprogress.CircleProgress
     android:id="@+id/waterProgress"
     custom:circle_progress="0"
@@ -32,101 +34,48 @@
     android:layout_above="@+id/scoreLabel"
     />
 
-    <ImageButton
-        android:id="@+id/smallWaterBtn"
-        android:background="@color/White"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="59dp"
-        android:src="@drawable/ic_glass_of_water_small"
-        android:layout_below="@+id/activityLabel"
-        android:layout_toStartOf="@+id/mediumWaterBtn"
-        android:layout_toLeftOf="@+id/mediumWaterBtn" />
-
-    <ImageButton
-        android:id="@+id/mediumWaterBtn"
-        android:background="@color/White"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_glass_of_water_medium"
-        android:layout_marginLeft="31dp"
-        android:layout_marginStart="31dp"
-        android:layout_alignBottom="@+id/smallWaterBtn"
-        android:layout_alignLeft="@+id/waterProgress"
-        android:layout_alignStart="@+id/waterProgress" />
-
-    <ImageButton
-        android:id="@+id/bigWaterBtn"
-        android:background="@color/White"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_glass_of_water_medium"
-        android:layout_alignTop="@+id/mediumWaterBtn"
-        android:layout_alignRight="@+id/waterProgress"
-        android:layout_alignEnd="@+id/waterProgress"
-        android:layout_marginRight="32dp"
-        android:layout_marginEnd="32dp" />
-
-    <ImageButton
-        android:id="@+id/biggestWaterBtn"
-        android:background="@color/White"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_glass_of_water_biggest"
-        android:layout_alignBottom="@+id/bigWaterBtn"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="34dp"
-        android:layout_marginEnd="34dp" />
-
-    <TextView
-        android:id="@+id/textView11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/smallWaterBtn"
-        android:layout_alignStart="@+id/smallWaterBtn"
-        android:layout_below="@+id/smallWaterBtn"
-        android:layout_marginTop="12dp"
-        android:text="100 ml" />
-
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="200 ml"
-        android:layout_alignBaseline="@+id/textView11"
-        android:layout_alignBottom="@+id/textView11"
-        android:layout_alignRight="@+id/mediumWaterBtn"
-        android:layout_alignEnd="@+id/mediumWaterBtn" />
-
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="300 ml"
-        android:layout_alignBaseline="@+id/textView12"
-        android:layout_alignBottom="@+id/textView12"
-        android:layout_alignRight="@+id/bigWaterBtn"
-        android:layout_alignEnd="@+id/bigWaterBtn" />
-
     <TextView
         android:id="@+id/textView14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="400 ml"
-        android:layout_alignBaseline="@+id/textView13"
-        android:layout_alignBottom="@+id/textView13"
-        android:layout_toRightOf="@+id/waterProgress"
-        android:layout_toEndOf="@+id/waterProgress" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp" />
 
     <TextView
         android:id="@+id/waterAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/biggestWaterBtn"
-        android:layout_centerHorizontal="true"
         android:text="0 / 2500 ml"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:layout_below="@+id/activityLabel"
+        android:layout_alignRight="@+id/activityLabel"
+        android:layout_alignEnd="@+id/activityLabel"
+        android:layout_marginTop="14dp" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@android:color/white"
+        android:layout_marginTop="42dp"
+        android:layout_below="@+id/waterAmount"
+        android:layout_alignRight="@+id/waterAmount" />
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="30dp"
+        android:layout_height="600dp"
+        android:rotation="270"
+        android:max="500"
+        android:progress="0"
+        android:layout_centerHorizontal="true"
+        android:layout_marginRight="17dp"
+        android:layout_marginEnd="17dp"
+        android:layout_alignBottom="@+id/waterProgress"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/activityLabel" />
 
 
 </RelativeLayout>
