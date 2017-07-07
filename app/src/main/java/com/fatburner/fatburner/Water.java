@@ -23,18 +23,16 @@ import java.io.InputStream;
  * Created by sete on 6/15/2017.
  */
 
-public class Water extends Menu implements View.OnClickListener {
+public class Water extends Menu {
 
     TextView waterProgressLabel;
-    ImageButton small;
-    ImageButton medium;
-    ImageButton big;
-    ImageButton biggest;
+    TextView selectedAmountLabel;
+    ImageView imageView;
     CircleProgress waterProgress;
 
     float progress;
     int waterDailyNorm = 2500;
-    int selectedAmount = 200;
+    int selectedAmount = 150;
     float increment = 0;
     int amount = 0;
 
@@ -49,16 +47,7 @@ public class Water extends Menu implements View.OnClickListener {
 
         waterProgressLabel = (TextView) findViewById(R.id.waterAmount);
 
-        small = (ImageButton) findViewById(R.id.smallWaterBtn);
-        small.setOnClickListener(this);
-        medium = (ImageButton) findViewById(R.id.mediumWaterBtn);
-        medium.setOnClickListener(this);
-        big = (ImageButton) findViewById(R.id.bigWaterBtn);
-        big.setOnClickListener(this);
-        biggest = (ImageButton) findViewById(R.id.biggestWaterBtn);
-        biggest.setOnClickListener(this);
-
-        ImageView imageView = (ImageView) findViewById(R.id.imageView) ;
+        imageView = (ImageView) findViewById(R.id.imageView) ;
         String filename = "drop.png";
         InputStream inputStream = null;
         try{
@@ -87,6 +76,8 @@ public class Water extends Menu implements View.OnClickListener {
         waterProgress = (CircleProgress) findViewById(R.id.waterProgress);
         waterProgress.setTextSize(100);
 
+        selectedAmountLabel = (TextView) findViewById(R.id.selectedAmount);
+        selectedAmountLabel.setText(String.valueOf(selectedAmount));
 
         SeekBar seekBar = (SeekBar)findViewById(R.id.seekBar);
         seekBar.setMax(10);
@@ -109,8 +100,12 @@ public class Water extends Menu implements View.OnClickListener {
                     if (progress >= 0 && progress <= seekBar.getMax()) {
 
                         String progressString = String.valueOf(progress * 50);
-                        //seekBar.setText(progressString); // the TextView Reference
+                        selectedAmountLabel.setText(progressString + " ml");
+                        imageView.getLayoutParams().height = progress * 50;
+                        imageView.getLayoutParams().width = progress * 50;
+                        imageView.requestLayout();
                         seekBar.setSecondaryProgress(progress);
+                        selectedAmount = progress * 50;
                     }
                 }
 
@@ -128,53 +123,10 @@ public class Water extends Menu implements View.OnClickListener {
                 increment = (c * 100);
                 progress = progress + increment;
 
-                if(progress > 130)
-                {
-                    waterProgress.setMax(Math.round(progress));
-                    waterProgress.setFinishedColor(Color.RED);
-                    waterProgress.setTextColor(Color.WHITE);
-                }
-
                 waterProgress.setProgress(Math.round(progress));
                 waterProgressLabel.setText(amount + " / " + waterDailyNorm + " ml");
             }
         });
-
-
-    }
-
-    public void onClick(View v) {
-        TextView textView11 = (TextView) findViewById(R.id.textView11);
-        TextView textView12 = (TextView) findViewById(R.id.textView12);
-        TextView textView13 = (TextView) findViewById(R.id.textView13);
-        TextView textView14 = (TextView) findViewById(R.id.textView14);
-
-        textView11.setTextColor(Color.BLACK);
-        textView12.setTextColor(Color.BLACK);
-        textView13.setTextColor(Color.BLACK);
-        textView14.setTextColor(Color.BLACK);
-
-        switch (v.getId()) {
-            case R.id.smallWaterBtn:
-                selectedAmount = 100;
-                textView11.setTextColor(Color.BLUE);
-                break;
-
-            case R.id.mediumWaterBtn:
-                selectedAmount = 200;
-                textView12.setTextColor(Color.BLUE);
-                break;
-
-            case R.id.bigWaterBtn:
-                selectedAmount = 300;
-                textView13.setTextColor(Color.BLUE);
-                break;
-
-            case R.id.biggestWaterBtn:
-                selectedAmount = 400;
-                textView14.setTextColor(Color.BLUE);
-                break;
-        }
 
     }
 }
