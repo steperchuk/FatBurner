@@ -44,6 +44,8 @@ public class MainActivity extends Menu {
         super.onCreate(savedInstanceState);
 
 
+        Intent intent = new Intent(MainActivity.this, TrainingsCalendar.class);
+        startActivity(intent);
 
         // создаем базу данных
         databaseHelper = new DatabaseHelper(getApplicationContext());

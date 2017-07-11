@@ -38,9 +38,13 @@
         android:id="@+id/selectedAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="400 ml"
-        android:layout_above="@+id/waterAmount"
-        android:layout_alignRight="@+id/seekBar" />
+        android:text="150 ml"
+        android:layout_alignBaseline="@+id/activityLabel"
+        android:layout_alignBottom="@+id/activityLabel"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="12dp"
+        android:layout_marginEnd="12dp" />
 
     <TextView
         android:id="@+id/waterAmount"
@@ -58,22 +62,26 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:background="@android:color/white"
-        android:layout_marginTop="42dp"
-        android:layout_below="@+id/waterAmount"
-        android:layout_alignRight="@+id/waterAmount" />
+        android:layout_above="@+id/waterProgress"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="39dp" />
 
-    <SeekBar
-        android:id="@+id/seekBar"
-        android:layout_width="30dp"
-        android:layout_height="500dp"
-        android:rotation="270"
-        android:max="500"
-        android:progress="0"
-        android:layout_marginEnd="17dp"
-        android:layout_alignBottom="@+id/waterProgress"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="21dp"
-        android:layout_alignTop="@+id/waterAmount" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginLeft="200dp"
+        android:layout_marginTop="50dp"
+        >
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:max="500"
+            android:progress="100"
+            android:rotation="270" />
+    </LinearLayout>
+
 
 
 </RelativeLayout>

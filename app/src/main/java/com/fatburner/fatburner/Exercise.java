@@ -76,6 +76,7 @@ public class Exercise extends Menu {
         final TextView infoLabel = (TextView) findViewById(R.id.info);
         final TextView attemptsLabel = (TextView) findViewById(R.id.attempts);
         final TextView dayLabel = (TextView) findViewById(R.id.day);
+        final ImageButton playButton = (ImageButton) findViewById(R.id.playerButton);
 
 
         List<String> exercises = new ArrayList<>();
@@ -210,6 +211,14 @@ public class Exercise extends Menu {
                     i++;
                 }
             });
+
+        playButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent("android.intent.action.MUSIC_PLAYER");
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
 
     }
 

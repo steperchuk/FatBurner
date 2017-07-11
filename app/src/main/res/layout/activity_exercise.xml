@@ -98,7 +98,7 @@
         android:layout_marginStart="35dp" />
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/playerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/White"
@@ -122,8 +122,8 @@
         android:id="@+id/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/imageButton3"
-        android:layout_alignRight="@+id/imageButton3"
+        android:layout_alignEnd="@+id/playerButton"
+        android:layout_alignRight="@+id/playerButton"
         android:layout_alignTop="@+id/done_btn"
         android:text="TextView"
         android:textAlignment="center"

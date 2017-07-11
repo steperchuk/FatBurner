@@ -1,8 +1,12 @@
 package com.fatburner.fatburner;
 
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,8 +14,11 @@ import android.support.v4.content.ContextCompat;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.github.lzyzsd.circleprogress.DonutProgress;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
@@ -22,6 +29,7 @@ import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -32,6 +40,8 @@ import java.util.HashSet;
 public class TrainingsCalendar extends Menu implements OnDateSelectedListener, OnMonthChangedListener {
 
     private static final DateFormat FORMATTER = SimpleDateFormat.getDateInstance();
+
+    DonutProgress startButton;
 
     TextView trainingStatusLabel;
     TextView dietStatusLabel;
@@ -67,8 +77,34 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
         mCalendarView.setOnDateChangedListener(this);
         mCalendarView.setOnMonthChangedListener(this);
 
+        mCalendarView.setSelectedDate(CalendarDay.today());
+
         trainingStatusLabel.setText(getSelectedDatesString());
 
+
+        ImageButton playerButton = (ImageButton) findViewById(R.id.playerButton);
+
+        startButton = (DonutProgress) findViewById(R.id.start_btn);
+        startButton.setText("Начать");
+        startAnimation();
+
+
+        playerButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent("android.intent.action.MUSIC_PLAYER");
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
+
+
+    }
+
+    void startAnimation ( ) {
+        AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(TrainingsCalendar.this, R.animator.progress_anim);
+        set.setInterpolator(new DecelerateInterpolator());
+        set.setTarget(startButton);
+        set.start();
 
     }
 
