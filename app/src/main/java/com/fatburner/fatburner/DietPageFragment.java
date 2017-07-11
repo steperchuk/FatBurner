@@ -14,11 +14,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -33,15 +37,15 @@ import static com.fatburner.fatburner.R.id.view;
 
 public class DietPageFragment extends Fragment {
 
+    ListView dietList;
+
+    final String ATTRIBUTE_NAME = "name";
+    final String ATTRIBUTE_NAME_INFO = "info";
+
 
     static final String ARGUMENT_PAGE_NUMBER = "arg_page_number";
     static final String SAVE_PAGE_NUMBER = "save_page_number";
 
-    TextView meal1;
-    TextView meal2;
-    TextView meal3;
-    TextView meal4;
-    TextView meal5;
 
     int pageNumber;
 
@@ -71,38 +75,30 @@ public class DietPageFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.diet_fragment, null);
 
-        meal1 = (TextView) view.findViewById(R.id.meal1);
-        meal2 = (TextView) view.findViewById(R.id.meal2);
-        meal3 = (TextView) view.findViewById(R.id.meal3);
-        meal4 = (TextView) view.findViewById(R.id.meal4);
-        meal5 = (TextView) view.findViewById(R.id.meal5);
+
+        String mealList[] = {"Завтрак","Перекус","Обед","Перекус","Ужин"};
+        String productsList[] = {"Product 1\nProduct 2\nProduct 2\nProduct 2\nProduct 2\nProduct 2\nProduct 2"};
 
 
+        dietList = (ListView) view.findViewById(R.id.dietList);
 
-        //String productsList = "Product 1\nProduct2\nProduct3\nProduct4\nProduct5";
-
-
-        String productsList = " ";
-
-        if(globalProductsMap.size() > 0){
-            Map<Integer, String[]> mealProducts = globalProductsMap.get(0);
-            String products[] = mealProducts.get(0);
-
-
-            for(String product: products){
-                productsList = productsList + product + "\n";
-            }
-
+        ArrayList<Map<String, Object>> data = new ArrayList<Map<String, Object>>(mealList.length);
+        Map<String, Object> m;
+        for (int i = 0; i < mealList.length; i++) {
+            m = new HashMap<String, Object>();
+            m.put(ATTRIBUTE_NAME, mealList[i]);
+            m.put(ATTRIBUTE_NAME_INFO, productsList[0]);
+            data.add(m);
         }
 
-        else{productsList = "Product 1\nProduct2\nProduct3\nProduct4\nProduct5";}
+        // массив имен атрибутов, из которых будут читаться данные
+        String[] from = { ATTRIBUTE_NAME,ATTRIBUTE_NAME_INFO};
+        // массив ID View-компонентов, в которые будут вставлять данные
+        int[] to = { R.id.dayTitle, R.id.products };
 
-        meal1.setText(productsList);
-        meal2.setText(productsList);
-        meal3.setText(productsList);
-        meal4.setText(productsList);
-        meal5.setText(productsList);
-
+        // создаем адаптер
+        SimpleAdapter sAdapter = new SimpleAdapter(getContext(), data, R.layout.list_row_products_diet, from, to);
+        dietList.setAdapter(sAdapter);
 
         return view;
     }

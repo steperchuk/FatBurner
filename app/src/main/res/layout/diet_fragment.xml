@@ -1,20 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/White">
 
+
+    <ListView
+        android:id="@+id/dietList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/trainingId"
+        android:layout_marginTop="5dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="60dp"
+        android:layout_alignParentStart="true">
+    </ListView>
+
+
     <ImageButton
         android:id="@+id/getTotalItemsList"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginEnd="13dp"
-        android:layout_marginRight="13dp"
+        android:layout_marginEnd="21dp"
+        android:layout_marginRight="21dp"
         android:background="@color/White"
         android:shadowColor="#45A9D4"
         android:shadowDx="0"
@@ -23,129 +32,9 @@
         android:src = "@drawable/ic_list"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
-        android:layout_alignParentTop="true"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="16dp" />
-
-    <TextView
-        android:id="@+id/textView19"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/getTotalItemsList"
-        android:layout_centerHorizontal="true"
-        android:text="Завтрак"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/meal1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView19"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:lines="8"
-        android:text="TextView"
-        android:textAlignment="center"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/textView20"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/meal1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:text="Перекус"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/meal2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView20"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:lines="6"
-        android:text="TextView"
-        android:textSize="18sp"
-        android:textAlignment="center" />
-
-    <TextView
-        android:id="@+id/textView21"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/meal2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:text="Обед"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/meal3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView21"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:lines="6"
-        android:text="TextView"
-        android:textSize="18sp"
-        android:textAlignment="center"/>
-
-    <TextView
-        android:id="@+id/textView22"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/meal3"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:text="Перекус"
-        android:textAlignment="center"
-        android:textSize="26sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/meal4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView22"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:lines="6"
-        android:text="TextView"
-        android:textSize="18sp"
-        android:textAlignment="center"/>
-
-    <TextView
-        android:id="@+id/textView23"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/meal4"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:text="Ужин"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/meal5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView23"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:lines="4"
-        android:text="TextView"
-        android:textSize="18sp"
-        android:textAlignment="center"/>
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
-</ScrollView>

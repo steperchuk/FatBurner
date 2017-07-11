@@ -68,22 +68,22 @@ class ProductsListPagerAdapter extends FragmentPagerAdapter {
         String product = "";
         switch (position){
             case 0:
-                product = PRODUCTS[0];
+                product = "Протеин";
                 break;
             case 1:
-                product = PRODUCTS[1];
+                product = "Каши/Крупы";
                 break;
             case 2:
-                product = PRODUCTS[2];
+                product = "Молочные";
                 break;
             case 3:
-                product = PRODUCTS[3];
+                product = "Фрукты/Овощи";
                 break;
             case 4:
-                product = PRODUCTS[4];
+                product = "Орехи";
                 break;
             case 5:
-                product = PRODUCTS[5];
+                product = "Жиры";
                 break;
         }
         return product;

@@ -62,25 +62,25 @@ class DietPagerAdapter extends FragmentPagerAdapter {
         String day = "";
         switch (position){
             case 0:
-                day = "Mon";
+                day = "Понедельник";
                 break;
             case 1:
-                day = "Tue";
+                day = "Вторник";
                 break;
             case 2:
-                day = "Wen";
+                day = "Среда";
                 break;
             case 3:
-                day = "The";
+                day = "Четверг";
                 break;
             case 4:
-                day = "Fri";
+                day = "Пятница";
                 break;
             case 5:
-                day = "Sat";
+                day = "Суббота";
                 break;
             case 6:
-                day = "Sun";
+                day = "Воскресенье";
                 break;
         }
         return day;

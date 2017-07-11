@@ -167,6 +167,8 @@ public class Exercise extends Menu {
 
 
             doneBtn = (DonutProgress) findViewById(R.id.done_btn);
+            doneBtn.setFinishedStrokeWidth(15);
+            doneBtn.setUnfinishedStrokeWidth(15);
 
             exerciseLabel.setText(exerciseList.get(0));
             infoLabel.setText(infoList.get(0));

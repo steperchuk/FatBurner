@@ -34,6 +34,8 @@ public class TrainingCompleted extends Menu {
 
         doneBtn = (DonutProgress) findViewById(R.id.done_btn);
         doneBtn.setText("Got It");
+        doneBtn.setFinishedStrokeWidth(15);
+        doneBtn.setUnfinishedStrokeWidth(15);
         doneBtn.setTextColor(R.color.OrangeDark);
         doneBtn.setFinishedStrokeColor(R.color.OrangeDark);
         startAnimation ();

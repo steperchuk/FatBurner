@@ -86,6 +86,8 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
 
         startButton = (DonutProgress) findViewById(R.id.start_btn);
         startButton.setText("Начать");
+        startButton.setFinishedStrokeWidth(15);
+        startButton.setUnfinishedStrokeWidth(15);
         startAnimation();
 
 
