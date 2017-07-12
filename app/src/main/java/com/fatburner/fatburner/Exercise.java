@@ -174,7 +174,7 @@ public class Exercise extends Menu {
             infoLabel.setText(infoList.get(0));
             attemptsLabel.setText("Подходов: " + attemptsList.get(0));
             repeatsLabel.setText("Повторений: " + repeatsList.get(0));
-            doneBtn.setText("Done");
+            doneBtn.setText("Далее");
             startAnimation(false);
             doneBtn.setProgress(progress);
             doneBtn.setOnClickListener(new View.OnClickListener() {

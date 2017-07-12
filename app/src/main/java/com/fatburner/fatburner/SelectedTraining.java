@@ -104,7 +104,7 @@ public class SelectedTraining extends Menu {
         ListView exercisesList = (ListView) findViewById(R.id.exercises);
 
         final TextView trainingLabel = (TextView) findViewById(R.id.trainingId);
-        trainingLabel.setText("Training: " + trainingId);
+        trainingLabel.setText("Тренировка: " + trainingId);
 
         // упаковываем данные в понятную для адаптера структуру
         ArrayList<Map<String, Object>> data = new ArrayList<Map<String, Object>>(exercises.size());

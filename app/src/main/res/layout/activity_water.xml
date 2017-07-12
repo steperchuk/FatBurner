@@ -13,13 +13,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
-        android:text="Water"
-
+        android:text="Норма воды"
         android:textSize="36sp"
         android:textStyle="bold"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
-
 
 
     <com.github.lzyzsd.circleprogress.CircleProgress
@@ -39,7 +37,7 @@
         android:id="@+id/selectedAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="150 ml"
+        android:text="150 мл"
         android:layout_marginLeft="19dp"
         android:layout_marginStart="19dp"
         android:layout_alignBottom="@+id/waterAmount"
@@ -50,12 +48,11 @@
         android:id="@+id/waterAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0 / 2500 ml"
+        android:text="0 / 2500 мл"
         android:textSize="18sp"
+        android:layout_centerHorizontal="true"
         android:layout_below="@+id/activityLabel"
-        android:layout_alignRight="@+id/activityLabel"
-        android:layout_alignEnd="@+id/activityLabel"
-        android:layout_marginTop="14dp" />
+        android:layout_marginTop="11dp" />
 
     <ImageView
         android:id="@+id/imageView"

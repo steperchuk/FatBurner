@@ -1,19 +1,15 @@
 package com.fatburner.fatburner;
 
-import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -38,10 +34,11 @@ public class Water extends Menu {
     ImageView imageView;
     CircleProgress waterProgress;
 
-    float progress;
+    float progress = 0;
     int waterDailyNorm = 2500;
     int selectedAmount = 150;
     float increment = 0;
+    int progressBarState = 3;
     int amount = 0;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -53,7 +50,10 @@ public class Water extends Menu {
         View contentView = inflater.inflate(R.layout.activity_water, null, false);
         mDrawerLayout.addView(contentView, 0);
 
+        loadData();
+
         waterProgressLabel = (TextView) findViewById(R.id.waterAmount);
+        waterProgressLabel.setText(amount + " / " + waterDailyNorm + " мл");
 
         imageView = (ImageView) findViewById(R.id.imageView);
         String filename = "drop.png";
@@ -75,12 +75,20 @@ public class Water extends Menu {
         }
 
         //setting ImageView size
-        imageView.getLayoutParams().height = 250;
-        imageView.getLayoutParams().width = 250;
+        imageView.getLayoutParams().height = (progressBarState * 50) + 100;
+        imageView.getLayoutParams().width = (progressBarState * 50) + 100;
         imageView.requestLayout();
 
         waterProgress = (CircleProgress) findViewById(R.id.waterProgress);
         waterProgress.setTextSize(100);
+        if(amount >= waterDailyNorm)
+        {
+            waterProgress.setProgress(100);
+        }
+        else
+        {
+            waterProgress.setProgress(Math.round(progress));
+        }
 
         waterProgress.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -107,17 +115,18 @@ public class Water extends Menu {
                     {
                     waterProgress.setProgress(Math.round(progress));
                     }
-                waterProgressLabel.setText(amount + " / " + waterDailyNorm + " ml");
+                waterProgressLabel.setText(amount + " / " + waterDailyNorm + " мл");
+                saveData();
             }
         });
 
         selectedAmountLabel = (TextView) findViewById(R.id.selectedAmount);
-        selectedAmountLabel.setText(String.valueOf(selectedAmount + " ml"));
+        selectedAmountLabel.setText(String.valueOf(progressBarState * 50 + " мл"));
 
 
         SeekBar seekBar = (SeekBar) findViewById(R.id.mySeekBar);
         seekBar.setMax(10);
-        seekBar.setProgress(3);
+        seekBar.setProgress(progressBarState);
 
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -135,9 +144,9 @@ public class Water extends Menu {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (fromUser) {
                     if (progress >= 0 && progress <= seekBar.getMax()) {
-
+                        progressBarState = progress;
                         String progressString = String.valueOf(progress * 50);
-                        selectedAmountLabel.setText(progressString + " ml");
+                        selectedAmountLabel.setText(progressString + " мл");
                         imageView.getLayoutParams().height = (progress * 50) + 100;
                         imageView.getLayoutParams().width = (progress * 50) + 100;
                         imageView.requestLayout();
@@ -150,23 +159,47 @@ public class Water extends Menu {
         });
 
 
+        }
+
+         void loadData(){
+
+            databaseHelper = new DatabaseHelper(this);
+            databaseHelper.getWritableDatabase();
+            db = databaseHelper.open();
+
+            databaseHelper = new DatabaseHelper(this);
+            databaseHelper.getWritableDatabase();
+            db = databaseHelper.open();
+
+            userCursor =  db.rawQuery("select * from WATER_INFO", null);
+
+            userCursor.moveToFirst();
+            waterDailyNorm = userCursor.getInt(0);
+            amount = userCursor.getInt(1);
+            progressBarState = userCursor.getInt(2);
+            progress = userCursor.getInt(3);
+
+             userCursor.close();
+             db.close();
+        }
 
 
-
-        /*
+        public void saveData() {
 
         databaseHelper = new DatabaseHelper(this);
         databaseHelper.getWritableDatabase();
         db = databaseHelper.open();
 
-        //code for updating WaterInfo table in DB
+        ContentValues cv = new ContentValues();
+        cv.put("DAY_NORM", 3000); //need to change hardcode to value from settings
+        cv.put("CURRENT_AMOUNT", amount);
+        cv.put("SELECTED_AMOUNT", progressBarState);
+        cv.put("PROGRESS", Math.round(progress));
+
+        db.update("WATER_INFO", cv, null, null);
 
         userCursor.close();
         db.close();
-
-        */
-
-        }
-
     }
+}
 

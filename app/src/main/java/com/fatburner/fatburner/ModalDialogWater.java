@@ -18,9 +18,9 @@ public class ModalDialogWater extends DialogFragment {
         AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
         return builder
                 .setTitle("Цель достигнута")
-                .setIcon(android.R.drawable.ic_dialog_info)
-                .setMessage("Вы потребили достаточное количество воды.")
-                .setPositiveButton("OK", null)
+                .setIcon(R.drawable.ic_information)
+                .setMessage("Вы выпили достаточное количество воды.")
+                .setPositiveButton("ОК", null)
                 .create();
     }
 }

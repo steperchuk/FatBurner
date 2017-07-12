@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="33dp"
-            android:text="Gender"
+            android:text="Пол"
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_alignParentTop="true"
@@ -46,7 +46,7 @@
             android:layout_alignStart="@+id/textView"
             android:layout_below="@+id/gender"
             android:layout_marginTop="14dp"
-            android:text="Goal"
+            android:text="Цель"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -58,7 +58,7 @@
             android:layout_alignStart="@+id/textView2"
             android:layout_below="@+id/textView2"
             android:layout_marginTop="14dp"
-            android:text="Difficulty"
+            android:text="Уровень"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -70,7 +70,7 @@
             android:layout_alignStart="@+id/textView3"
             android:layout_below="@+id/textView3"
             android:layout_marginTop="14dp"
-            android:text="Water Day Norm"
+            android:text="Дневная норма воды"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -78,7 +78,7 @@
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Training days"
+            android:text="Тренировочные дни"
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_below="@+id/textView4"
@@ -94,7 +94,7 @@
             android:layout_alignStart="@+id/textView5"
             android:layout_below="@+id/textView5"
             android:layout_marginTop="14dp"
-            android:text="Use Custom Diet"
+            android:text="Следовать диете"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -102,7 +102,7 @@
             android:id="@+id/textView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Notify about water"
+            android:text="Напомнить о приеме воды"
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_below="@+id/textView17"
@@ -114,7 +114,7 @@
             android:id="@+id/textView8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Notify about food"
+            android:text="Напомнить о приеме пищи"
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_below="@+id/switchWaterNotification"
@@ -205,7 +205,7 @@
             android:layout_alignStart="@+id/textView6"
             android:layout_below="@+id/textView6"
             android:layout_marginTop="14dp"
-            android:text="Phase"
+            android:text="Норма Ккал в день"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -217,7 +217,7 @@
             android:layout_alignStart="@+id/textView16"
             android:layout_below="@+id/textView16"
             android:layout_marginTop="15dp"
-            android:text="Diet Type"
+            android:text="Тип диеты"
             android:textSize="18sp"
             android:textStyle="bold" />
 

@@ -33,7 +33,9 @@ public class TrainingCompleted extends Menu {
         mDrawerLayout.addView(contentView, 0);
 
         doneBtn = (DonutProgress) findViewById(R.id.done_btn);
-        doneBtn.setText("Got It");
+        doneBtn.setFinishedStrokeWidth(15);
+        doneBtn.setUnfinishedStrokeWidth(15);
+        doneBtn.setText("Запомнить результат");
         doneBtn.setFinishedStrokeWidth(15);
         doneBtn.setUnfinishedStrokeWidth(15);
         doneBtn.setTextColor(R.color.OrangeDark);

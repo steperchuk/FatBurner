@@ -368,7 +368,7 @@ public class Settings extends Menu {
         selectedPhase = phaseValue;  //should be removed in future
         selectedDiet = dietTypeValue; //should be removed in future
 
-        Toast.makeText(this, "Settings loaded", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Настройки загружены", Toast.LENGTH_SHORT).show();
     }
 
    public void saveSettings() {
@@ -403,7 +403,7 @@ public class Settings extends Menu {
        userCursor.close();
        db.close();
 
-       Toast.makeText(this, "Settings saved", Toast.LENGTH_SHORT).show();
+       Toast.makeText(this, "Настройки сохранены", Toast.LENGTH_SHORT).show();
 
        selectedPhase = phaseValue;  //should be removed in future
        selectedDiet = dietTypeValue; //should be removed in future
