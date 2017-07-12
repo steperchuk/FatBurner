@@ -100,9 +100,11 @@ public class Water extends Menu {
         selectedAmountLabel = (TextView) findViewById(R.id.selectedAmount);
         selectedAmountLabel.setText(String.valueOf(selectedAmount + " ml"));
 
-        SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar);
+
+        SeekBar seekBar = (SeekBar) findViewById(R.id.mySeekBar);
         seekBar.setMax(10);
-        seekBar.setProgress(3, true);
+        seekBar.setProgress(3);
+
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -132,6 +134,10 @@ public class Water extends Menu {
 
             }
         });
+
+
+
+
 
         /*
 

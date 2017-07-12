@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/calendarLibrary" />
             <option value="$PROJECT_DIR$/circleButtonLibrary" />
+            <option value="$PROJECT_DIR$/verticalSeekbar" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

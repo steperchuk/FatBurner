@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/calendarLibrary/calendarLibrary.iml" filepath="$PROJECT_DIR$/calendarLibrary/calendarLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/circleButtonLibrary/circleButtonLibrary.iml" filepath="$PROJECT_DIR$/circleButtonLibrary/circleButtonLibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/verticalSeekbar/verticalSeekbar.iml" filepath="$PROJECT_DIR$/verticalSeekbar/verticalSeekbar.iml" />
     </modules>
   </component>
 </project>

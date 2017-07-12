@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/White"
@@ -39,12 +40,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="150 ml"
-        android:layout_alignBaseline="@+id/activityLabel"
-        android:layout_alignBottom="@+id/activityLabel"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="12dp"
-        android:layout_marginEnd="12dp" />
+        android:layout_marginLeft="19dp"
+        android:layout_marginStart="19dp"
+        android:layout_alignBottom="@+id/waterAmount"
+        android:layout_toRightOf="@+id/waterProgress"
+        android:layout_toEndOf="@+id/waterProgress" />
 
     <TextView
         android:id="@+id/waterAmount"
@@ -66,21 +66,29 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="39dp" />
 
-    <LinearLayout
+    <!-- This library requires pair of the VerticalSeekBar and VerticalSeekBarWrapper classes -->
+    <com.h6ah4i.android.widget.verticalseekbar.VerticalSeekBarWrapper
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        android:id="@+id/verticalSeekBarWrapper"
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/selectedAmount"
+        android:layout_alignEnd="@+id/selectedAmount"
+        android:layout_alignLeft="@+id/selectedAmount"
+        android:layout_alignStart="@+id/selectedAmount">
+        <!-- Rotation: CW90 or CW270 -->
+
+    <com.h6ah4i.android.widget.verticalseekbar.VerticalSeekBar
+        android:id="@+id/mySeekBar"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_marginLeft="200dp"
-        android:layout_marginTop="50dp"
-        >
+        android:layout_alignTop="@+id/verticalSeekBarWrapper"
+        android:layout_toEndOf="@+id/verticalSeekBarWrapper"
+        android:layout_toRightOf="@+id/verticalSeekBarWrapper"
+        android:splitTrack="false"
+        app:seekBarRotation="CW270" />
 
-        <SeekBar
-            android:id="@+id/seekBar"
-            android:layout_width="300dp"
-            android:layout_height="match_parent"
-            android:max="500"
-            android:progress="100"
-            android:rotation="270" />
-    </LinearLayout>
+    </com.h6ah4i.android.widget.verticalseekbar.VerticalSeekBarWrapper>
 
 
 

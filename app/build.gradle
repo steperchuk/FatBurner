@@ -33,4 +33,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile project(':circleButtonLibrary')
     compile project(':calendarLibrary')
+    compile project(':verticalSeekbar')
 }

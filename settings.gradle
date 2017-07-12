@@ -1,1 +1,1 @@
-include ':app', ':circleButtonLibrary', ':calendarLibrary'
+include ':app', ':circleButtonLibrary', ':calendarLibrary', 'verticalSeekbar'
