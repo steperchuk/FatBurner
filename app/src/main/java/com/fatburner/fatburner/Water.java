@@ -84,6 +84,15 @@ public class Water extends Menu {
 
         waterProgress.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
+                if(amount >= waterDailyNorm)
+                {
+                    ModalDialogWater dialog = new ModalDialogWater();
+                    dialog.show(getSupportFragmentManager(), "custom");
+                    waterProgress.setProgress(100);
+                    return;
+                }
+
                 amount = amount + selectedAmount;
                 float a = Math.round(selectedAmount);
                 float b = Math.round(waterDailyNorm);
@@ -92,7 +101,12 @@ public class Water extends Menu {
                 increment = (c * 100);
                 progress = progress + increment;
 
-                waterProgress.setProgress(Math.round(progress));
+                if(amount >= waterDailyNorm)
+                {waterProgress.setProgress(100);}
+                else
+                    {
+                    waterProgress.setProgress(Math.round(progress));
+                    }
                 waterProgressLabel.setText(amount + " / " + waterDailyNorm + " ml");
             }
         });
