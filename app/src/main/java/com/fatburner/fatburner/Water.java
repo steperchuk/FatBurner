@@ -144,6 +144,7 @@ public class Water extends Menu {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (fromUser) {
                     if (progress >= 0 && progress <= seekBar.getMax()) {
+                        if(progress <3){seekBar.setProgress(3); progress = 3;}
                         progressBarState = progress;
                         String progressString = String.valueOf(progress * 50);
                         selectedAmountLabel.setText(progressString + " мл");
@@ -191,7 +192,6 @@ public class Water extends Menu {
         db = databaseHelper.open();
 
         ContentValues cv = new ContentValues();
-        cv.put("DAY_NORM", 3000); //need to change hardcode to value from settings
         cv.put("CURRENT_AMOUNT", amount);
         cv.put("SELECTED_AMOUNT", progressBarState);
         cv.put("PROGRESS", Math.round(progress));

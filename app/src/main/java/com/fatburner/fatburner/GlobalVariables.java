@@ -22,9 +22,9 @@ public class GlobalVariables extends Application{
     public static Map<String,Integer> PRODUCTS_COUNT = new ArrayMap<>();
     //public static List<List<String>> listOfProducts = new ArrayList<List<String>>();
     public static Map<Integer, List<String>> listOfProducts = new HashMap<Integer, List<String>>();
-
     public static int selectedMealId;
     public static int selectedDayId;
     public static Map<Integer, Map<Integer, String[]>> globalProductsMap = new HashMap<Integer, Map<Integer, String[]>>();
+
 
     }

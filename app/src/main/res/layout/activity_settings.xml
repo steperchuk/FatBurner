@@ -70,7 +70,7 @@
             android:layout_alignStart="@+id/textView3"
             android:layout_below="@+id/textView3"
             android:layout_marginTop="14dp"
-            android:text="Дневная норма воды"
+            android:text="Дневная норма воды (мл)"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -160,18 +160,21 @@
             android:layout_alignRight="@+id/switchFoodNotification"
             android:layout_alignTop="@+id/textView7" />
 
-        <TextView
+        <EditText
             android:id="@+id/waterDayNorm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/textView4"
             android:layout_alignBottom="@+id/textView4"
             android:layout_alignEnd="@+id/trainingDays"
+            android:layout_alignLeft="@+id/switchWaterNotification"
             android:layout_alignRight="@+id/trainingDays"
-            android:layout_toRightOf="@+id/textView7"
+            android:layout_alignStart="@+id/switchWaterNotification"
             android:ems="10"
-            android:inputType="time"
+            android:inputType="numberDecimal"
+            android:maxLength="4"
             android:textAlignment="viewEnd"
+            android:textColor="@color/Blue"
             android:textSize="18sp" />
 
         <Switch
@@ -259,20 +262,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/textView3"
-            android:layout_alignRight="@+id/gender"
             android:layout_alignEnd="@+id/gender"
+            android:layout_alignRight="@+id/gender"
             android:layout_toEndOf="@+id/textView17"
-            android:layout_toRightOf="@+id/textView17" />
+            android:layout_toRightOf="@+id/textView17"
+            android:textAlignment="textEnd" />
 
         <Spinner
             android:id="@+id/difficulty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/textView3"
-            android:layout_alignRight="@+id/goal"
             android:layout_alignEnd="@+id/goal"
             android:layout_alignLeft="@+id/goal"
-            android:layout_alignStart="@+id/goal" />
+            android:layout_alignRight="@+id/goal"
+            android:layout_alignStart="@+id/goal"
+            android:layout_alignTop="@+id/textView3"
+            android:textAlignment="textEnd" />
 
 
 </RelativeLayout>

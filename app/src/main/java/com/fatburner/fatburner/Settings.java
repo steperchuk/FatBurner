@@ -20,6 +20,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -54,7 +55,7 @@ public class Settings extends Menu {
 
 
     final int DIALOG_DAYS = 3;
-    TextView waterDayNorm;
+    EditText waterDayNorm;
     TextView trainingDays;
     Spinner goal;
     Spinner difficulty;
@@ -93,7 +94,7 @@ public class Settings extends Menu {
 
         final ImageButton applyButton = (ImageButton) findViewById(R.id.applyBtn);
 
-        waterDayNorm = (TextView) findViewById(R.id.waterDayNorm);
+        waterDayNorm = (EditText) findViewById(R.id.waterDayNorm);
         trainingDays = (TextView) findViewById(R.id.trainingDays);
 
         goal = (Spinner) findViewById(R.id.goal);
@@ -125,6 +126,7 @@ public class Settings extends Menu {
         });
 
         loadSettings();
+
 
         if(dietTypeValue){
             switchDietType.setText("Углеводная");
@@ -258,9 +260,12 @@ public class Settings extends Menu {
             public void onClick(View v) {
 
                 isFirstStart = false;
-                saveSettings();
-                Intent intent = new Intent(Settings.this, MainActivity.class);
-                startActivity(intent);
+                //ModalDialogSettings dialog = new ModalDialogSettings();
+                //dialog.show(getSupportFragmentManager(), "custom");
+
+                    saveSettings();
+                    Intent intent = new Intent(Settings.this, MainActivity.class);
+                    startActivity(intent);
 
             }
         });
@@ -403,7 +408,7 @@ public class Settings extends Menu {
        cv.put("GOAL", goalValue);
        cv.put("DIFFICULTY", difficultyValue);
        cv.put("TRAINING_DAYS", trainingDaysValue);
-       cv.put("WATER_NORM", waterNormValue);
+       cv.put("WATER_NORM", Integer.valueOf(waterDayNorm.getText().toString()));
        if(useCustomDietValue){cv.put("USE_CUSTOM_DIET", 1);}
        else{cv.put("USE_CUSTOM_DIET", 0);}
        if(dietTypeValue){ cv.put("DIET_TYPE", 1);}
@@ -417,6 +422,14 @@ public class Settings extends Menu {
        else{cv.put("WATER_NOTIFICATON", 0);}
 
        db.update("APP_SETTINGS", cv, null, null);
+
+       cv = new ContentValues();
+       cv.put("DAY_NORM", Integer.valueOf(waterDayNorm.getText().toString()));
+       cv.put("CURRENT_AMOUNT", 0);
+       cv.put("SELECTED_AMOUNT", 3);
+       cv.put("PROGRESS", Math.round(0));
+
+       db.update("WATER_INFO", cv, null, null);
 
        userCursor.close();
        db.close();
