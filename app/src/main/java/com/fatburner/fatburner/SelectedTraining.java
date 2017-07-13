@@ -3,16 +3,19 @@ package com.fatburner.fatburner;
 
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -30,6 +33,8 @@ import java.util.Map;
  */
 
 public class SelectedTraining extends Menu {
+
+    ListView exercisesList;
 
     final String ATTRIBUTE_NAME = "name";
     final String ATTRIBUTE_NAME_INFO = "info";
@@ -101,7 +106,7 @@ public class SelectedTraining extends Menu {
 
         TextView startLabel = (TextView) findViewById(R.id.startLabel);
 
-        ListView exercisesList = (ListView) findViewById(R.id.exercises);
+        exercisesList = (ListView) findViewById(R.id.exercises);
 
         final TextView trainingLabel = (TextView) findViewById(R.id.trainingId);
         trainingLabel.setText("Тренировка: " + trainingId);
@@ -139,12 +144,46 @@ public class SelectedTraining extends Menu {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //add code
+
+
+                //get exercise name according to position
+
+                final Dialog dialog = new Dialog(SelectedTraining.this);
+                dialog.setContentView(R.layout.modal_exercise_info);
+                dialog.setTitle("This is my custom dialog box");
+                dialog.setCancelable(true);
+
+                //set up text
+                TextView info = (TextView) dialog.findViewById(R.id.info);
+                info.setText("Тут должен быть текст из базы");
+
+                TextView exerciseLabel = (TextView) dialog.findViewById(R.id.exercise_label);
+                exerciseLabel.setText("ПОДТЯГИВАНИЯ");
+
+                //set up image view
+                ImageButton youtubeBtn = (ImageButton) dialog.findViewById(R.id.youtubeButton);
+                youtubeBtn.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=cxLG2wtE7TM")));
+                    }
+                });
+
+
+                //set up button
+                Button button = (Button) dialog.findViewById(R.id.Button01);
+                button.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.show();
             }
-        };
+            
+            };
 
-    }
-
+        exercisesList.setOnItemClickListener(mOnListClick);
+        }
 
     private void blink(){
         final Handler handler = new Handler();

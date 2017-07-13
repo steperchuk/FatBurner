@@ -3,11 +3,13 @@ package com.fatburner.fatburner;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -76,6 +78,7 @@ public class Exercise extends Menu {
         final TextView infoLabel = (TextView) findViewById(R.id.info);
         final TextView attemptsLabel = (TextView) findViewById(R.id.attempts);
         final TextView dayLabel = (TextView) findViewById(R.id.day);
+        final ImageButton infoBtn = (ImageButton) findViewById(R.id.infoBtn);
         final ImageButton playButton = (ImageButton) findViewById(R.id.playerButton);
 
 
@@ -219,6 +222,42 @@ public class Exercise extends Menu {
                 Intent intent = new Intent("android.intent.action.MUSIC_PLAYER");
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
+            }
+        });
+
+        infoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(Exercise.this);
+                dialog.setContentView(R.layout.modal_exercise_info);
+                dialog.setTitle("This is my custom dialog box");
+                dialog.setCancelable(true);
+
+                //set up text
+                TextView info = (TextView) dialog.findViewById(R.id.info);
+                info.setText("Тут должен быть текст из базы");
+
+                TextView exerciseLabel = (TextView) dialog.findViewById(R.id.exercise_label);
+                exerciseLabel.setText("ПОДТЯГИВАНИЯ");
+
+                //set up image view
+                ImageButton youtubeBtn = (ImageButton) dialog.findViewById(R.id.youtubeButton);
+                youtubeBtn.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=cxLG2wtE7TM")));
+                    }
+                });
+
+
+                //set up button
+                Button button = (Button) dialog.findViewById(R.id.Button01);
+                button.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.show();
             }
         });
 
