@@ -97,4 +97,18 @@ public class Utils {
        return  normalizedList.toArray(new String[0]);
 
     }
+
+
+    public static boolean[] getCheckedDays(String daysValue){
+        boolean chkd[] = { false, false, false, false, false, false, false };
+        if(daysValue.contains("Пон")){chkd[0] = true;};
+        if(daysValue.contains("Вто")){chkd[1] = true;};
+        if(daysValue.contains("Сре")){chkd[2] = true;};
+        if(daysValue.contains("Чет")){chkd[3] = true;};
+        if(daysValue.contains("Пят")){chkd[4] = true;};
+        if(daysValue.contains("Суб")){chkd[5] = true;};
+        if(daysValue.contains("Вос")){chkd[6] = true;};
+        return chkd;
+    }
+
 }

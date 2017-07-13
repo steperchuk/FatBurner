@@ -17,8 +17,8 @@
 
         <ImageView
             android:id="@+id/list_image"
-            android:layout_width="15dip"
-            android:layout_height="15dip"
+            android:layout_width="30dip"
+            android:layout_height="30dip"
             android:src="@drawable/ic_trophy"/>
 
     </LinearLayout>

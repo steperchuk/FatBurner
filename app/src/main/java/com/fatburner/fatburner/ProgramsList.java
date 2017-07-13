@@ -39,6 +39,7 @@ public class ProgramsList extends Menu {
     final String ATTRIBUTE_NAME_INFO = "info";
     final String ATTRIBUTE_NAME_PROGRESS = "progress";
     final String ATTRIBUTE_NAME_PB = "pb";
+    final String ATTRIBUTE_ICON = "icon";
 
     ListView programms_list;
 
@@ -93,13 +94,18 @@ public class ProgramsList extends Menu {
             m.put(ATTRIBUTE_NAME_INFO, info.get(i));
             m.put(ATTRIBUTE_NAME_PROGRESS, load.get(i) + "%");
             m.put(ATTRIBUTE_NAME_PB, load.get(i));
+            if(load.get(i) != 100){m.put(ATTRIBUTE_ICON, R.drawable.ic_dumbbell);}
+            else{m.put(ATTRIBUTE_ICON, R.drawable.ic_trophy);}
+            //need to add case for current training
             data.add(m);
         }
 
+
+
         // массив имен атрибутов, из которых будут читаться данные
-        String[] from = { ATTRIBUTE_NAME_TITLE,ATTRIBUTE_NAME_INFO, ATTRIBUTE_NAME_PROGRESS, ATTRIBUTE_NAME_PB};
+        String[] from = { ATTRIBUTE_NAME_TITLE,ATTRIBUTE_NAME_INFO, ATTRIBUTE_NAME_PROGRESS, ATTRIBUTE_NAME_PB, ATTRIBUTE_ICON};
         // массив ID View-компонентов, в которые будут вставлять данные
-        int[] to = { R.id.title, R.id.info, R.id.progress, R.id.pbLoad};
+        int[] to = { R.id.title, R.id.info, R.id.progress, R.id.pbLoad, R.id.list_image};
 
         // создаем адаптер
         SimpleAdapter sAdapter = new SimpleAdapter(this, data, R.layout.list_row, from, to);
@@ -109,7 +115,7 @@ public class ProgramsList extends Menu {
         // определяем список и присваиваем ему адаптер
         programms_list = (ListView) findViewById(R.id.programms_list);
         programms_list.setAdapter(sAdapter);
-        
+
           AdapterView.OnItemClickListener mOnListClick = new AdapterView.OnItemClickListener(){
 
             @Override
@@ -149,6 +155,7 @@ public class ProgramsList extends Menu {
         int red = getResources().getColor(R.color.Red);
         int orange = getResources().getColor(R.color.Orange);
         int green = getResources().getColor(R.color.Green);
+
 
         @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
         @Override

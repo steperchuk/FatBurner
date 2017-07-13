@@ -46,7 +46,7 @@ public class Settings extends Menu {
 
 
     String phases[] = {"Фаза 1", "Фаза 2", "Фаза 3"};
-    String days[] = { "Monday", "Thuesday", "Wensday", "Thursday", "Friday", "Saturday", "Sunday" };
+    String days[] = { "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье" };
     String goals[] = {"Увеличение силы","Поддержание формы","Подготовительная","Набор Массы","Жиросжигание"};
     String difficulties[] = {"Новичок","Любитель","Профессионал"};
     boolean chkd[] = { false, false, false, false, false, false, false };
@@ -113,6 +113,11 @@ public class Settings extends Menu {
             @Override
             public void onClick(View v) {
                 hideKeyboard(v);
+
+                for(int i = 0; i < Utils.getCheckedDays(trainingDays.getText().toString()).length; i++) {
+                    chkd[i] = Utils.getCheckedDays(trainingDays.getText().toString())[i];
+                }
+
                 trainingDays.setText("");
                 daysSelected = "";
                 showDialog(DIALOG_DAYS);
@@ -126,30 +131,35 @@ public class Settings extends Menu {
         }
 
         if(switchUseCustomDiet.isChecked()){
-            switchUseCustomDiet.setText("Yes");
+            switchUseCustomDiet.setText("Да");
+            switchDietType.setVisibility(View.VISIBLE);
+            phase.setVisibility(View.VISIBLE);
+        }
+        else {
+            switchUseCustomDiet.setText("Нет");
             switchDietType.setVisibility(View.INVISIBLE);
             phase.setVisibility(View.INVISIBLE);
         }
 
         gender.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(gender.getText().equals("Male"))
-                {gender.setText("Female");}
-                else {gender.setText("Male");}
+                if(gender.getText().equals("Муж"))
+                {gender.setText("Жен");}
+                else {gender.setText("Муж");}
                 genderValue = isChecked;
             }
         });
 
         switchUseCustomDiet.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(switchUseCustomDiet.getText().equals("No"))
-                {switchUseCustomDiet.setText("Yes");
-                    switchDietType.setVisibility(View.INVISIBLE);
-                    phase.setVisibility(View.INVISIBLE);
-                }
-                else {switchUseCustomDiet.setText("No");
+                if(switchUseCustomDiet.getText().equals("Нет"))
+                {switchUseCustomDiet.setText("Да");
                     switchDietType.setVisibility(View.VISIBLE);
                     phase.setVisibility(View.VISIBLE);
+                }
+                else {switchUseCustomDiet.setText("Нет");
+                    switchDietType.setVisibility(View.INVISIBLE);
+                    phase.setVisibility(View.INVISIBLE);
                 }
                 useCustomDietValue = isChecked;
             }
@@ -270,7 +280,7 @@ public class Settings extends Menu {
 
         if (id == DIALOG_DAYS)
         {
-            adb.setTitle(R.string.items);
+            adb.setTitle("Дни недели");
             adb.setMultiChoiceItems(days, chkd, myItemsMultiClickListener);
             adb.setPositiveButton(R.string.ok, myBtnClickListener);
             return adb.create();
@@ -288,11 +298,19 @@ public class Settings extends Menu {
 
     DialogInterface.OnClickListener myBtnClickListener = new DialogInterface.OnClickListener() {
         public void onClick(DialogInterface dialog, int which) {
+            int atLeastOneChecked = 0;
             SparseBooleanArray sbArray = ((AlertDialog)dialog).getListView().getCheckedItemPositions();
             for (int i = 0; i < sbArray.size(); i++) {
                 int key = sbArray.keyAt(i);
                 if (sbArray.get(key))
-                    daysSelected = daysSelected + days[key].substring(0,3) + ", ";
+                {
+                    daysSelected = daysSelected + days[key].substring(0, 3) + ", ";
+                    atLeastOneChecked = 1;
+                }
+            }
+            if(atLeastOneChecked == 0){
+                dialog.cancel();
+                return;
             }
             daysSelected = daysSelected.substring(0, daysSelected.length() - 2);
             trainingDaysValue = daysSelected;

@@ -49,6 +49,7 @@ public class TrainingsList extends Menu {
     final String ATTRIBUTE_NAME_INFO = "info";
     final String ATTRIBUTE_NAME_PROGRESS = "progress";
     final String ATTRIBUTE_NAME_PB = "pb";
+    final String ATTRIBUTE_ICON = "icon";
 
     ListView trainings_list;
 
@@ -97,13 +98,15 @@ public class TrainingsList extends Menu {
             m.put(ATTRIBUTE_NAME_INFO, info.get(i) + " мин");
             m.put(ATTRIBUTE_NAME_PROGRESS, load.get(i) + "%");
             m.put(ATTRIBUTE_NAME_PB, load.get(i));
+            if(load.get(i) != 100){m.put(ATTRIBUTE_ICON, R.drawable.ic_dumbbell);}
+            else{m.put(ATTRIBUTE_ICON, R.drawable.ic_trophy);}
             data.add(m);
         }
 
         // массив имен атрибутов, из которых будут читаться данные
-        String[] from = { ATTRIBUTE_NAME_TITLE,ATTRIBUTE_NAME_INFO, ATTRIBUTE_NAME_PROGRESS, ATTRIBUTE_NAME_PB };
+        String[] from = { ATTRIBUTE_NAME_TITLE,ATTRIBUTE_NAME_INFO, ATTRIBUTE_NAME_PROGRESS, ATTRIBUTE_NAME_PB, ATTRIBUTE_ICON };
         // массив ID View-компонентов, в которые будут вставлять данные
-        int[] to = { R.id.title, R.id.info, R.id.progress, R.id.pbLoad };
+        int[] to = { R.id.title, R.id.info, R.id.progress, R.id.pbLoad, R.id.list_image };
 
         // создаем адаптер
         SimpleAdapter sAdapter = new SimpleAdapter(this, data, R.layout.list_row, from, to);
