@@ -111,4 +111,27 @@ public class Utils {
         return chkd;
     }
 
+
+    public static String twoHoursIncDec(Integer h, Integer m, boolean forward ){
+        String result = "";
+        Integer hour = 0;
+        if(forward){
+            if(h == 23 && m == 0){hour = 1;}
+            if(h == 23 && m > 0){hour = 2;}
+            if(h == 24 && m == 0){hour = 2;}
+            if(h != 23 || h != 24) {hour = h + 2;};
+        }
+        else{
+            if(h == 1 && m == 0){hour =  23;}
+            if(h == 1 && m > 0){hour = 22;}
+            if(h == 2 && m == 0){hour = 24;}
+            if(h == 2 && m > 0){hour = 23;}
+            if(h != 1 || h != 2) {hour = h - 2;};
+        }
+
+        if(hour < 10)
+        {result = "0" + h;}
+
+        return result;
+    }
 }

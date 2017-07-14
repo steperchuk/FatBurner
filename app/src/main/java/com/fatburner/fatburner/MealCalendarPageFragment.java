@@ -323,8 +323,19 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
 
 
     private void setTimeValues(){
+
+        String incrementedHour;
+        String decrementedHour;
+        Integer incH;
+        Integer decH;
+
+
         String h = String.valueOf(hour);
         String m = String.valueOf(min);
+
+
+
+        Utils.twoHoursIncDec(hour, min, false); //time backward
 
         if(hour < 10)
         {h = "0" + h;}
@@ -333,18 +344,77 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
         switch (timerIdForApply){
             case 1:
                 breakfestTime.setText(h + ":" + m);
+                incrementedHour = Utils.twoHoursIncDec(hour, min, true);
+                incH = Integer.valueOf(incrementedHour);
+                secondBreakfestTime.setText(incrementedHour + ":" + m);
+                incrementedHour = Utils.twoHoursIncDec(incH, min, true);
+                incH = Integer.valueOf(incrementedHour);
+                lunchTime.setText(incrementedHour + ":" + m);
+                incrementedHour = Utils.twoHoursIncDec(incH, min, true);
+                incH = Integer.valueOf(incrementedHour);
+                secondLunchTime.setText(incrementedHour + ":" + m);
+                incrementedHour = Utils.twoHoursIncDec(incH, min, true);
+                incH = Integer.valueOf(incrementedHour);
+                dinnerTime.setText(incrementedHour + ":" + m);
                 break;
             case 2:
+                decrementedHour = Utils.twoHoursIncDec(hour, min, false);
+                breakfestTime.setText(decrementedHour + ":" + m);
                 secondBreakfestTime.setText(h + ":" + m);
+                incrementedHour = Utils.twoHoursIncDec(hour, min, true);
+                incH = Integer.valueOf(incrementedHour);
+                lunchTime.setText(incrementedHour + ":" + m);
+                incrementedHour = Utils.twoHoursIncDec(incH, min, true);
+                incH = Integer.valueOf(incrementedHour);
+                secondLunchTime.setText(incrementedHour + ":" + m);
+                incrementedHour = Utils.twoHoursIncDec(incH, min, true);
+                dinnerTime.setText(incrementedHour + ":" + m);
                 break;
             case 3:
                 lunchTime.setText(h + ":" + m);
+                incrementedHour = Utils.twoHoursIncDec(hour, min, true);
+                incH = Integer.valueOf(incrementedHour);
+                secondLunchTime.setText(incrementedHour + ":" + m);
+                incrementedHour = Utils.twoHoursIncDec(incH, min, true);
+                dinnerTime.setText(incrementedHour + ":" + m);
+
+                decrementedHour = Utils.twoHoursIncDec(hour, min, false);
+                decH = Integer.valueOf(decrementedHour);
+                secondBreakfestTime.setText(decH + ":" + m);
+                decrementedHour = Utils.twoHoursIncDec(hour, min, false);
+                breakfestTime.setText(decrementedHour + ":" + m);
+
                 break;
             case 4:
                 secondLunchTime.setText(h + ":" + m);
+                incrementedHour = Utils.twoHoursIncDec(hour, min, true);
+                dinnerTime.setText(incrementedHour + ":" + m);
+
+                decrementedHour = Utils.twoHoursIncDec(hour, min, false);
+                decH = Integer.valueOf(decrementedHour);
+                lunchTime.setText(decrementedHour + ":" + m);
+                decrementedHour = Utils.twoHoursIncDec(decH, min, false);
+                decH = Integer.valueOf(decrementedHour);
+                secondBreakfestTime.setText(decH + ":" + m);
+                decrementedHour = Utils.twoHoursIncDec(hour, min, false);
+                breakfestTime.setText(decrementedHour + ":" + m);
+
                 break;
             case 5:
                 dinnerTime.setText(h + ":" + m);
+
+                decrementedHour = Utils.twoHoursIncDec(hour, min, false);
+                decH = Integer.valueOf(decrementedHour);
+                secondLunchTime.setText(decrementedHour + ":" + m);
+                decrementedHour = Utils.twoHoursIncDec(decH, min, false);
+                decH = Integer.valueOf(decrementedHour);
+                lunchTime.setText(decrementedHour + ":" + m);
+                decrementedHour = Utils.twoHoursIncDec(decH, min, false);
+                decH = Integer.valueOf(decrementedHour);
+                secondBreakfestTime.setText(decH + ":" + m);
+                decrementedHour = Utils.twoHoursIncDec(hour, min, false);
+                breakfestTime.setText(decrementedHour + ":" + m);
+
                 break;
         }
 
