@@ -9,60 +9,6 @@
     tools:context="com.fatburner.fatburner.MainActivity"
     android:id="@+id/drawerLayout">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true">
-
-        <com.github.lzyzsd.circleprogress.DonutProgress
-            android:id="@+id/start_btn"
-            custom:donut_progress="0"
-            custom:donut_text_size="36dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginBottom="15dp"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_above="@+id/scoreLabel"
-            />
-
-        <TextView
-            android:id="@+id/current_week"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="26dp"
-            android:text="Week 1"
-            android:textSize="36sp" />
-
-        <TextView
-            android:id="@+id/current_training"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/current_week"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="11dp"
-            android:text="Training 1"
-            android:textSize="24sp" />
-
-        <ImageButton
-            android:id="@+id/music_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/White"
-            android:src="@drawable/ic_play_button"
-            android:layout_alignBottom="@+id/start_btn"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="15dp"
-            android:layout_marginEnd="15dp" />
-
-    </RelativeLayout>
-
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_view"
         android:layout_width="wrap_content"

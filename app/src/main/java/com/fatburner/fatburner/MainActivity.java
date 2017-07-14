@@ -29,75 +29,43 @@ public class MainActivity extends Menu {
     SQLiteDatabase db;
     Cursor userCursor;
 
-    DonutProgress startButton;
-    ImageButton playerButton;
-    TextView currentTraining;
-
-    final String DATA_SD = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC) + "/music.mp3";
-    MediaPlayer mediaPlayer;
-    AudioManager am;
-
-    boolean playerStarted = false;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        Intent intent = new Intent(MainActivity.this, TrainingsCalendar.class);
-        startActivity(intent);
-
         // создаем базу данных
         databaseHelper = new DatabaseHelper(getApplicationContext());
         databaseHelper.create_db();
-
 
         // Implements menu visibility
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View contentView = inflater.inflate(R.layout.activity_main, null, false);
         mDrawerLayout.addView(contentView, 0);
 
-        playerButton = (ImageButton) findViewById(R.id.music_btn);
 
-        currentTraining = (TextView) findViewById(R.id.current_training);
-        currentTraining.setText("Training: " + TRAINING_ID);
+        databaseHelper = new DatabaseHelper(this);
+        databaseHelper.getWritableDatabase();
+        db = databaseHelper.open();
 
-        startButton = (DonutProgress) findViewById(R.id.start_btn);
-        startAnimation();
+        userCursor =  db.rawQuery("select * from APP_SETTINGS", null);
 
-                if(TRAINING_ID == 0)
-                {startButton.setText("Start");}
-                else {
-                    if (LOAD_ARRAY[TRAINING_ID] > 0) {
-                        startButton.setText("Continue");
-                    }
-                }
-
-        startButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                    if(TRAINING_ID == 0){
-                    Intent intent = new Intent(MainActivity.this, ProgramsList.class);
-                    startActivity(intent);}
-                else{
-                        Intent intent = new Intent(MainActivity.this, Exercise.class);
-                        startActivity(intent);
-                }
-
-
+        userCursor.moveToFirst();
+        if(userCursor.getInt(0) == 1)
+        {
+            intent = new Intent(MainActivity.this, TrainingsCalendar.class);
+            startActivity(intent);
+        }
+        else
+            {
+            intent = new Intent(MainActivity.this, Settings.class);
+            startActivity(intent);
             }
-        });
-
-        am = (AudioManager) getSystemService(AUDIO_SERVICE);
 
 
-        playerButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent("android.intent.action.MUSIC_PLAYER");
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-            }
-        });
+        userCursor.close();
+        db.close();
 
     }
 
@@ -109,25 +77,6 @@ public class MainActivity extends Menu {
         userCursor.close();
     }
 
-    private void releaseMP() {
-        if (mediaPlayer != null) {
-            try {
-                mediaPlayer.release();
-                mediaPlayer = null;
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    void startAnimation ( ) {
-        AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(MainActivity.this, R.animator.progress_anim);
-        set.setInterpolator(new DecelerateInterpolator());
-        set.setTarget(startButton);
-        set.start();
-
-    }
 
 }
 
