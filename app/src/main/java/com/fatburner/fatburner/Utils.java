@@ -112,21 +112,21 @@ public class Utils {
     }
 
 
-    public static String twoHoursIncDec(Integer h, Integer m, boolean forward ){
+    public static String twoHoursIncDec(Integer h, Integer increment, boolean forward ){
         String result = "";
         Integer hour = 0;
         if(forward){
-            if(h == 23){hour = 1;}
-            if(h == 0){hour = 2;}
+            hour = h + increment;
         }
         else{
-            if(h == 1){hour =  23;}
-            if(h == 2){hour = 0;}
+            hour = h - increment;
         }
-
+        if(hour > 23){hour = (h + increment) - 24;}
+        if(hour < 0){hour = 24 + hour;}
         if(hour < 10)
         {result = "0" + hour;}
 
+        result = hour.toString();
         return result;
     }
 
