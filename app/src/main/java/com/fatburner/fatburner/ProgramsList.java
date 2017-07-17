@@ -74,7 +74,7 @@ public class ProgramsList extends Menu {
 
         switchRecommended.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                showRecommended = isChecked
+                showRecommended = isChecked;
             }
         });
 
