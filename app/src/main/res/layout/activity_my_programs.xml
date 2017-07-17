@@ -9,8 +9,22 @@
     <ListView
         android:id="@+id/programms_list"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="470dp"
         android:layout_alignParentLeft="true"
         android:gravity="left"
         android:textAlignment="gravity"></ListView>
+
+    <Switch
+        android:id="@+id/isRecommended"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/programms_list"
+        android:layout_alignRight="@+id/programms_list"
+        android:layout_alignTop="@+id/programms_list"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_gravity="right"
+        android:text="Отображать только рекоммендуемые"
+        android:textSize="18sp" />
+
 </LinearLayout>

@@ -12,12 +12,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -42,6 +44,8 @@ public class ProgramsList extends Menu {
     final String ATTRIBUTE_ICON = "icon";
 
     ListView programms_list;
+    Switch switchRecommended;
+    boolean showRecommended = false;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -53,6 +57,7 @@ public class ProgramsList extends Menu {
         mDrawerLayout.addView(contentView, 0);
 
 
+        switchRecommended = (Switch) findViewById(R.id.isRecommended);
 
 
         ///Work with DB
@@ -66,7 +71,31 @@ public class ProgramsList extends Menu {
         databaseHelper.TABLE = "PROGRAMMS";
         //получаем данные из бд в виде курсора
 
-        userCursor =  db.rawQuery("select * from "+ DatabaseHelper.TABLE, null);
+
+        switchRecommended.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                showRecommended = isChecked
+            }
+        });
+
+
+
+        if(showRecommended)
+        {
+            userCursor =  db.rawQuery("select * from APP_SETTINGS", null);
+            userCursor.moveToFirst();
+            Integer goalValue = userCursor.getInt(2);
+            Integer difficultyValue = userCursor.getInt(3);
+            String goal = Utils.parseGoalValue(goalValue);
+            String difficulty = Utils.parseDifficultyValue(difficultyValue);
+
+            //msybe crash would be here
+            userCursor =  db.rawQuery("select * from "+ DatabaseHelper.TABLE + " where GOAL = " + goal + " AND DIFFICULTY = " + difficulty , null);
+        }
+        else
+        {
+            userCursor =  db.rawQuery("select * from "+ DatabaseHelper.TABLE, null);
+        }
 
 
         programs = new ArrayList<>();

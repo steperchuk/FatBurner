@@ -134,4 +134,43 @@ public class Utils {
 
         return result;
     }
+
+
+    public static String parseGoalValue(int value){
+        String goal ="";
+        switch (value){
+            case 1:
+                goal = "Увеличение силы";
+                break;
+            case 2:
+                goal = "Поддержание формы";
+                break;
+            case 3:
+                goal = "Подготовительная";
+                break;
+            case 4:
+                goal = "Набор Массы";
+                break;
+            case 5:
+                goal = "Жиросжигание";
+                break;
+        }
+        return goal;
+    }
+
+    public static String parseDifficultyValue(int value){
+        String difficulty ="";
+        switch (value){
+            case 1:
+                difficulty = "Новичок";
+                break;
+            case 2:
+                difficulty = "Любитель";
+                break;
+            case 3:
+                difficulty = "Профессионал";
+                break;
+        }
+        return difficulty;
+    }
 }
