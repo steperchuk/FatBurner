@@ -45,7 +45,7 @@ public class ProgramsList extends Menu {
 
     ListView programms_list;
     Switch switchRecommended;
-    boolean showRecommended = false;
+    boolean showRecommended = true;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -58,7 +58,7 @@ public class ProgramsList extends Menu {
 
 
         switchRecommended = (Switch) findViewById(R.id.isRecommended);
-
+        switchRecommended.setChecked(true);
 
         ///Work with DB
         // открываем подключение
@@ -71,26 +71,56 @@ public class ProgramsList extends Menu {
         databaseHelper.TABLE = "PROGRAMMS";
         //получаем данные из бд в виде курсора
 
+        fillList();
 
         switchRecommended.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 showRecommended = isChecked;
+                fillList();
             }
         });
 
 
+          AdapterView.OnItemClickListener mOnListClick = new AdapterView.OnItemClickListener(){
 
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                ContentValues cv = new ContentValues();
+                String selectedProgramm = programs.get(position);
+                cv.put(DatabaseHelper.COLUMN_IS_CURRENT, 0);
+                db.update(DatabaseHelper.TABLE, cv, null, null);
+                cv.put(DatabaseHelper.COLUMN_IS_CURRENT, 1);
+                db.update(DatabaseHelper.TABLE, cv, DatabaseHelper.COLUMN_NAME + " = ?" , new String[]{selectedProgramm});
+                cv = new ContentValues();
+                cv.put("CURRENT_PROGRAMM", selectedProgramm);
+                db.update("TRAINING_SETTINGS",cv,null,null);
+                db.close();
+                databaseHelper.close();
+                Intent intent;
+                intent = new Intent(ProgramsList.this, TrainingsList.class);
+                startActivity(intent);
+            }
+        };
+
+        programms_list.setOnItemClickListener(mOnListClick);
+
+
+    }
+
+    void fillList(){
         if(showRecommended)
         {
             userCursor =  db.rawQuery("select * from APP_SETTINGS", null);
             userCursor.moveToFirst();
+            Integer gender = userCursor.getInt(1);
             Integer goalValue = userCursor.getInt(2);
             Integer difficultyValue = userCursor.getInt(3);
             String goal = Utils.parseGoalValue(goalValue);
             String difficulty = Utils.parseDifficultyValue(difficultyValue);
 
-            //msybe crash would be here
-            userCursor =  db.rawQuery("select * from "+ DatabaseHelper.TABLE + " where GOAL = " + goal + " AND DIFFICULTY = " + difficulty , null);
+            userCursor = db.query(DatabaseHelper.TABLE, null, "GENDER is null AND GOAL = ? AND DIFFICULTY = ? OR GENDER = ? AND GOAL = ? AND DIFFICULTY = ? OR IS_CURRENT = ?", new String[] {String.valueOf(goal), String.valueOf(difficulty), String.valueOf(gender), String.valueOf(goal), String.valueOf(difficulty), String.valueOf(1)}, null, null, null);
+
         }
         else
         {
@@ -101,6 +131,7 @@ public class ProgramsList extends Menu {
         programs = new ArrayList<>();
         List<Integer> load = new ArrayList<>();
         List<String> info = new ArrayList<>();
+        List<Integer> isCurrent = new ArrayList<>();
 
         if (userCursor.moveToFirst()) {
             do {
@@ -109,6 +140,7 @@ public class ProgramsList extends Menu {
                 info.add("Недели: " + userCursor.getInt(userCursor.getColumnIndex(DatabaseHelper.COLUMN_WEEKS)) +
                         "  Дней в неделю: " + String.valueOf(userCursor.getInt(userCursor.getColumnIndex(DatabaseHelper.COLUMN_DAYS_PER_WEEK))) +
                         "  Время: " + userCursor.getString(userCursor.getColumnIndex(DatabaseHelper.COLUMN_HOURS)));
+                isCurrent.add(userCursor.getInt(userCursor.getColumnIndex(DatabaseHelper.COLUMN_IS_CURRENT)) );
             } while (userCursor.moveToNext());
         }
 
@@ -125,7 +157,7 @@ public class ProgramsList extends Menu {
             m.put(ATTRIBUTE_NAME_PB, load.get(i));
             if(load.get(i) != 100){m.put(ATTRIBUTE_ICON, R.drawable.ic_dumbbell);}
             else{m.put(ATTRIBUTE_ICON, R.drawable.ic_trophy);}
-            //need to add case for current training
+            if(isCurrent.get(i) == 1){m.put(ATTRIBUTE_ICON, R.drawable.ic_play_button);}
             data.add(m);
         }
 
@@ -144,30 +176,6 @@ public class ProgramsList extends Menu {
         // определяем список и присваиваем ему адаптер
         programms_list = (ListView) findViewById(R.id.programms_list);
         programms_list.setAdapter(sAdapter);
-
-          AdapterView.OnItemClickListener mOnListClick = new AdapterView.OnItemClickListener(){
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                ContentValues cv = new ContentValues();
-                String selectedProgramm = programs.get(position);
-                cv.put(DatabaseHelper.COLUMN_IS_CURRENT, 0);
-                db.update(DatabaseHelper.TABLE, cv, null, null);
-                cv.put(DatabaseHelper.COLUMN_IS_CURRENT, 1);
-                db.update(DatabaseHelper.TABLE, cv, DatabaseHelper.COLUMN_NAME + " = ?" , new String[]{selectedProgramm});
-
-                db.close();
-                databaseHelper.close();
-                Intent intent;
-                intent = new Intent(ProgramsList.this, TrainingsList.class);
-                startActivity(intent);
-            }
-        };
-
-        programms_list.setOnItemClickListener(mOnListClick);
-
-
     }
 
     @Override
@@ -176,7 +184,6 @@ public class ProgramsList extends Menu {
         db.close();
         userCursor.close();
     }
-
 
 
     class MyViewBinder implements SimpleAdapter.ViewBinder {

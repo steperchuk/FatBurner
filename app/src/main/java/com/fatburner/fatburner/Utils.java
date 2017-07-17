@@ -116,21 +116,16 @@ public class Utils {
         String result = "";
         Integer hour = 0;
         if(forward){
-            if(h == 23 && m == 0){hour = 1;}
-            if(h == 23 && m > 0){hour = 2;}
-            if(h == 24 && m == 0){hour = 2;}
-            if(h != 23 || h != 24) {hour = h + 2;};
+            if(h == 23){hour = 1;}
+            if(h == 0){hour = 2;}
         }
         else{
-            if(h == 1 && m == 0){hour =  23;}
-            if(h == 1 && m > 0){hour = 22;}
-            if(h == 2 && m == 0){hour = 24;}
-            if(h == 2 && m > 0){hour = 23;}
-            if(h != 1 || h != 2) {hour = h - 2;};
+            if(h == 1){hour =  23;}
+            if(h == 2){hour = 0;}
         }
 
         if(hour < 10)
-        {result = "0" + h;}
+        {result = "0" + hour;}
 
         return result;
     }
@@ -139,19 +134,19 @@ public class Utils {
     public static String parseGoalValue(int value){
         String goal ="";
         switch (value){
-            case 1:
+            case 0:
                 goal = "Увеличение силы";
                 break;
-            case 2:
+            case 1:
                 goal = "Поддержание формы";
                 break;
-            case 3:
+            case 2:
                 goal = "Подготовительная";
                 break;
-            case 4:
+            case 3:
                 goal = "Набор Массы";
                 break;
-            case 5:
+            case 4:
                 goal = "Жиросжигание";
                 break;
         }
@@ -161,13 +156,13 @@ public class Utils {
     public static String parseDifficultyValue(int value){
         String difficulty ="";
         switch (value){
-            case 1:
+            case 0:
                 difficulty = "Новичок";
                 break;
-            case 2:
+            case 1:
                 difficulty = "Любитель";
                 break;
-            case 3:
+            case 2:
                 difficulty = "Профессионал";
                 break;
         }

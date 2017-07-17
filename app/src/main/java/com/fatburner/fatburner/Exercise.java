@@ -4,6 +4,7 @@ import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -42,11 +43,13 @@ import static java.lang.Thread.sleep;
 
 public class Exercise extends Menu {
 
+    ImageView imageView;
+
     DatabaseHelper databaseHelper;
     SQLiteDatabase db;
     Cursor userCursor;
 
-    int i = 1;
+    int i = 0;
     int relaxTimerValue = 1000; // 1 sec for test purposes
     float progress = 0;
     DonutProgress doneBtn;
@@ -90,26 +93,7 @@ public class Exercise extends Menu {
 
 
 
-        ImageView imageView = (ImageView) findViewById(R.id.imageView) ;
-        String filename = "srspina.png";
-        InputStream inputStream = null;
-        try{
-            inputStream = getApplicationContext().getAssets().open(filename);
-            Drawable d = Drawable.createFromStream(inputStream, null);
-            imageView.setImageDrawable(d);
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-        finally {
-            try {
-                if (inputStream != null)
-                    inputStream.close();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
+        imageView = (ImageView) findViewById(R.id.imageView) ;
 
 
             ///Work with DB
@@ -173,10 +157,22 @@ public class Exercise extends Menu {
             doneBtn.setFinishedStrokeWidth(15);
             doneBtn.setUnfinishedStrokeWidth(15);
 
-            exerciseLabel.setText(exerciseList.get(0));
-            infoLabel.setText(infoList.get(0));
-            attemptsLabel.setText("Подходов: " + attemptsList.get(0));
-            repeatsLabel.setText("Повторений: " + repeatsList.get(0));
+        //Imageloading
+        db = databaseHelper.open();
+        userCursor = db.rawQuery("select * from EXERCISES_INFO where NAME = ?", new String[] {String.valueOf(exerciseList.get(i))}, null);
+        userCursor.moveToFirst();
+        String filename = userCursor.getString(1);
+        loadImage(filename);
+        userCursor.close();
+        db.close();
+        ///
+
+
+            exerciseLabel.setText(exerciseList.get(i));
+            infoLabel.setText(infoList.get(i));
+            attemptsLabel.setText("Подходов: " + attemptsList.get(i));
+            repeatsLabel.setText("Повторений: " + repeatsList.get(i));
+            i = 1;
             doneBtn.setText("Далее");
             startAnimation(false);
             doneBtn.setProgress(progress);
@@ -184,6 +180,15 @@ public class Exercise extends Menu {
                 public void onClick(View v) {
                     if (animationFinished) {
                         exerciseLabel.setText(exerciseList.get(i));
+                        //Imageloading
+                        db = databaseHelper.open();
+                        userCursor = db.rawQuery("select * from EXERCISES_INFO where NAME = ?", new String[] {String.valueOf(exerciseList.get(i))}, null);
+                        userCursor.moveToFirst();
+                        String filename = userCursor.getString(1);
+                        loadImage(filename);
+                        userCursor.close();
+                        db.close();
+                        ///
                         infoLabel.setText(infoList.get(i));
                         if (!exerciseList.get(i).equals("Отдых")) {
                             repeatsLabel.setText("Повторений: " + repeatsList.get(i));
@@ -214,6 +219,14 @@ public class Exercise extends Menu {
                     }
 
                     i++;
+
+                    db = databaseHelper.open();
+                    ContentValues cv = new ContentValues();
+                    cv.put("PROGRESS", (int) progress);
+                    db.update("TRAININGS", cv, "IS_CURRENT = ?" , new String[]{String.valueOf(1)});
+                    db.close();
+                    databaseHelper.close();
+
                 }
             });
 
@@ -230,27 +243,46 @@ public class Exercise extends Menu {
             public void onClick(View v) {
                 final Dialog dialog = new Dialog(Exercise.this);
                 dialog.setContentView(R.layout.modal_exercise_info);
-                dialog.setTitle("This is my custom dialog box");
+                String exerciseName =  exerciseLabel.getText().toString();
                 dialog.setCancelable(true);
 
                 //set up text
                 TextView info = (TextView) dialog.findViewById(R.id.info);
-                info.setText("Тут должен быть текст из базы");
+
+
+                db = databaseHelper.open();
+                userCursor = db.rawQuery("select * from EXERCISES_INFO where NAME = ?", new String[] {String.valueOf(exerciseName)}, null);
+
+                userCursor.moveToFirst();
+                String description = userCursor.getString(2);
+                String advice = userCursor.getString(3);
+                final String video = userCursor.getString(4);
+
+                userCursor.close();
+                db.close();
+
+
+
+                info.setText(description + "\n" + advice);
 
                 TextView exerciseLabel = (TextView) dialog.findViewById(R.id.exercise_label);
-                exerciseLabel.setText("ПОДТЯГИВАНИЯ");
+                exerciseLabel.setText(exerciseName);
 
-                //set up image view
+
                 ImageButton youtubeBtn = (ImageButton) dialog.findViewById(R.id.youtubeButton);
+                if (!video.contains("http")) {
+                    youtubeBtn.setVisibility(View.GONE);
+                }
                 youtubeBtn.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
-                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=cxLG2wtE7TM")));
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(video)));
                     }
                 });
 
 
+
                 //set up button
-                Button button = (Button) dialog.findViewById(R.id.Button01);
+                ImageButton button = (ImageButton) dialog.findViewById(R.id.Button01);
                 button.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         dialog.cancel();
@@ -260,6 +292,28 @@ public class Exercise extends Menu {
                 dialog.show();
             }
         });
+
+    }
+
+    void loadImage(String filename){
+        InputStream inputStream = null;
+        try{
+            inputStream = getApplicationContext().getAssets().open(filename);
+            Drawable d = Drawable.createFromStream(inputStream, null);
+            imageView.setImageDrawable(d);
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (inputStream != null)
+                    inputStream.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
 
     }
 

@@ -6,6 +6,8 @@ package com.fatburner.fatburner;
 
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -28,6 +30,11 @@ import static com.fatburner.fatburner.GlobalVariables.selectedMealId;
 
 
 public class MealCalendarPageFragment extends Fragment implements View.OnClickListener {
+
+
+    DatabaseHelper databaseHelper;
+    SQLiteDatabase db;
+    Cursor userCursor;
 
     String breakfestItems[];
     String secondBreakFestItems[];
@@ -55,6 +62,12 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
     TextView secondLunchTime;
     TextView dinnerTime;
     TextView legendLabel;
+
+    TextView breakfestCalLabel;
+    TextView secondBreakfestCalLabel;
+    TextView lunchCalLabel;
+    TextView secondLunchCalLabel;
+    TextView dinnerCalLabel;
 
     ImageButton applyButton;
     ImageButton breakfestButton;
@@ -98,6 +111,13 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
         applyButton = (ImageButton) view.findViewById(R.id.applyMealCalendarBtn);
         applyButton.setOnClickListener(this);
 
+
+        breakfestCalLabel = (TextView) view.findViewById(R.id.breakfestCalLabel);
+        secondBreakfestCalLabel = (TextView) view.findViewById(R.id.secondBreakfestCalLabel);
+        lunchCalLabel = (TextView) view.findViewById(R.id.lunchCalLabel);
+        secondLunchCalLabel = (TextView) view.findViewById(R.id.secondLunchCalLabel);
+        dinnerCalLabel = (TextView) view.findViewById(R.id.dinnerCalLabel);
+
         breakfestButton = (ImageButton) view.findViewById(R.id.breakfestBtn);
         breakfestButton.setOnClickListener(this);
         secondBreakfestButton = (ImageButton) view.findViewById(R.id.secondBreakfestBtn);
@@ -134,6 +154,8 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
 
         setMealShemas();
 
+        setCalValues();
+
         return view;
     }
 
@@ -146,6 +168,57 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+
+    private void setCalValues(){
+        databaseHelper = new DatabaseHelper(getContext());
+        databaseHelper.getWritableDatabase();
+        db = databaseHelper.open();
+
+        userCursor =  db.rawQuery("select * from APP_SETTINGS", null);
+        userCursor.moveToFirst();
+
+        Integer useDiet =  userCursor.getInt(6); //useDiet flag
+        Integer phase = userCursor.getInt(8); //phase
+
+        db.close();
+        userCursor.close();
+
+
+        if(useDiet == 0) {
+            breakfestCalLabel.setVisibility(View.INVISIBLE);
+            secondBreakfestCalLabel.setVisibility(View.INVISIBLE);
+            lunchCalLabel.setVisibility(View.INVISIBLE);
+            secondLunchCalLabel.setVisibility(View.INVISIBLE);
+            dinnerCalLabel.setVisibility(View.INVISIBLE);
+        }
+        else {
+
+            switch (phase){
+                case 0:
+                    breakfestCalLabel.setText("200 Ккал");
+                    secondBreakfestCalLabel.setText("100 Ккал");
+                    lunchCalLabel.setText("400 Ккал");
+                    secondLunchCalLabel.setText("100 Ккал");
+                    dinnerCalLabel.setText("400 Ккал");
+                    break;
+                case 1:
+                    breakfestCalLabel.setText("300 Ккал");
+                    secondBreakfestCalLabel.setText("200 Ккал");
+                    lunchCalLabel.setText("400 Ккал");
+                    secondLunchCalLabel.setText("200 Ккал");
+                    dinnerCalLabel.setText("400 Ккал");
+                    break;
+                case 2:
+                    breakfestCalLabel.setText("400 Ккал");
+                    secondBreakfestCalLabel.setText("200 Ккал");
+                    lunchCalLabel.setText("600 Ккал");
+                    secondLunchCalLabel.setText("200 Ккал");
+                    dinnerCalLabel.setText("600 Ккал");
+                    break;
+            }
+        }
     }
 
 
@@ -203,14 +276,6 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
                     break;
             }
         }
-
-        /*
-        String breakfestItems[] = {"1М + 1К", "1П + 1К","1П + 1Ф", "1M + 1O"};
-        String secondBreakFestItems[] = {"1M", "1Ф + 0.5О", "1К"};
-        String lunchItems[] = {"3К + 1П", "2К + 1П + 1Ф + 1Ж", "2К + 1М + 1П", "2К + 1П + 1О", "2К + 1П + 2Ж", "1К + 2Ф + 1Ж + 1П", "1К + 1Ф + 1М + 1П", "1К + 1Ф + 1П + 1О"};
-        String secondLunchItems[] = {"1M", "1Ф + 0.5О", "1К"};
-        String dinnerItems[] = lunchItems;
-        */
 
         ArrayAdapter<String> adapter;
         adapter = new ArrayAdapter<String>(getActivity(), R.layout.my_spinner_large_text, breakfestItems);
@@ -322,7 +387,7 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
     };
 
 
-    private void setTimeValues(){
+    private void setTimeValues(){ //crash
 
         String incrementedHour;
         String decrementedHour;
@@ -333,9 +398,6 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
         String h = String.valueOf(hour);
         String m = String.valueOf(min);
 
-
-
-        Utils.twoHoursIncDec(hour, min, false); //time backward
 
         if(hour < 10)
         {h = "0" + h;}

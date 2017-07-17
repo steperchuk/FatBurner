@@ -46,7 +46,7 @@ public class Settings extends Menu {
     Cursor userCursor;
 
 
-    String phases[] = {"Фаза 1", "Фаза 2", "Фаза 3"};
+    String phases[] = {"1200", "1500", "2000"};
     String days[] = { "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье" };
     String goals[] = {"Увеличение силы","Поддержание формы","Подготовительная","Набор Массы","Жиросжигание"};
     String difficulties[] = {"Новичок","Любитель","Профессионал"};
@@ -126,7 +126,6 @@ public class Settings extends Menu {
         });
 
         loadSettings();
-
 
         if(dietTypeValue){
             switchDietType.setText("Углеводная");
@@ -342,7 +341,7 @@ public class Settings extends Menu {
         {isFirstStart = true;}
         else{isFirstStart = false;}
 
-        if(userCursor.getInt(1) == 1)
+        if(userCursor.getInt(1) == 0)
         {genderValue = true;}
         else{genderValue = false;}
 
@@ -381,6 +380,8 @@ public class Settings extends Menu {
         trainingDays.setText(trainingDaysValue);
         waterDayNorm.setText(waterNormValue);
         gender.setChecked(genderValue);
+        if(genderValue){gender.setText("Жен");}
+        else {gender.setText("Муж");}
         switchDietType.setChecked(dietTypeValue);
         switchUseCustomDiet.setChecked(useCustomDietValue);
         switchFoodNotification.setChecked(foodNotificationValue);
@@ -402,8 +403,8 @@ public class Settings extends Menu {
 
        ContentValues cv = new ContentValues();
        cv.put("FIRST_START", 1);
-       if(genderValue){cv.put("GENDER", 1);}
-       else{cv.put("GENDER", 0);}
+       if(genderValue){cv.put("GENDER", 0);}
+       else{cv.put("GENDER", 1);}
 
        cv.put("GOAL", goalValue);
        cv.put("DIFFICULTY", difficultyValue);

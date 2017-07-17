@@ -76,14 +76,16 @@ public class TrainingsList extends Menu {
         // массив данных
         userCursor =  db.rawQuery("select * from "+ TABLE + " where " + COLUMN_PROGRAMM_NAME + " = ?", new String[]{getCurrentProgramm()});
         trainings = new ArrayList<>();
-        List<Integer> load = new ArrayList<>();
+        final List<Integer> load = new ArrayList<>();
         List<String> info = new ArrayList<>();
+        List<Integer> isCurrent = new ArrayList<>();
 
         if (userCursor.moveToFirst()) {
             do {
                 trainings.add(userCursor.getInt(userCursor.getColumnIndex(COLUMN_TRAINING_ID)));
                 load.add(userCursor.getInt(userCursor.getColumnIndex(COLUMN_PROGRESS)));
                 info.add("Время выполнения:" + userCursor.getInt(userCursor.getColumnIndex(COLUMN_EXPECTED_TIME)));
+                isCurrent.add(userCursor.getInt(userCursor.getColumnIndex(COLUMN_IS_CURRENT)));
             } while (userCursor.moveToNext());
         }
 
@@ -98,8 +100,11 @@ public class TrainingsList extends Menu {
             m.put(ATTRIBUTE_NAME_INFO, info.get(i) + " мин");
             m.put(ATTRIBUTE_NAME_PROGRESS, load.get(i) + "%");
             m.put(ATTRIBUTE_NAME_PB, load.get(i));
-            if(load.get(i) != 100){m.put(ATTRIBUTE_ICON, R.drawable.ic_dumbbell);}
-            else{m.put(ATTRIBUTE_ICON, R.drawable.ic_trophy);}
+            if(isCurrent.get(i) == 1){m.put(ATTRIBUTE_ICON, R.drawable.ic_play_button);}
+            else{
+                if(load.get(i) != 100){m.put(ATTRIBUTE_ICON, R.drawable.ic_dumbbell);}
+                else{m.put(ATTRIBUTE_ICON, R.drawable.ic_trophy);}
+            }
             data.add(m);
         }
 
@@ -134,6 +139,9 @@ public class TrainingsList extends Menu {
                 db.update(TABLE, cv, null, null);
                 cv.put("IS_CURRENT", 1);
                 db.update(TABLE, cv, COLUMN_TRAINING_ID + " = ?" , new String[]{String.valueOf(selectedTraining)});
+                cv = new ContentValues();
+                cv.put("CURRENT_PROGRAMM", selectedTraining);
+                db.update("TRAINING_SETTINGS",cv,null,null);
 
                 db.close();
                 databaseHelper.close();
