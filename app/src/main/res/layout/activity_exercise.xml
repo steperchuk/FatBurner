@@ -29,8 +29,8 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/attempts"
         android:layout_alignBottom="@+id/attempts"
-        android:layout_alignLeft="@+id/day"
-        android:layout_alignStart="@+id/day"
+        android:layout_alignLeft="@+id/attemptsCounter"
+        android:layout_alignStart="@+id/attemptsCounter"
         android:text="TextView"
         android:textAlignment="viewStart"
         android:textSize="18sp" />
@@ -108,7 +108,7 @@
         android:layout_toEndOf="@+id/done_btn" />
 
     <TextView
-        android:id="@+id/day"
+        android:id="@+id/attemptsCounter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/done_btn"
@@ -116,7 +116,7 @@
         android:layout_alignRight="@+id/infoBtn"
         android:text="TextView"
         android:textAlignment="center"
-        tools:text="День: 1" />
+        tools:text="Подход: 1/3" />
 
     <TextView
         android:id="@+id/time"

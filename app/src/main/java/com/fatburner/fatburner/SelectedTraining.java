@@ -158,6 +158,8 @@ public class SelectedTraining extends Menu {
                 db = databaseHelper.open();
                 userCursor = db.rawQuery("select * from EXERCISES_INFO where NAME = ?", new String[] {String.valueOf(exerciseName)}, null);
 
+                if(userCursor.getCount() == 0){return;}
+
                 userCursor.moveToFirst();
                 String description = userCursor.getString(2);
                 String advice = userCursor.getString(3);
@@ -175,7 +177,7 @@ public class SelectedTraining extends Menu {
 
 
                 ImageButton youtubeBtn = (ImageButton) dialog.findViewById(R.id.youtubeButton);
-                if (!video.contains("http")) {
+                if (video == null) {
                     youtubeBtn.setVisibility(View.GONE);
                 }
                 youtubeBtn.setOnClickListener(new View.OnClickListener() {

@@ -19,7 +19,7 @@
     <ScrollView android:id="@+id/ScrollView01"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/youtubeButton"
+        android:layout_below="@+id/exercise_label"
         android:layout_marginRight="3dp"
         android:layout_above="@+id/Button01"
         android:layout_alignLeft="@+id/exercise_label"
@@ -30,6 +30,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
             android:layout_marginRight="3dp"
             android:layout_marginLeft="3dp"/>
 
@@ -52,7 +53,7 @@
     <TextView
         android:id="@+id/exercise_label"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:text="TextView"
         android:textSize="16dp"
         android:textColor="@color/Blue"

@@ -50,10 +50,12 @@ public class Exercise extends Menu {
     Cursor userCursor;
 
     int i = 0;
+    int currentAttemptId = 1;
     int relaxTimerValue = 1000; // 1 sec for test purposes
     float progress = 0;
     DonutProgress doneBtn;
     boolean animationFinished = true;
+    boolean relaxNow = false;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +82,7 @@ public class Exercise extends Menu {
         final TextView repeatsLabel = (TextView) findViewById(R.id.repeats);
         final TextView infoLabel = (TextView) findViewById(R.id.info);
         final TextView attemptsLabel = (TextView) findViewById(R.id.attempts);
-        final TextView dayLabel = (TextView) findViewById(R.id.day);
+        final TextView attemptsCounterLabel = (TextView) findViewById(R.id.attemptsCounter);
         final ImageButton infoBtn = (ImageButton) findViewById(R.id.infoBtn);
         final ImageButton playButton = (ImageButton) findViewById(R.id.playerButton);
 
@@ -92,77 +94,76 @@ public class Exercise extends Menu {
         List<Integer> relaxTime = new ArrayList<>();
 
 
-
-        imageView = (ImageView) findViewById(R.id.imageView) ;
-
-
-            ///Work with DB
-            // открываем подключение
-            databaseHelper = new DatabaseHelper(this);
-            databaseHelper.getWritableDatabase();
-            db = databaseHelper.open();
+        imageView = (ImageView) findViewById(R.id.imageView);
 
 
-            userCursor = db.rawQuery("select DAY from TRAININGS where IS_CURRENT = 1", null);
-            userCursor.moveToFirst();
-            int day = userCursor.getInt(0);
+        ///Work with DB
+        // открываем подключение
+        databaseHelper = new DatabaseHelper(this);
+        databaseHelper.getWritableDatabase();
+        db = databaseHelper.open();
 
-            dayLabel.setText("День: " + day);
+
+        userCursor = db.rawQuery("select DAY from TRAININGS where IS_CURRENT = 1", null);
+        userCursor.moveToFirst();
+        int day = userCursor.getInt(0);
 
         userCursor = db.rawQuery("select PROGRAMM_NAME from TRAININGS where IS_CURRENT = 1", null);
         userCursor.moveToFirst();
         String programmName = userCursor.getString(0);
 
-        userCursor = db.query("EXERCISES_LIST", null, "DAY = ? AND PROGRAMM_NAME = ?", new String[] {String.valueOf(day), programmName}, null, null, null);
+        userCursor = db.query("EXERCISES_LIST", null, "DAY = ? AND PROGRAMM_NAME = ?", new String[]{String.valueOf(day), programmName}, null, null, null);
 
 
         if (userCursor.moveToFirst()) {
-                do {
-                    exercises.add(userCursor.getString(userCursor.getColumnIndex("EXERCISE")));
-                    infos.add(userCursor.getString(userCursor.getColumnIndex("EXERCISE_INFO")));
-                    attempts.add(userCursor.getString(userCursor.getColumnIndex("ATTEMPTS")));
-                    repeats.add(userCursor.getString(userCursor.getColumnIndex("REPEATS")));
-                    relaxTime.add(userCursor.getInt(userCursor.getColumnIndex("RELAX_TIME")));
-                } while (userCursor.moveToNext());
+            do {
+                exercises.add(userCursor.getString(userCursor.getColumnIndex("EXERCISE")));
+                infos.add(userCursor.getString(userCursor.getColumnIndex("EXERCISE_INFO")));
+                attempts.add(userCursor.getString(userCursor.getColumnIndex("ATTEMPTS")));
+                repeats.add(userCursor.getString(userCursor.getColumnIndex("REPEATS")));
+                relaxTime.add(userCursor.getInt(userCursor.getColumnIndex("RELAX_TIME")));
+            } while (userCursor.moveToNext());
+        }
+
+        userCursor.close();
+        db.close();
+
+
+        final List<String> exerciseList = new ArrayList<>();
+        final List<String> infoList = new ArrayList<>();
+        final List<String> attemptsList = new ArrayList<>();
+        final List<String> repeatsList = new ArrayList<>();
+        final List<Integer> relaxTimeList = new ArrayList<>();
+
+
+        for (int i = 0; i < exercises.size(); i++) {
+            for (int j = 0; j < Integer.parseInt(attempts.get(i)); j++) {
+                exerciseList.add(exercises.get(i));
+                infoList.add(infos.get(i));
+                attemptsList.add(attempts.get(i));
+                repeatsList.add(repeats.get(i));
+                relaxTimeList.add(relaxTime.get(i));
+                exerciseList.add("Отдых");
+                infoList.add(" ");
+                attemptsList.add(" ");
+                repeatsList.add(" ");
+                relaxTimeList.add(relaxTime.get(i));
             }
-
-            userCursor.close();
-            db.close();
+        }
 
 
-            final List<String> exerciseList = new ArrayList<>();
-            final List<String> infoList = new ArrayList<>();
-            final List<String> attemptsList = new ArrayList<>();
-            final List<String> repeatsList = new ArrayList<>();
-            final List<Integer> relaxTimeList = new ArrayList<>();
-
-
-            for (int i = 0; i < exercises.size(); i++) {
-                for (int j = 0; j < Integer.parseInt(attempts.get(i)); j++) {
-                    exerciseList.add(exercises.get(i));
-                    infoList.add(infos.get(i));
-                    attemptsList.add(attempts.get(i));
-                    repeatsList.add(repeats.get(i));
-                    relaxTimeList.add(relaxTime.get(i));
-                    exerciseList.add("Отдых");
-                    infoList.add(" ");
-                    attemptsList.add(" ");
-                    repeatsList.add(" ");
-                    relaxTimeList.add(relaxTime.get(i));
-                }
-            }
-
-
-            doneBtn = (DonutProgress) findViewById(R.id.done_btn);
-            doneBtn.setFinishedStrokeWidth(15);
-            doneBtn.setUnfinishedStrokeWidth(15);
+        doneBtn = (DonutProgress) findViewById(R.id.done_btn);
+        doneBtn.setFinishedStrokeWidth(15);
+        doneBtn.setUnfinishedStrokeWidth(15);
 
         //Imageloading
         db = databaseHelper.open();
-        userCursor = db.rawQuery("select * from EXERCISES_INFO where NAME = ?", new String[] {String.valueOf(exerciseList.get(i))}, null);
+        userCursor = db.rawQuery("select * from EXERCISES_INFO where NAME = ?", new String[]{String.valueOf(exerciseList.get(i))}, null);
         userCursor.moveToFirst();
-        String filename = userCursor.getString(1);
-        loadImage(filename);
+        if (userCursor.getCount() != 0)
+        {   String filename = userCursor.getString(1);
+            loadImage(filename);
+        }
         userCursor.close();
         db.close();
         ///
@@ -172,6 +173,7 @@ public class Exercise extends Menu {
             infoLabel.setText(infoList.get(i));
             attemptsLabel.setText("Подходов: " + attemptsList.get(i));
             repeatsLabel.setText("Повторений: " + repeatsList.get(i));
+            attemptsCounterLabel.setText("Подход: " + currentAttemptId + "/" + attemptsList.get(i));
             i = 1;
             doneBtn.setText("Далее");
             startAnimation(false);
@@ -179,12 +181,22 @@ public class Exercise extends Menu {
             doneBtn.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     if (animationFinished) {
+                        String filename = "";
                         exerciseLabel.setText(exerciseList.get(i));
                         //Imageloading
                         db = databaseHelper.open();
                         userCursor = db.rawQuery("select * from EXERCISES_INFO where NAME = ?", new String[] {String.valueOf(exerciseList.get(i))}, null);
                         userCursor.moveToFirst();
-                        String filename = userCursor.getString(1);
+                        if(exerciseList.get(i) != "Отдых")
+                        {
+                            if(userCursor.getCount() != 0) {
+                                filename = userCursor.getString(1);
+
+                            }
+                            else {filename = "working-out-silhouette.png";}
+                                relaxNow = false;
+                        }
+                        else {filename = "relax.png"; relaxNow = true;}
                         loadImage(filename);
                         userCursor.close();
                         db.close();
@@ -192,8 +204,21 @@ public class Exercise extends Menu {
                         infoLabel.setText(infoList.get(i));
                         if (!exerciseList.get(i).equals("Отдых")) {
                             repeatsLabel.setText("Повторений: " + repeatsList.get(i));
+                            currentAttemptId++;
+
+                            if(!exerciseList.get(i).equals("Отдых")) {
+                                attemptsCounterLabel.setVisibility(View.VISIBLE);
+                                if (currentAttemptId > Integer.parseInt(attemptsList.get(i))) {
+                                    currentAttemptId = 1;
+                                    attemptsCounterLabel.setText("Подход: " + currentAttemptId + "/" + attemptsList.get(i));
+                                } else {
+                                    attemptsCounterLabel.setText("Подход: " + currentAttemptId + "/" + attemptsList.get(i));
+                                }
+                            }
+
                         } else {
                             repeatsLabel.setText(" ");
+                            attemptsCounterLabel.setVisibility(View.INVISIBLE);
                         }
 
                         if (!exerciseList.get(i).equals("Отдых")) {
@@ -241,55 +266,57 @@ public class Exercise extends Menu {
         infoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Dialog dialog = new Dialog(Exercise.this);
-                dialog.setContentView(R.layout.modal_exercise_info);
-                String exerciseName =  exerciseLabel.getText().toString();
-                dialog.setCancelable(true);
+                if(!relaxNow) {
+                    final Dialog dialog = new Dialog(Exercise.this);
+                    dialog.setContentView(R.layout.modal_exercise_info);
+                    String exerciseName = exerciseLabel.getText().toString();
+                    dialog.setCancelable(true);
 
-                //set up text
-                TextView info = (TextView) dialog.findViewById(R.id.info);
-
-
-                db = databaseHelper.open();
-                userCursor = db.rawQuery("select * from EXERCISES_INFO where NAME = ?", new String[] {String.valueOf(exerciseName)}, null);
-
-                userCursor.moveToFirst();
-                String description = userCursor.getString(2);
-                String advice = userCursor.getString(3);
-                final String video = userCursor.getString(4);
-
-                userCursor.close();
-                db.close();
+                    //set up text
+                    TextView info = (TextView) dialog.findViewById(R.id.info);
 
 
+                    db = databaseHelper.open();
+                    userCursor = db.rawQuery("select * from EXERCISES_INFO where NAME = ?", new String[]{String.valueOf(exerciseName)}, null);
 
-                info.setText(description + "\n" + advice);
+                    userCursor.moveToFirst();
+                    if(userCursor.getCount() == 0){return;}
+                    String description = userCursor.getString(2);
+                    String advice = userCursor.getString(3);
+                    final String video = userCursor.getString(4);
 
-                TextView exerciseLabel = (TextView) dialog.findViewById(R.id.exercise_label);
-                exerciseLabel.setText(exerciseName);
+                    userCursor.close();
+                    db.close();
 
 
-                ImageButton youtubeBtn = (ImageButton) dialog.findViewById(R.id.youtubeButton);
-                if (!video.contains("http")) {
-                    youtubeBtn.setVisibility(View.GONE);
+                    info.setText(description + "\n" + advice);
+
+                    TextView exerciseLabel = (TextView) dialog.findViewById(R.id.exercise_label);
+                    exerciseLabel.setText(exerciseName);
+
+
+                    ImageButton youtubeBtn = (ImageButton) dialog.findViewById(R.id.youtubeButton);
+                    if (!video.contains("http")) {
+                        youtubeBtn.setVisibility(View.GONE);
+                    }
+                    youtubeBtn.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View v) {
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(video)));
+                        }
+                    });
+
+
+                    //set up button
+                    ImageButton button = (ImageButton) dialog.findViewById(R.id.Button01);
+                    button.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View v) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    dialog.show();
                 }
-                youtubeBtn.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(video)));
-                    }
-                });
-
-
-
-                //set up button
-                ImageButton button = (ImageButton) dialog.findViewById(R.id.Button01);
-                button.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        dialog.cancel();
-                    }
-                });
-
-                dialog.show();
+                else { return; }
             }
         });
 

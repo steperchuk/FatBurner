@@ -69,7 +69,7 @@ public class TrainingsList extends Menu {
         View contentView = inflater.inflate(R.layout.activity_trainings_list, null, false);
         mDrawerLayout.addView(contentView, 0);
 
-        switchCompleted = (Switch) findViewById(R.id.isRecommended);
+        switchCompleted = (Switch) findViewById(R.id.hideCompleted);
         switchCompleted.setChecked(true);
 
         loadList();
@@ -97,7 +97,8 @@ public class TrainingsList extends Menu {
                 cv.put("IS_CURRENT", 1);
                 db.update(TABLE, cv, COLUMN_TRAINING_ID + " = ? and " + COLUMN_PROGRAMM_NAME + " = ?", new String[]{String.valueOf(selectedTraining), String.valueOf(getCurrentProgramm())});
                 cv = new ContentValues();
-                cv.put("CURRENT_PROGRAMM", selectedTraining);
+                db = databaseHelper.open();
+                cv.put("CURRENT_TRAINING", selectedTraining);
                 db.update("TRAINING_SETTINGS",cv,null,null);
 
                 db.close();
@@ -158,15 +159,30 @@ public class TrainingsList extends Menu {
             } while (userCursor.moveToNext());
         }
 
+        List<Integer> allTrainings = new ArrayList<>();
+        List<Integer> allLoad = new ArrayList<>();
+        db = databaseHelper.open();
+        userCursor = db.rawQuery("select * from " + TABLE + " where " + COLUMN_PROGRAMM_NAME + " = ?", new String[]{getCurrentProgramm()});
+        if (userCursor.moveToFirst()) {
+            do {
+                allTrainings.add(userCursor.getInt(userCursor.getColumnIndex(COLUMN_TRAINING_ID)));
+                allLoad.add(userCursor.getInt(userCursor.getColumnIndex(COLUMN_PROGRESS)));
+            } while (userCursor.moveToNext());
+        }
+
         int totalTrainingsLoad = 0;
-        for(int i = 0; i < trainings.size(); i++){
-            totalTrainingsLoad = totalTrainingsLoad + load.get(i);
+        for(int i = 0; i < allTrainings.size(); i++){
+            totalTrainingsLoad = totalTrainingsLoad + allLoad.get(i);
         }
 
         if(totalTrainingsLoad != 0) {
-            int programmCompletion = Math.round((trainings.size() * 100 / totalTrainingsLoad) * 100);
+
+            float totalTrainings = (allTrainings.size() * 100);
+            float percentValue = totalTrainingsLoad / totalTrainings;
+            float programmCompletion = percentValue * 100;
             ContentValues cv = new ContentValues();
             cv.put("COMPLETION_STATUS", programmCompletion);
+            db = databaseHelper.open();
             db.update("PROGRAMMS", cv, "NAME = ?", new String[]{String.valueOf(getCurrentProgramm())});
         }
 
@@ -182,10 +198,14 @@ public class TrainingsList extends Menu {
             m.put(ATTRIBUTE_NAME_INFO, info.get(i) + " мин");
             m.put(ATTRIBUTE_NAME_PROGRESS, load.get(i) + "%");
             m.put(ATTRIBUTE_NAME_PB, load.get(i));
-            if(isCurrent.get(i) == 1){m.put(ATTRIBUTE_ICON, R.drawable.ic_play_button);}
-            else{
-                if(load.get(i) != 100){m.put(ATTRIBUTE_ICON, R.drawable.ic_dumbbell);}
-                else{m.put(ATTRIBUTE_ICON, R.drawable.ic_trophy);}
+            if (load.get(i) == 100) {
+                m.put(ATTRIBUTE_ICON, R.drawable.ic_trophy);
+            } else if (isCurrent.get(i) == 1) {
+                m.put(ATTRIBUTE_ICON, R.drawable.ic_done);
+            } else {
+                if (load.get(i) != 100) {
+                    m.put(ATTRIBUTE_ICON, R.drawable.ic_dumbbell);
+                }
             }
             data.add(m);
         }

@@ -35,6 +35,8 @@ public class Menu extends AppCompatActivity {
         mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
         mToogle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
 
+        getMenuSettings();
+
         mDrawerLayout.addDrawerListener(mToogle);
         mToogle.syncState();
 
@@ -68,11 +70,12 @@ public class Menu extends AppCompatActivity {
 
     public void selectDrawerItem(MenuItem item){
             Intent intent;
+        getMenuSettings();
             String products[] = {"П", "К", "М", "Ф", "О", "Ж"};
             switch (item.getItemId()) {
                 case R.id.nav_training:
                     intent = new Intent(Menu.this, Exercise.class);
-                    if(currentTraining != null) {
+                    if(currentTraining != "") {
                     startActivity(intent);
                     }
                     else{
@@ -83,7 +86,7 @@ public class Menu extends AppCompatActivity {
                     break;
                 case R.id.nav_challange:
                     intent = new Intent(Menu.this, SelectedTraining.class);
-                    if(currentTraining != null) {
+                    if(currentTraining != "") {
                     startActivity(intent);
                     }
                     else{
@@ -133,19 +136,23 @@ public class Menu extends AppCompatActivity {
            SQLiteDatabase db;
            Cursor userCursor;
 
+           databaseHelper = new DatabaseHelper(getApplicationContext());
+           databaseHelper.create_db();
+
            databaseHelper = new DatabaseHelper(this);
            databaseHelper.getWritableDatabase();
            db = databaseHelper.open();
 
-           userCursor =  db.rawQuery("select * from PROGRAMMS where IS_CURRENT = ?", new String[]{"1"});
-           if(userCursor != null)
+           userCursor =  db.rawQuery("select * from PROGRAMMS where IS_CURRENT = ?", new String[]{String.valueOf(1)});
+           int a = userCursor.getCount();
+           if(userCursor.getCount() != 0)
            {
                userCursor.moveToFirst();
                currentProgram = userCursor.getString(0);
            }
 
-           userCursor =  db.rawQuery("select * from TRAININGS where IS_CURRENT = ?", new String[]{"1"});
-           if(userCursor != null)
+           userCursor =  db.rawQuery("select PROGRAMM_NAME from TRAININGS where IS_CURRENT = 1", null);
+           if(userCursor.getCount() != 0)
            {
                userCursor.moveToFirst();
                currentTraining = userCursor.getString(0);

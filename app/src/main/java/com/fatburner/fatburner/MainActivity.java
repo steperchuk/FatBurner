@@ -36,8 +36,8 @@ public class MainActivity extends Menu {
         super.onCreate(savedInstanceState);
 
         // создаем базу данных
-        databaseHelper = new DatabaseHelper(getApplicationContext());
-        databaseHelper.create_db();
+        //databaseHelper = new DatabaseHelper(getApplicationContext());
+        //databaseHelper.create_db();
 
         // Implements menu visibility
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

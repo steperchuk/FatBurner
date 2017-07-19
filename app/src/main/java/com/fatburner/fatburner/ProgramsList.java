@@ -72,6 +72,7 @@ public class ProgramsList extends Menu {
 
         fillList();
 
+
         switchRecommended.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 showRecommended = isChecked;
@@ -84,6 +85,9 @@ public class ProgramsList extends Menu {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                databaseHelper.getWritableDatabase();
+                db = databaseHelper.open();
 
                 ContentValues cv = new ContentValues();
                 String selectedProgramm = programs.get(position);
@@ -108,6 +112,9 @@ public class ProgramsList extends Menu {
     }
 
     void fillList(){
+        databaseHelper.getWritableDatabase();
+        db = databaseHelper.open();
+
         if(showRecommended)
         {
             userCursor =  db.rawQuery("select * from APP_SETTINGS", null);
@@ -118,12 +125,12 @@ public class ProgramsList extends Menu {
             String goal = Utils.parseGoalValue(goalValue);
             String difficulty = Utils.parseDifficultyValue(difficultyValue);
 
-            userCursor = db.query(DatabaseHelper.TABLE, null, "GENDER is null AND GOAL = ? AND DIFFICULTY = ? OR GENDER = ? AND GOAL = ? AND DIFFICULTY = ? OR IS_CURRENT = ?", new String[] {String.valueOf(goal), String.valueOf(difficulty), String.valueOf(gender), String.valueOf(goal), String.valueOf(difficulty), String.valueOf(1)}, null, null, null);
+            userCursor = db.query(DatabaseHelper.TABLE, null, "GENDER is null AND GOAL = ? AND DIFFICULTY = ? OR GENDER = ? AND GOAL = ? AND DIFFICULTY = ? OR IS_CURRENT = ?", new String[] {String.valueOf(goal), String.valueOf(difficulty), String.valueOf(gender), String.valueOf(goal), String.valueOf(difficulty), String.valueOf(1)}, null, null, "IS_CURRENT desc");
 
         }
         else
         {
-            userCursor =  db.rawQuery("select * from "+ DatabaseHelper.TABLE, null);
+            userCursor =  db.rawQuery("select * from "+ DatabaseHelper.TABLE + " ORDER BY IS_CURRENT desc", null);
         }
 
 
@@ -144,6 +151,7 @@ public class ProgramsList extends Menu {
         }
 
         userCursor.close();
+        db.close();
 
         // упаковываем данные в понятную для адаптера структуру
         ArrayList<Map<String, Object>> data = new ArrayList<Map<String, Object>>(load.size());
@@ -154,9 +162,15 @@ public class ProgramsList extends Menu {
             m.put(ATTRIBUTE_NAME_INFO, info.get(i));
             m.put(ATTRIBUTE_NAME_PROGRESS, load.get(i) + "%");
             m.put(ATTRIBUTE_NAME_PB, load.get(i));
-            if(load.get(i) != 100){m.put(ATTRIBUTE_ICON, R.drawable.ic_dumbbell);}
-            else{m.put(ATTRIBUTE_ICON, R.drawable.ic_trophy);}
-            if(isCurrent.get(i) == 1){m.put(ATTRIBUTE_ICON, R.drawable.ic_play_button);}
+            if (load.get(i) == 100) {
+                m.put(ATTRIBUTE_ICON, R.drawable.ic_trophy);
+            } else if (isCurrent.get(i) == 1) {
+                m.put(ATTRIBUTE_ICON, R.drawable.ic_done);
+            } else {
+                if (load.get(i) != 100) {
+                    m.put(ATTRIBUTE_ICON, R.drawable.ic_dumbbell);
+                }
+            }
             data.add(m);
         }
 
