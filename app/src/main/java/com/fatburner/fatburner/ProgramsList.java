@@ -69,7 +69,6 @@ public class ProgramsList extends Menu {
 
 
         databaseHelper.TABLE = "PROGRAMMS";
-        //получаем данные из бд в виде курсора
 
         fillList();
 
@@ -183,6 +182,13 @@ public class ProgramsList extends Menu {
         super.onDestroy();
         db.close();
         userCursor.close();
+    }
+
+    @Override
+    public void onResume()
+    {  // After a pause OR at startup
+        super.onResume();
+        fillList();
     }
 
 

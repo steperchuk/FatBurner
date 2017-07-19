@@ -34,7 +34,6 @@ public class TrainingsList extends Menu {
     SQLiteDatabase db;
     Cursor userCursor;
 
-
     static final String TABLE = "TRAININGS";
     static final String COLUMN_PROGRAMM_NAME = "PROGRAMM_NAME";
     static final String COLUMN_TRAINING_ID = "TRAINING_ID";
@@ -64,7 +63,53 @@ public class TrainingsList extends Menu {
         View contentView = inflater.inflate(R.layout.activity_trainings_list, null, false);
         mDrawerLayout.addView(contentView, 0);
 
+        loadList();
 
+        AdapterView.OnItemClickListener mOnListClick = new AdapterView.OnItemClickListener(){
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                databaseHelper.getWritableDatabase();
+                db = databaseHelper.open();
+
+
+                ContentValues cv = new ContentValues();
+                int selectedTraining = trainings.get(position);
+                cv.put("IS_CURRENT", 0);
+                db.update(TABLE, cv, null, null);
+                cv.put("IS_CURRENT", 1);
+                db.update(TABLE, cv, COLUMN_TRAINING_ID + " = ? and " + COLUMN_PROGRAMM_NAME + " = ?", new String[]{String.valueOf(selectedTraining), String.valueOf(getCurrentProgramm())});
+                cv = new ContentValues();
+                cv.put("CURRENT_PROGRAMM", selectedTraining);
+                db.update("TRAINING_SETTINGS",cv,null,null);
+
+                db.close();
+                databaseHelper.close();
+
+                if(position != -1) {
+                    Intent intent;
+                    intent = new Intent(TrainingsList.this, SelectedTraining.class);
+                    startActivity(intent);
+                }
+            }
+        };
+
+        trainings_list.setOnItemClickListener(mOnListClick);
+
+    }
+
+
+    @Override
+    public void onResume()
+    {  // After a pause OR at startup
+        super.onResume();
+        loadList();
+    }
+
+
+
+    private void loadList(){
         ///Work with DB
         // открываем подключение
         databaseHelper = new DatabaseHelper(this);
@@ -89,6 +134,19 @@ public class TrainingsList extends Menu {
             } while (userCursor.moveToNext());
         }
 
+        int totalTrainingsLoad = 0;
+        for(int i = 0; i < trainings.size(); i++){
+            totalTrainingsLoad = totalTrainingsLoad + load.get(i);
+        }
+
+        if(totalTrainingsLoad != 0) {
+            int programmCompletion = Math.round((trainings.size() * 100 / totalTrainingsLoad) * 100);
+            ContentValues cv = new ContentValues();
+            cv.put("COMPLETION_STATUS", programmCompletion);
+            db.update("PROGRAMMS", cv, "NAME = ?", new String[]{String.valueOf(getCurrentProgramm())});
+        }
+
+        db.close();
         userCursor.close();
 
         // упаковываем данные в понятную для адаптера структуру
@@ -121,47 +179,7 @@ public class TrainingsList extends Menu {
         // определяем список и присваиваем ему адаптер
         trainings_list = (ListView) findViewById(R.id.trainings_list);
         trainings_list.setAdapter(sAdapter);
-
-
-        AdapterView.OnItemClickListener mOnListClick = new AdapterView.OnItemClickListener(){
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-
-                databaseHelper.getWritableDatabase();
-                db = databaseHelper.open();
-
-
-                ContentValues cv = new ContentValues();
-                int selectedTraining = trainings.get(position);
-                cv.put("IS_CURRENT", 0);
-                db.update(TABLE, cv, null, null);
-                cv.put("IS_CURRENT", 1);
-                db.update(TABLE, cv, COLUMN_TRAINING_ID + " = ?" , new String[]{String.valueOf(selectedTraining)});
-                cv = new ContentValues();
-                cv.put("CURRENT_PROGRAMM", selectedTraining);
-                db.update("TRAINING_SETTINGS",cv,null,null);
-
-                db.close();
-                databaseHelper.close();
-
-                if(position != -1) {
-                    Intent intent;
-                    intent = new Intent(TrainingsList.this, SelectedTraining.class);
-                    startActivity(intent);
-                }
-            }
-        };
-
-        trainings_list.setOnItemClickListener(mOnListClick);
-
-
     }
-
-
-
-
 
     private String getCurrentProgramm() {
         db = databaseHelper.open();

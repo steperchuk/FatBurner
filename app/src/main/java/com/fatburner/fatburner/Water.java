@@ -168,10 +168,6 @@ public class Water extends Menu {
             databaseHelper.getWritableDatabase();
             db = databaseHelper.open();
 
-            databaseHelper = new DatabaseHelper(this);
-            databaseHelper.getWritableDatabase();
-            db = databaseHelper.open();
-
             userCursor =  db.rawQuery("select * from WATER_INFO", null);
 
             userCursor.moveToFirst();

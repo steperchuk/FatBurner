@@ -1,6 +1,8 @@
 package com.fatburner.fatburner;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -19,6 +21,9 @@ public class Menu extends AppCompatActivity {
     public DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToogle;
     private NavigationView mNavigationView;
+
+    String currentProgram = "";
+    String currentTraining = "";
 
 
     @Override
@@ -67,16 +72,25 @@ public class Menu extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.nav_training:
                     intent = new Intent(Menu.this, Exercise.class);
-                    if(TRAINING != null){
+                    if(currentTraining != null) {
                     startActivity(intent);
                     }
                     else{
-                        Toast.makeText(this, "You need to select training firts", Toast.LENGTH_SHORT).show();
+                        ModalDialogNotSelected dialog = new ModalDialogNotSelected();
+                        dialog.show(getSupportFragmentManager(), "custom");
+                        return;
                     }
                     break;
                 case R.id.nav_challange:
                     intent = new Intent(Menu.this, SelectedTraining.class);
+                    if(currentTraining != null) {
                     startActivity(intent);
+                    }
+                    else{
+                        ModalDialogNotSelected dialog = new ModalDialogNotSelected();
+                        dialog.show(getSupportFragmentManager(), "custom");
+                        return;
+                    }
                     break;
                 case R.id.nav_programs:
                     intent = new Intent(Menu.this, ProgramsList.class);
@@ -111,6 +125,35 @@ public class Menu extends AppCompatActivity {
                     startActivity(intent);
                     break;
             }
+        }
+
+
+       private void getMenuSettings(){
+           DatabaseHelper databaseHelper;
+           SQLiteDatabase db;
+           Cursor userCursor;
+
+           databaseHelper = new DatabaseHelper(this);
+           databaseHelper.getWritableDatabase();
+           db = databaseHelper.open();
+
+           userCursor =  db.rawQuery("select * from PROGRAMMS where IS_CURRENT = ?", new String[]{"1"});
+           if(userCursor != null)
+           {
+               userCursor.moveToFirst();
+               currentProgram = userCursor.getString(0);
+           }
+
+           userCursor =  db.rawQuery("select * from TRAININGS where IS_CURRENT = ?", new String[]{"1"});
+           if(userCursor != null)
+           {
+               userCursor.moveToFirst();
+               currentTraining = userCursor.getString(0);
+           }
+
+           userCursor.close();
+           db.close();
+
         }
 
 
