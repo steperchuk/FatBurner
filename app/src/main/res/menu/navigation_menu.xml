@@ -2,39 +2,39 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/nav_training"
-        android:title="Current Training"
+        android:title="Начать Тренировку"
         android:icon= "@drawable/ic_working_out" />
 
     <item android:id="@+id/nav_challange"
-        android:title="Current Challange"
+        android:title="Текущая Тренировка"
         android:icon="@mipmap/ic_person_black_24dp" />
 
     <item android:id="@+id/nav_programs"
-        android:title="My Programms"
+        android:title="Программы Тренировок"
         android:icon="@mipmap/ic_list_black_24dp"/>
 
     <item android:id="@+id/nav_trainings_calendar"
-        android:title="Trainings Calendar"
+        android:title="Календарь"
         android:icon="@mipmap/ic_perm_contact_calendar_black_24dp"/>
 
     <item android:id="@+id/nav_water"
-        android:title="Water"
+        android:title="Употреблении Воды"
         android:icon="@drawable/ic_glass_of_water_small"/>
 
     <item android:id="@+id/nav_diet"
-        android:title="Diet"
+        android:title="Моя Диета"
         android:icon="@mipmap/ic_accessibility_black_24dp"/>
 
     <item android:id="@+id/nav_meal_calendar"
-        android:title="Meal Calendar"
+        android:title="Приемы Пищи"
         android:icon="@drawable/ic_time"/>
 
     <item android:id="@+id/products_list"
-        android:title="Products List"
+        android:title="Список Продуктов"
         android:icon="@drawable/ic_dish"/>
 
     <item android:id="@+id/nav_settings"
-        android:title="Settings"
+        android:title="Настройки"
         android:icon="@mipmap/ic_settings_black_24dp"/>
     
 </menu>

@@ -90,6 +90,20 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
         startButton.setUnfinishedStrokeWidth(15);
         startAnimation();
 
+        startButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(TrainingsCalendar.this, Exercise.class);
+                if(currentTraining != "") {
+                    startActivity(intent);
+                }
+                else{
+                    ModalDialogNotSelected dialog = new ModalDialogNotSelected();
+                    dialog.show(getSupportFragmentManager(), "custom");
+                    return;
+                }
+            }
+        });
+
 
         playerButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
