@@ -228,21 +228,21 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
 
         if(selectedDiet){
             switch (selectedPhase){
-                case 1:
+                case 0:
                     breakfestItems = getResources().getStringArray(R.array.carbohydratePhase1Meal1);
                     secondBreakFestItems = getResources().getStringArray(R.array.carbohydratePhase1Meal2);
                     lunchItems = getResources().getStringArray(R.array.carbohydratePhase1Meal3);
                     secondLunchItems = secondBreakFestItems;
                     dinnerItems = lunchItems;
                     break;
-                case 2:
+                case 1:
                     breakfestItems = getResources().getStringArray(R.array.carbohydratePhase2Meal1);
                     secondBreakFestItems = getResources().getStringArray(R.array.carbohydratePhase2Meal2);
                     lunchItems = getResources().getStringArray(R.array.carbohydratePhase2Meal3);
                     secondLunchItems = secondBreakFestItems;
                     dinnerItems = lunchItems;
                     break;
-                case 3:
+                case 2:
                     breakfestItems = getResources().getStringArray(R.array.carbohydratePhase3Meal1);
                     secondBreakFestItems = getResources().getStringArray(R.array.carbohydratePhase3Meal2);
                     lunchItems = getResources().getStringArray(R.array.carbohydratePhase3Meal3);
@@ -253,21 +253,21 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
         }
         else{
             switch (selectedPhase){
-                case 1:
+                case 0:
                     breakfestItems = getResources().getStringArray(R.array.proteinPhase1Meal1);
                     secondBreakFestItems = getResources().getStringArray(R.array.proteinPhase1Meal2);
                     lunchItems = getResources().getStringArray(R.array.proteinPhase1Meal3);
                     secondLunchItems = secondBreakFestItems;
                     dinnerItems = lunchItems;
                     break;
-                case 2:
+                case 1:
                     breakfestItems = getResources().getStringArray(R.array.proteinPhase2Meal1);
                     secondBreakFestItems = getResources().getStringArray(R.array.proteinPhase2Meal2);
                     lunchItems = getResources().getStringArray(R.array.proteinPhase2Meal3);
                     secondLunchItems = secondBreakFestItems;
                     dinnerItems = lunchItems;
                     break;
-                case 3:
+                case 2:
                     breakfestItems = getResources().getStringArray(R.array.proteinPhase3Meal1);
                     secondBreakFestItems = getResources().getStringArray(R.array.proteinPhase3Meal2);
                     lunchItems = getResources().getStringArray(R.array.proteinPhase3Meal3);
