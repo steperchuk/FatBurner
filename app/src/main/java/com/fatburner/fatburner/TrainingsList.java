@@ -13,9 +13,12 @@ import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
+import android.widget.Switch;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -29,6 +32,9 @@ import static com.fatburner.fatburner.GlobalVariables.TRAINING_ID;
 
 
 public class TrainingsList extends Menu {
+
+    Switch switchCompleted;
+    boolean hideCompleted = true;
 
     DatabaseHelper databaseHelper;
     SQLiteDatabase db;
@@ -63,7 +69,17 @@ public class TrainingsList extends Menu {
         View contentView = inflater.inflate(R.layout.activity_trainings_list, null, false);
         mDrawerLayout.addView(contentView, 0);
 
+        switchCompleted = (Switch) findViewById(R.id.isRecommended);
+        switchCompleted.setChecked(true);
+
         loadList();
+
+        switchCompleted.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                hideCompleted = isChecked;
+                loadList();
+            }
+        });
 
         AdapterView.OnItemClickListener mOnListClick = new AdapterView.OnItemClickListener(){
 
@@ -119,7 +135,15 @@ public class TrainingsList extends Menu {
         //DatabaseHelper.TABLE = "TRAININGS";
 
         // массив данных
-        userCursor =  db.rawQuery("select * from "+ TABLE + " where " + COLUMN_PROGRAMM_NAME + " = ?", new String[]{getCurrentProgramm()});
+        if(hideCompleted)
+        {
+            userCursor = db.query(TABLE, null, COLUMN_PROGRAMM_NAME + " = ?" + "AND PROGRESS != ?",  new String[]{getCurrentProgramm(), "100"}, null, null, null);
+        }
+        else
+        {
+            userCursor = db.rawQuery("select * from " + TABLE + " where " + COLUMN_PROGRAMM_NAME + " = ?", new String[]{getCurrentProgramm()});
+        }
+
         trainings = new ArrayList<>();
         final List<Integer> load = new ArrayList<>();
         List<String> info = new ArrayList<>();
