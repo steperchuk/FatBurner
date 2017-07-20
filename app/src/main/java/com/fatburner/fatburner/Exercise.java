@@ -25,6 +25,8 @@ import android.widget.TextView;
 
 import com.github.lzyzsd.circleprogress.DonutProgress;
 
+import org.w3c.dom.Text;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -296,7 +298,7 @@ public class Exercise extends Menu {
 
 
                     ImageButton youtubeBtn = (ImageButton) dialog.findViewById(R.id.youtubeButton);
-                    if (!video.contains("http")) {
+                    if (video == null){
                         youtubeBtn.setVisibility(View.GONE);
                     }
                     youtubeBtn.setOnClickListener(new View.OnClickListener() {

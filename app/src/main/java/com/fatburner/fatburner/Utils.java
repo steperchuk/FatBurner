@@ -125,7 +125,7 @@ public class Utils {
         if(hour < 0){hour = 24 + hour;}
         if(hour < 10) {result = "0" + hour.toString();}
         else {result = hour.toString();}
-        
+
         return result;
     }
 
