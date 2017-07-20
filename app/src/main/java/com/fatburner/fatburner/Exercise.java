@@ -226,7 +226,7 @@ public class Exercise extends Menu {
                         } else {
                             attemptsLabel.setText(" ");
                         }
-                        //relaxTimerValue = relaxTimeList.get(i) * 1000;    // comment this row for debug purposes
+                        relaxTimerValue = relaxTimeList.get(i) * 1000;    // comment this row for debug purposes
 
                         if (!exerciseList.get(i).equals("Отдых")) {
 

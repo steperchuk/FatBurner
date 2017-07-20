@@ -24,6 +24,7 @@ public class Menu extends AppCompatActivity {
 
     String currentProgram = "";
     String currentTraining = "";
+    Integer currentDiet = 0;
 
 
     @Override
@@ -109,12 +110,26 @@ public class Menu extends AppCompatActivity {
                     break;
                 case R.id.nav_diet:
                     intent = new Intent(Menu.this, Diet.class);
-                    startActivity(intent);
+                    if(currentDiet != 0) {
+                        startActivity(intent);
+                    }
+                    else{
+                        ModalDialogNotSelectedDiet dialog = new ModalDialogNotSelectedDiet();
+                        dialog.show(getSupportFragmentManager(), "custom");
+                        return;
+                    }
                     break;
                 case R.id.nav_meal_calendar:
                     dietListViewMode = false;
                     intent = new Intent(Menu.this, MealCalendar.class);
-                    startActivity(intent);
+                    if(currentDiet != 0) {
+                        startActivity(intent);
+                    }
+                    else{
+                        ModalDialogNotSelectedDiet dialog = new ModalDialogNotSelectedDiet();
+                        dialog.show(getSupportFragmentManager(), "custom");
+                        return;
+                    }
                     break;
                 case R.id.products_list:
                     dietListViewMode = true;
@@ -156,6 +171,13 @@ public class Menu extends AppCompatActivity {
            {
                userCursor.moveToFirst();
                currentTraining = userCursor.getString(0);
+           }
+
+           userCursor =  db.rawQuery("select * from APP_SETTINGS", null);
+           if(userCursor.getCount() != 0)
+           {
+               userCursor.moveToFirst();
+               currentDiet = userCursor.getInt(6);
            }
 
            userCursor.close();

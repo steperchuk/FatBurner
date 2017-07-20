@@ -203,19 +203,19 @@
     </string-array>
     <string-array name="proteinPhase3Meal1">
         <item>1К + 1Ф + 1М + 1О</item>
-        <item>2К + 1,5Ф + 1П</item>
+        <item>2К + 1Ф + 1П</item>
         <item>2К + 1М + 1П</item>
         <item>2К + 1О + 1П</item>
         <item>2Ф + 1М + 1П + 1О</item>
         <item>1К + 1Ж + 2П</item>
-        <item>2П + 1,5Ф</item>
+        <item>2П + 2Ф</item>
         <item>1Ф + 1П + 2О</item>
     </string-array>
     <string-array name="proteinPhase3Meal2">
         <item>1К + 1М</item>
         <item>1К + 1О</item>
         <item>1Ф + 1М</item>
-        <item>1,5Ф + 1О</item>
+        <item>1Ф + 1О</item>
         <item>1Ф + 1П</item>
         <item>1М + 1О</item>
         <item>2О</item>
@@ -226,16 +226,15 @@
         <item>4К + 1О +1П +1Ж</item>
         <item>3К + 1Ф +1П +1Ж + 1О</item>
         <item>3К + 1Ф +1М +1П + 1О</item>
-        <item>3К + 1,5Ф +0,5М +1П + 2Ж</item>
-        <item>3К + 0,5М +2П + 1Ж</item>
-        <item>3К + 1,5Ф +1П + 1,5О</item>
-        <item>3К + 2М + 0,5П + 2Ж</item>
-        <item>2К + 1Ф + 1М + 0,5П + 2Ж + 0,5О</item>
+        <item>3К + 1Ф +1М +1П + 2Ж</item>
+        <item>3К + 1М +2П + 1Ж</item>
+        <item>3К + 2Ф +1П + 1О</item>
+        <item>3К + 2М + 1П + 2Ж</item>
+        <item>2К + 1Ф + 1М + 2Ж + 1О</item>
         <item>2К + 2Ф + 1М + 1П + 2Ж</item>
-        <item>2К + 1Ф + 2М + 0,5П + 2Ж</item>
-        <item>2К + 2Ф + 1,5П + 2Ж</item>
+        <item>2К + 2Ф + 1П + 2Ж</item>
         <item>2К + 2М + 1П + 2Ж</item>
-        <item>2К + 1,5М + 1,5П + 1О</item>
+        <item>2К + 2М + 1П + 1О</item>
     </string-array>
     <string-array name="carbohydratePhase1Meal1">
         <item>1М + 1К</item>
@@ -245,7 +244,7 @@
     </string-array>
     <string-array name="carbohydratePhase1Meal2">
         <item>1М</item>
-        <item>1Ф + 0.5О</item>
+        <item>1Ф + 1О</item>
         <item>1К</item>
     </string-array>
     <string-array name="carbohydratePhase1Meal3">
@@ -261,14 +260,14 @@
     <string-array name="carbohydratePhase2Meal1">
         <item>2К + 1П</item>
         <item>2К + 1М</item>
-        <item>1К + 1,5О</item>
+        <item>1К + 1О</item>
         <item>1Ф + 1М + 1П</item>
         <item>1К + 1П + 1Ф</item>
-        <item>1,5Ф + 1М + 1О</item>
+        <item>1Ф + 1М + 1О</item>
     </string-array>
     <string-array name="carbohydratePhase2Meal2">
         <item>1М + 1Ф</item>
-        <item>1,5Ф + 1О</item>
+        <item>1Ф + 1О</item>
         <item>1М + 1К</item>
         <item>1К + 1О</item>
         <item>2К</item>
@@ -285,19 +284,19 @@
     </string-array>
     <string-array name="carbohydratePhase3Meal1">
         <item>1К + 1Ф + 1М +1О</item>
-        <item>2К + 1,5Ф + 1П</item>
+        <item>2К + 1Ф + 1П</item>
         <item>2К + 1М + 1П</item>
         <item>2К + 1П + 1О</item>
         <item>2Ф + 1М + 1П + 1О</item>
         <item>1К + 2П + 1Ж</item>
-        <item>1,5Ф + 2П</item>
+        <item>1Ф + 2П</item>
         <item>1Ф + 1П + 2О</item>
     </string-array>
     <string-array name="carbohydratePhase3Meal2">
         <item>1К + 1М</item>
         <item>1К + 1О</item>
         <item>1Ф + 1М</item>
-        <item>1,5Ф + 1О</item>
+        <item>1Ф + 1О</item>
         <item>1Ф + 1П</item>
         <item>1М + 1О</item>
         <item>2О</item>
@@ -309,15 +308,14 @@
         <item>3К + 1Ф + 1П + 1Ж + 1О</item>
         <item>3К + 1Ф + 1М + 1П + 1Ж</item>
         <item>3К + 1Ф + 1М + 1П + 1О</item>
-        <item>3К + 1,5Ф + 0,5М + 1П + 2Ж</item>
-        <item>3К + 0,5М + 2П + 1Ж</item>
-        <item>3К + 1,5Ф + 1П + 1,5О</item>
-        <item>3К + 2М + 0,5П + 2Ж</item>
-        <item>2К + 1Ф + 1М + 0,5П + 2Ж + 0,5О</item>
+        <item>3К + 1Ф + 1П + 2Ж</item>
+        <item>3К + 1М + 2П + 1Ж</item>
+        <item>3К + 2Ф + 1П + 1О</item>
+        <item>3К + 2М + 1П + 2Ж</item>
         <item>2К + 2Ф + 1М + 1П + 2Ж</item>
-        <item>2К + 1Ф + 2М + 0,5П + 2Ж</item>
-        <item>2К + 2Ф + 1,5П + 2Ж</item>
+        <item>2К + 1Ф + 2М + 1П + 2Ж</item>
+        <item>2К + 2Ф + 1П + 2Ж</item>
         <item>2К + 2М + 1П + 2Ж</item>
-        <item>2К + 1,5М + 1,5П + 1О</item>
+        <item>2К + 2М + 1П + 1О</item>
     </string-array>
 </resources>

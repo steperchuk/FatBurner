@@ -95,7 +95,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
-            android:text="Завтрак"
+            android:text="Перекус"
             android:textColor="@color/Black"
             android:textSize="24sp" />
 
@@ -158,7 +158,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
-            android:text="Завтрак"
+            android:text="Обед"
             android:textColor="@color/Black"
             android:textSize="24sp" />
 
@@ -221,7 +221,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
-            android:text="Завтрак"
+            android:text="Перекус"
             android:textColor="@color/Black"
             android:textSize="24sp" />
 
@@ -284,7 +284,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
-            android:text="Завтрак"
+            android:text="Ужин"
             android:textColor="@color/Black"
             android:textSize="24sp" />
 

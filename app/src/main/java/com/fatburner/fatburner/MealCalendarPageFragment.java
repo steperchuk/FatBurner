@@ -48,7 +48,7 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
     int min;
     int timerIdForApply;
 
-    String legend = " П - мясо/рыба/яйца \n К - каши/крупы \n М - молочные \n Ф - фрукты/ягоды \n О - орехи \n Ж - масла/жиры";
+    String legend = "Категории продуктов:\n П - мясо/рыба/яйца \n К - каши/крупы \n М - молочные \n Ф - фрукты/ягоды \n О - орехи \n Ж - масла/жиры";
 
     Spinner breakfestShema;
     Spinner secondBreakfestShema;
@@ -391,9 +391,6 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
 
         String incrementedHour;
         String decrementedHour;
-        Integer incH;
-        Integer decH;
-
 
         String h = String.valueOf(hour);
         String m = String.valueOf(min);
