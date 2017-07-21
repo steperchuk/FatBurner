@@ -4,11 +4,15 @@ package com.fatburner.fatburner;
  * Created by sete on 6/15/2017.
  */
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +41,13 @@ import static com.fatburner.fatburner.R.id.view;
 
 public class DietPageFragment extends Fragment {
 
+    String days[] = { "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье" };
+    String daysSelected = "";
+    final int DIALOG_DAYS = 3;
+    boolean chkd[] = { false, false, false, false, false, false, false };
+
     ListView dietList;
+    ImageButton getTotalItemsList;
 
     final String ATTRIBUTE_NAME = "name";
     final String ATTRIBUTE_NAME_INFO = "info";
@@ -81,6 +91,17 @@ public class DietPageFragment extends Fragment {
 
 
         dietList = (ListView) view.findViewById(R.id.dietList);
+        getTotalItemsList = (ImageButton) view.findViewById(R.id.getTotalItemsList);
+
+        getTotalItemsList.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                showDialog(DIALOG_DAYS);
+            }
+        });
+
+
+
 
         ArrayList<Map<String, Object>> data = new ArrayList<Map<String, Object>>(mealList.length);
         Map<String, Object> m;
@@ -102,6 +123,55 @@ public class DietPageFragment extends Fragment {
 
         return view;
     }
+
+    protected Dialog onCreateDialog(int id) {
+        AlertDialog.Builder adb = new AlertDialog.Builder(this);
+
+
+        if (id == DIALOG_DAYS)
+        {
+            adb.setTitle("Дни недели");
+            adb.setMultiChoiceItems(days, chkd, myItemsMultiClickListener);
+            adb.setPositiveButton(R.string.ok, myBtnClickListener);
+            return adb.create();
+        }
+
+        return super.onCreateDialog(id);
+    };
+
+    DialogInterface.OnMultiChoiceClickListener myItemsMultiClickListener = new DialogInterface.OnMultiChoiceClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+            ListView lv = ((AlertDialog) dialog).getListView();
+        }
+    };
+
+    DialogInterface.OnClickListener myBtnClickListener = new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialog, int which) {
+            int atLeastOneChecked = 0;
+            SparseBooleanArray sbArray = ((AlertDialog)dialog).getListView().getCheckedItemPositions();
+            for (int i = 0; i < sbArray.size(); i++) {
+                int key = sbArray.keyAt(i);
+                if (sbArray.get(key))
+                {
+                    daysSelected = daysSelected + days[key] + ", ";
+                    atLeastOneChecked = 1;
+                }
+            }
+            if(atLeastOneChecked == 0){
+                dialog.cancel();
+                return;
+            }
+
+                // perform products calculation according to selected days
+                // perform PRODUCTS_ORDER table in DB filling. Need separate method.
+
+            Intent intent = new Intent(getActivity(), ProductsOrder.class);
+            startActivity(intent);
+
+        }
+    };
+
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
