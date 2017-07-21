@@ -49,7 +49,7 @@ public class ProductsOrder extends Menu {
         setContentView(R.layout.activity_products_order);
 
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View contentView = inflater.inflate(R.layout.activity_exercise, null, false);
+        View contentView = inflater.inflate(R.layout.activity_products_order, null, false);
         mDrawerLayout.addView(contentView, 0);
 
         productsOrderList = (ListView) findViewById(R.id.orders_list);
