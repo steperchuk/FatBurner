@@ -50,13 +50,13 @@ public class ProductsOrder extends Menu {
 
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View contentView = inflater.inflate(R.layout.activity_products_order, null, false);
-        mDrawerLayout.addView(contentView, 0);
+        //mDrawerLayout.addView(contentView, 0);
 
         productsOrderList = (ListView) findViewById(R.id.orders_list);
         switchHideOrdered = (Switch) findViewById(R.id.hideOrdred);
         switchHideOrdered.setChecked(true);
 
-        productsOrderList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        productsOrderList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
         loadList();
 
@@ -72,8 +72,7 @@ public class ProductsOrder extends Menu {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
-
-
+                databaseHelper = new DatabaseHelper(getApplicationContext());
                 databaseHelper.getWritableDatabase();
                 db = databaseHelper.open();
 
@@ -107,6 +106,8 @@ public class ProductsOrder extends Menu {
 
     private void loadList(){
 
+        productsList.clear();
+        databaseHelper = new DatabaseHelper(getApplicationContext());
         databaseHelper.getWritableDatabase();
         db = databaseHelper.open();
 
@@ -134,7 +135,7 @@ public class ProductsOrder extends Menu {
 
 
         for (int i = 0; i < products.size(); i++){
-            productsList.add(products.get(i) + "  -  " + weights.get(i));
+            productsList.add(products.get(i) + "  -  " + weights.get(i) + " гр");
         }
 
 

@@ -48,6 +48,9 @@
         <activity android:name=".Diet"
             android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity"></activity>
+        <activity android:name=".ProductsOrder"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".MainActivity"></activity>
     </application>
 
 </manifest>

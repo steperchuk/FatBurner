@@ -4,7 +4,10 @@ package com.fatburner.fatburner;
  * Created by sete on 6/15/2017.
  */
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.SparseBooleanArray;
@@ -21,6 +24,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -38,6 +42,17 @@ import static com.fatburner.fatburner.GlobalVariables.globalProductsMap;
 
 
 public class ProductsPageFragment extends Fragment{
+
+    DatabaseHelper databaseHelper;
+    SQLiteDatabase db;
+    Cursor userCursor;
+
+
+    String dayId;
+    String mealIdentifier;
+    String productsList[];
+    Map<Integer, String[]> products = new HashMap<>();
+
 
     ArrayAdapter<CharSequence> adapter = null;
 
@@ -130,7 +145,6 @@ public class ProductsPageFragment extends Fragment{
         lvMain.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-
                 String productsList[] = {" "," "," "," "};
 
                 if (lvMain.isItemChecked(position)) {
@@ -196,6 +210,7 @@ public class ProductsPageFragment extends Fragment{
                 mealProducts.put(mealId, normalizedList);
                 productsMap.put(day,mealProducts);
                 globalProductsMap = productsMap; // filling diet
+                addProductsToDB(productsMap);
                 getActivity().onBackPressed();
             }
         });
@@ -251,6 +266,84 @@ public class ProductsPageFragment extends Fragment{
         }
 
         lvMain.setAdapter(adapter);
+    }
+
+    private void addProductsToDB(Map<Integer, Map<Integer, String[]>> productsMap){
+
+
+        Set keys = productsMap.keySet();
+        for(Object key: keys){
+            dayId = String.valueOf(key);
+            products = productsMap.get(key);
+        }
+
+        Set productKeys = products.keySet();
+        for(Object key: productKeys){
+            mealIdentifier = String.valueOf(key);
+            productsList = products.get(key);
+        }
+
+        List<String> productNames = new ArrayList<>();
+        List<String> productWeights = new ArrayList<>();
+
+        databaseHelper = new DatabaseHelper(getContext());
+        databaseHelper.getWritableDatabase();
+        db = databaseHelper.open();
+
+
+        userCursor = db.query("DIET", null, "DAY = ? AND MEAL = ?", new String[]{dayId, mealIdentifier}, null, null, null);
+
+        if (userCursor.moveToFirst()) {
+            do {
+                try {
+                    db.delete("DIET", "DAY = ? and MEAL = ?", new String[]{dayId, mealIdentifier});
+                }
+                catch(Exception e)
+                {
+                    e.printStackTrace();
+                }
+            } while (userCursor.moveToNext());
+        }
+
+        for(int i = 0; i < productsList.length; i++){
+            ContentValues cv = new ContentValues();
+            cv.put("DAY", dayId);
+            cv.put("MEAL", mealIdentifier);
+
+            String arrayItem = productsList[i];
+
+            arrayItem = arrayItem.trim();
+            String productName = arrayItem.substring(0, arrayItem.indexOf("-"));
+            arrayItem = arrayItem.replace(productName + "-", "");
+            String productWeight = arrayItem.substring(0, arrayItem.indexOf("-"));
+
+            cv.put("PRODUCT", productName);
+            cv.put("WEIGHT", productWeight);
+
+            db.insert("DIET", null, cv);
+        }
+
+        /* this is for debug
+        userCursor =  db.rawQuery("select * from DIET", null);
+
+        List<String> prod = new ArrayList<>();
+
+        if (userCursor.moveToFirst()) {
+            do {
+                prod.add(userCursor.getString(userCursor.getColumnIndex("PRODUCT")));
+            } while (userCursor.moveToNext());
+        }
+
+        int s = prod.size();
+         */
+
+        listOfProducts.clear();
+        userCursor.close();
+        db.close();
+
+
+
+
     }
 
     }

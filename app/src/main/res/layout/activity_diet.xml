@@ -4,11 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/White"
     tools:context=".MainActivity">
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="70dp">
         <android.support.v4.view.PagerTabStrip
             android:id="@+id/pagerTabStrip"
             android:layout_width="match_parent"
@@ -17,4 +19,24 @@
             android:layout_gravity="top">
         </android.support.v4.view.PagerTabStrip>
     </android.support.v4.view.ViewPager>
+    <ImageButton
+        android:id="@+id/getTotalItemsList"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="21dp"
+        android:layout_marginRight="21dp"
+        android:background="@color/White"
+        android:shadowColor="#45A9D4"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:src = "@drawable/ic_list"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
 </RelativeLayout>

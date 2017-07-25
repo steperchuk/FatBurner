@@ -5,37 +5,52 @@
     android:layout_height="match_parent"
     android:background="@color/White">
 
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <ListView
-        android:id="@+id/dietList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/trainingId"
-        android:layout_marginTop="5dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginBottom="60dp"
-        android:layout_alignParentStart="true">
-    </ListView>
+ <LinearLayout
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:orientation="vertical">
 
+     <ListView
+         android:id="@+id/breakfestList"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="5dp">
+     </ListView>
 
-    <ImageButton
-        android:id="@+id/getTotalItemsList"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="21dp"
-        android:layout_marginRight="21dp"
-        android:background="@color/White"
-        android:shadowColor="#45A9D4"
-        android:shadowDx="0"
-        android:shadowDy="0"
-        android:shadowRadius="5"
-        android:src = "@drawable/ic_list"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+     <ListView
+         android:id="@+id/secondBreakfestList"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="5dp">
+     </ListView>
+
+     <ListView
+         android:id="@+id/lunchList"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="5dp">
+     </ListView>
+
+     <ListView
+         android:id="@+id/secondLunchList"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="5dp">
+     </ListView>
+
+     <ListView
+         android:id="@+id/dinnerList"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="5dp">
+     </ListView>
+
+ </LinearLayout>
+    </ScrollView>
+
 
 </RelativeLayout>
