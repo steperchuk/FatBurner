@@ -126,14 +126,18 @@
             android:id="@+id/textView9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Notify about sleep"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:visibility="invisible"
-            android:layout_below="@+id/switchFoodNotification"
+            android:layout_above="@+id/applyBtn"
             android:layout_alignLeft="@+id/textView8"
             android:layout_alignStart="@+id/textView8"
-            android:layout_marginTop="11dp" />
+
+            android:layout_below="@+id/switchFoodNotification"
+            android:layout_marginTop="20dp"
+            android:layout_toLeftOf="@+id/switchSleepNotification"
+            android:layout_toStartOf="@+id/switchSleepNotification"
+            android:text="Внимание! Изменение настроек диеты приведет к удалению текущих настроек!"
+            android:textColor="@color/Red"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
         <Switch
             android:id="@+id/switchSleepNotification"

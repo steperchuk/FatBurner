@@ -163,6 +163,7 @@ public class Settings extends Menu {
                     phase.setVisibility(View.INVISIBLE);
                 }
                 useCustomDietValue = isChecked;
+                deleteAllMealSettingsAndDiet();
             }
         });
 
@@ -190,6 +191,7 @@ public class Settings extends Menu {
                 {switchDietType.setText("Углеводная");}
                 else {switchDietType.setText("Белковая");}
                 dietTypeValue = isChecked;
+                deleteAllMealSettingsAndDiet();
             }
         });
 
@@ -215,6 +217,7 @@ public class Settings extends Menu {
                 String selectedItem = phase.getSelectedItem().toString();
                 List<String> wordList = Arrays.asList(phases);
                 phaseValue = wordList.indexOf(selectedItem);
+                deleteAllMealSettingsAndDiet();
             }
 
             @Override
@@ -395,7 +398,7 @@ public class Settings extends Menu {
         Toast.makeText(this, "Настройки загружены", Toast.LENGTH_SHORT).show();
     }
 
-   public void saveSettings() {
+    public void saveSettings() {
 
        databaseHelper = new DatabaseHelper(this);
        databaseHelper.getWritableDatabase();
@@ -439,6 +442,61 @@ public class Settings extends Menu {
 
        selectedPhase = phaseValue;  //should be removed in future
        selectedDiet = dietTypeValue; //should be removed in future
+    }
+
+    private void deleteAllMealSettingsAndDiet(){
+
+        databaseHelper = new DatabaseHelper(this);
+        databaseHelper.getWritableDatabase();
+        db = databaseHelper.open();
+
+        userCursor =  db.rawQuery("select * from PRODUCTS_ORDER", null);
+
+        if (userCursor.moveToFirst()) {
+            do {
+                try {
+                    db.delete("PRODUCTS_ORDER", null, null);
+                }
+                catch(Exception e)
+                {
+                    e.printStackTrace();
+                }
+            } while (userCursor.moveToNext());
+        }
+
+        userCursor.close();
+
+        userCursor =  db.rawQuery("select * from MEAL_SETTINGS", null);
+
+        if (userCursor.moveToFirst()) {
+            do {
+                try {
+                    db.delete("MEAL_SETTINGS", null, null);
+                }
+                catch(Exception e)
+                {
+                    e.printStackTrace();
+                }
+            } while (userCursor.moveToNext());
+        }
+        userCursor.close();
+
+        userCursor =  db.rawQuery("select * from DIET", null);
+
+        if (userCursor.moveToFirst()) {
+            do {
+                try {
+                    db.delete("DIET", null, null);
+                }
+                catch(Exception e)
+                {
+                    e.printStackTrace();
+                }
+            } while (userCursor.moveToNext());
+        }
+
+        userCursor.close();
+        db.close();
     }
 
 }

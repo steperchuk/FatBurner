@@ -20,6 +20,7 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -531,8 +532,7 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
         userCursor.close();
         db.close();
 
-        //use this code to set selection
-        //dinnerShema.setSelection(3);
+        Toast.makeText(getContext(), "Настройки для этого дня сохранены", Toast.LENGTH_SHORT).show();
 
     }
 
