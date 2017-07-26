@@ -5,6 +5,7 @@ package com.fatburner.fatburner;
  */
 
 import android.app.TimePickerDialog;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -19,6 +20,9 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.fatburner.fatburner.GlobalVariables.PRODUCTS_PAGES_COUNT;
@@ -155,6 +159,8 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
         setMealShemas();
 
         setCalValues();
+
+        loadSettings();
 
         return view;
     }
@@ -370,7 +376,7 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
                 break;
 
             case R.id.applyMealCalendarBtn:
-                //code for saving preferences
+                saveMealSettings();
                 break;
         }
     }
@@ -465,5 +471,118 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
 
     }
 
+    private void saveMealSettings(){
+
+        Integer dayId = selectedDayId;
+
+        List<Integer> shemasList = new ArrayList<>();
+        List<String> timesList = new ArrayList<>();
+
+
+        databaseHelper = new DatabaseHelper(getContext());
+        databaseHelper.getWritableDatabase();
+        db = databaseHelper.open();
+
+        // clear DB
+        userCursor = db.query("MEAL_SETTINGS", null, "DAY = ?", new String[]{String.valueOf(dayId)}, null, null, null);
+
+        if (userCursor.moveToFirst()) {
+            do {
+                try {
+                    db.delete("MEAL_SETTINGS", "DAY = ?", new String[] { String.valueOf(dayId) });
+                }
+                catch(Exception e)
+                {
+                    e.printStackTrace();
+                }
+            } while (userCursor.moveToNext());
+        }
+
+
+        //insert into db
+
+        shemasList.add(breakfestShema.getSelectedItemPosition());
+        shemasList.add(secondBreakfestShema.getSelectedItemPosition());
+        shemasList.add(lunchShema.getSelectedItemPosition());
+        shemasList.add(secondLunchShema.getSelectedItemPosition());
+        shemasList.add(dinnerShema.getSelectedItemPosition());
+
+        timesList.add(breakfestTime.getText().toString());
+        timesList.add(secondBreakfestTime.getText().toString());
+        timesList.add(lunchTime.getText().toString());
+        timesList.add(secondLunchTime.getText().toString());
+        timesList.add(dinnerTime.getText().toString());
+
+
+        for(int i = 0; i < shemasList.size(); i++) {
+            ContentValues cv = new ContentValues();
+            cv.put("DAY", dayId);
+            cv.put("MEAL", i);
+            cv.put("SHEMA", shemasList.get(i));
+            cv.put("TIME", timesList.get(i));
+
+            db.insert("MEAL_SETTINGS", null, cv);
+        }
+
+
+        shemasList.clear();
+        timesList.clear();
+
+        userCursor.close();
+        db.close();
+
+        //use this code to set selection
+        //dinnerShema.setSelection(3);
+
     }
+
+    private void loadSettings() {
+
+        Integer dayId = getArguments().getInt(ARGUMENT_PAGE_NUMBER);;
+
+        List<Integer> shemasList = new ArrayList<>();
+        List<String> timesList = new ArrayList<>();
+
+        databaseHelper = new DatabaseHelper(getContext());
+        databaseHelper.getWritableDatabase();
+        db = databaseHelper.open();
+
+        // clear DB
+        userCursor = db.query("MEAL_SETTINGS", null, "DAY = ?", new String[]{String.valueOf(dayId)}, null, null, null);
+
+        Integer a = userCursor.getCount();
+
+        if (userCursor.getCount() == 0)
+        {
+            return;
+        }
+
+        if (userCursor.moveToFirst()) {
+            do {
+                shemasList.add(userCursor.getInt(2));
+                timesList.add(userCursor.getString(4));
+            } while (userCursor.moveToNext());
+        }
+
+        breakfestShema.setSelection(shemasList.get(0));
+        secondBreakfestShema.setSelection(shemasList.get(1));
+        lunchShema.setSelection(shemasList.get(2));
+        secondLunchShema.setSelection(shemasList.get(3));
+        dinnerShema.setSelection(shemasList.get(4));
+
+        breakfestTime.setText(timesList.get(0).toString());
+        secondBreakfestTime.setText(timesList.get(1).toString());
+        lunchTime.setText(timesList.get(2).toString());
+        secondLunchTime.setText(timesList.get(3).toString());
+        dinnerTime.setText(timesList.get(4).toString());
+
+        shemasList.clear();
+        timesList.clear();
+
+        userCursor.close();
+        db.close();
+
+    }
+
+}
 
