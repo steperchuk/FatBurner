@@ -32,7 +32,7 @@ public class ProductsOrder extends Menu {
     SQLiteDatabase db;
     Cursor userCursor;
 
-    int listLayout = android.R.layout.simple_list_item_single_choice;
+    int listLayout = android.R.layout.simple_list_item_multiple_choice;
 
     public DrawerLayout mDrawerLayout;
 
@@ -81,20 +81,9 @@ public class ProductsOrder extends Menu {
                 if(productsOrderList.isItemChecked(position)) { cv.put("IS_ORDERED", 1);}
                 else { cv.put("IS_ORDERED", 0);}
 
-                /* try if validation above will not work
-                SparseBooleanArray sbArray = productsOrderList.getCheckedItemPositions();
-                for (int i = 0; i < sbArray.size(); i++)
-                {
-                    int key = sbArray.keyAt(i);
-                    if (sbArray.get(key))
-                    {
-                        cv.put("IS_ORDERED", 1);
-                    }
-                }
-
-                */
-
                 db.update("PRODUCTS_ORDER", cv, "PRODUCT" + " = ?" , new String[]{getCurrentProductsList().get(position).toString()});
+
+                loadList();
 
                 db.close();
                 databaseHelper.close();
@@ -111,6 +100,7 @@ public class ProductsOrder extends Menu {
         databaseHelper.getWritableDatabase();
         db = databaseHelper.open();
 
+
         if(hideOrdered)
         {
             userCursor = db.query("PRODUCTS_ORDER", null, "IS_ORDERED != ?", new String[] {String.valueOf(1)}, null, null, null);
@@ -122,16 +112,14 @@ public class ProductsOrder extends Menu {
 
         List<String> products = new ArrayList<>();
         List<Integer> weights = new ArrayList<>();
-
+        List<Integer> orderedList = new ArrayList<>();
         if (userCursor.moveToFirst()) {
             do {
+                orderedList.add(userCursor.getInt(0));
                 products.add(userCursor.getString(1) );
                 weights.add(userCursor.getInt(2));
             } while (userCursor.moveToNext());
         }
-
-        userCursor.close();
-        db.close();
 
 
         for (int i = 0; i < products.size(); i++){
@@ -144,6 +132,19 @@ public class ProductsOrder extends Menu {
 
         // присваиваем адаптер списку
         productsOrderList.setAdapter(adapter);
+
+        for (int i = 0; i < orderedList.size(); i++){
+            if(orderedList.get(i) == 0)
+            {
+                productsOrderList.setItemChecked(i, false);
+            }
+            else{
+                productsOrderList.setItemChecked(i, true);
+            }
+        }
+
+        userCursor.close();
+        db.close();
 
     }
 
