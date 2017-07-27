@@ -2,6 +2,7 @@ package com.fatburner.fatburner;
 
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -19,8 +20,10 @@ import android.widget.TextView;
 import com.github.lzyzsd.circleprogress.DonutProgress;
 
 import java.io.IOException;
+import java.util.Calendar;
 
 import static com.fatburner.fatburner.GlobalVariables.LOAD_ARRAY;
+import static com.fatburner.fatburner.GlobalVariables.TRAINING_DAYS;
 import static com.fatburner.fatburner.GlobalVariables.TRAINING_ID;
 
 public class MainActivity extends Menu {
@@ -30,6 +33,8 @@ public class MainActivity extends Menu {
     Cursor userCursor;
 
     Intent intent;
+
+    String trainingDaysDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +54,28 @@ public class MainActivity extends Menu {
         databaseHelper.getWritableDatabase();
         db = databaseHelper.open();
 
+
+        userCursor = db.query("CALENDAR", null, "DATE = ?", new String[] {Utils.getCurrentDate()}, null, null, null);
+
+        if(userCursor.getCount() == 0){
+            ContentValues cv = new ContentValues();
+            cv.put("DATE", Utils.getCurrentDate());
+            cv.put("TRAINING_STATUS", "0");
+            cv.put("WATER_STATUS","0");
+            cv.put("FOOD_STATUS","0");
+            cv.put("PROGRAMM_STATUS","0");
+            cv.put("TRAINING_NAME","");
+            cv.put("PROGRAMM_NAME","0");
+            db.insert("CALENDAR", null, cv);
+        }
+
+        userCursor.close();
+        db.close();
+
+
+
+        db = databaseHelper.open();
+
         userCursor =  db.rawQuery("select * from APP_SETTINGS", null);
 
         userCursor.moveToFirst();
@@ -64,11 +91,7 @@ public class MainActivity extends Menu {
             }
 
 
-        userCursor.close();
-        db.close();
-
     }
-
 
     @Override
     protected void onDestroy() {

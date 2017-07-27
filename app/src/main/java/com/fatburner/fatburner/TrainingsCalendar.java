@@ -6,6 +6,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
@@ -40,6 +42,10 @@ import java.util.HashSet;
  */
 
 public class TrainingsCalendar extends Menu implements OnDateSelectedListener, OnMonthChangedListener {
+
+    DatabaseHelper databaseHelper;
+    SQLiteDatabase db;
+    Cursor userCursor;
 
     private static final DateFormat FORMATTER = SimpleDateFormat.getDateInstance();
 
@@ -80,8 +86,7 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
         mCalendarView.setOnMonthChangedListener(this);
 
         mCalendarView.setSelectedDate(CalendarDay.today());
-
-        trainingStatusLabel.setText(getSelectedDatesString());
+        loadProgressForSpecificDay(getSelectedDatesString());
 
 
         ImageButton playerButton = (ImageButton) findViewById(R.id.playerButton);
@@ -177,7 +182,9 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
 
 
     public void onDateSelected(@NonNull MaterialCalendarView widget, @Nullable CalendarDay date, boolean selected) {
-        trainingStatusLabel.setText(getSelectedDatesString());
+
+
+        loadProgressForSpecificDay(getSelectedDatesString());
     }
 
 
@@ -187,10 +194,50 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
 
     private String getSelectedDatesString() {
         CalendarDay date = mCalendarView.getSelectedDate();
+        /*
         if (date == null) {
             return "No Selection";
         }
         return FORMATTER.format(date.getDate());
+        */
+        return String.valueOf(date).replace("CalendarDay", "").replace("}","").replace("{","");
+    }
+
+
+    private void loadProgressForSpecificDay(String day){
+
+        databaseHelper = new DatabaseHelper(this);
+        databaseHelper.getWritableDatabase();
+        db = databaseHelper.open();
+
+        userCursor = db.query("CALENDAR", null, "DATE = ?", new String[] {day}, null, null, null);
+
+        if(userCursor.getCount() != 0)
+        {
+
+            userCursor.moveToFirst();
+            trainingStatusLabel.setText(" - " + userCursor.getString(4)+"%");
+            dietStatusLabel.setText(" - " + userCursor.getString(5)+"%");
+            waterStatusLabel.setText(" - " + userCursor.getString(6)+"%");
+
+        }
+        else
+        {
+            trainingStatusLabel.setText(" - 0%");
+            dietStatusLabel.setText(" - 0%");
+            waterStatusLabel.setText(" - 0%");
+        }
+
+        userCursor.close();
+        db.close();
+
+
+        db = databaseHelper.open();
+        userCursor =  db.rawQuery("select * from APP_SETTINGS", null);
+        userCursor.moveToFirst();
+        if(userCursor.getInt(6) == 0)
+        {dietStatusLabel.setText(" - выкл");}
+
     }
     
 }

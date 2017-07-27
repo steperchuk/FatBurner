@@ -196,6 +196,16 @@ public class Water extends Menu {
 
         userCursor.close();
         db.close();
-    }
+
+            db = databaseHelper.open();
+
+            cv = new ContentValues();
+            cv.put("WATER_STATUS", Math.round(progress));
+            db.update("CALENDAR", cv, "DATE = ?" , new String[]{Utils.getCurrentDate()});
+
+            db.close();
+
+
+        }
 }
 

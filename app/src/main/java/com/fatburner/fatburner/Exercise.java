@@ -255,7 +255,16 @@ public class Exercise extends Menu {
                     cv.put("PROGRESS", (int) progress);
                     db.update("TRAININGS", cv, "IS_CURRENT = ?" , new String[]{String.valueOf(1)});
                     db.close();
+
+
+                    db = databaseHelper.open();
+
+                    cv = new ContentValues();
+                    cv.put("TRAINING_STATUS", (int) progress);
+                    db.update("CALENDAR", cv, "DATE = ?" , new String[]{Utils.getCurrentDate()});
+
                     databaseHelper.close();
+                    db.close();
 
                 }
             });

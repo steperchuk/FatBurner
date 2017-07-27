@@ -34,6 +34,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+import static com.fatburner.fatburner.GlobalVariables.TRAINING_DAYS;
 import static com.fatburner.fatburner.GlobalVariables.selectedPhase;
 import static com.fatburner.fatburner.GlobalVariables.selectedDiet;
 
@@ -438,6 +439,8 @@ public class Settings extends Menu {
        userCursor.close();
        db.close();
 
+        getTrainingDaysFromDB(trainingDaysValue);
+
        Toast.makeText(this, "Настройки сохранены", Toast.LENGTH_SHORT).show();
 
        selectedPhase = phaseValue;  //should be removed in future
@@ -530,5 +533,16 @@ public class Settings extends Menu {
 
 
     }
+
+    private void getTrainingDaysFromDB(String trainingDaysValue){
+        if(trainingDaysValue.contains("Пон")){TRAINING_DAYS.add(1);}
+        if(trainingDaysValue.contains("Вто")){TRAINING_DAYS.add(2);}
+        if(trainingDaysValue.contains("Сре")){TRAINING_DAYS.add(3);}
+        if(trainingDaysValue.contains("Чет")){TRAINING_DAYS.add(4);}
+        if(trainingDaysValue.contains("Пят")){TRAINING_DAYS.add(5);}
+        if(trainingDaysValue.contains("Суб")){TRAINING_DAYS.add(6);}
+        if(trainingDaysValue.contains("Вос")){TRAINING_DAYS.add(7);}
+    }
+
 
 }

@@ -3,6 +3,7 @@ package com.fatburner.fatburner;
 import android.util.ArrayMap;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -166,5 +167,32 @@ public class Utils {
                 break;
         }
         return difficulty;
+    }
+
+    public static String getCurrentDate(){
+        Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DATE);
+        String date = year + "-" + month + "-" + day;
+
+        return date;
+    }
+
+    public static String getParsedDate(String parameter){
+        Integer value = null;
+        Calendar c = Calendar.getInstance();
+        switch (parameter){
+            case "day":
+                value = c.get(Calendar.DATE);
+                break;
+            case "month":
+                value = c.get(Calendar.MONTH);
+                break;
+            case "year":
+                value = c.get(Calendar.YEAR);
+                break;
+        }
+        return String.valueOf(value);
     }
 }

@@ -25,6 +25,7 @@ public class GlobalVariables extends Application{
     public static int selectedMealId;
     public static int selectedDayId;
     public static Map<Integer, Map<Integer, String[]>> globalProductsMap = new HashMap<Integer, Map<Integer, String[]>>();
+    public static List<Integer> TRAINING_DAYS = new ArrayList<>();
 
 
     }
