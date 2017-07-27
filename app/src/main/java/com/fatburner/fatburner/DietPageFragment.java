@@ -40,7 +40,7 @@ import static com.fatburner.fatburner.GlobalVariables.globalProductsMap;
 import static com.fatburner.fatburner.GlobalVariables.selectedDiet;
 import static com.fatburner.fatburner.GlobalVariables.selectedPhase;
 import static com.fatburner.fatburner.R.id.textView;
-import static com.fatburner.fatburner.R.id.view;
+
 
 
 public class DietPageFragment extends Fragment {

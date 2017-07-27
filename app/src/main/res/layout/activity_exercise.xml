@@ -22,31 +22,34 @@
         android:textSize="24sp"
         android:textStyle="bold" />
 
+<LinearLayout
+    android:id="@+id/exercise_info"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_below="@+id/info">
 
     <TextView
         android:id="@+id/repeats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/attempts"
-        android:layout_alignBottom="@+id/attempts"
-        android:layout_alignLeft="@+id/attemptsCounter"
-        android:layout_alignStart="@+id/attemptsCounter"
         android:text="TextView"
-        android:textAlignment="viewStart"
-        android:textSize="18sp" />
+        android:textAlignment="center"
+        android:layout_weight="1"
+        android:textSize="18sp"/>
 
     <TextView
         android:id="@+id/attempts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:text="TextView"
-        android:textAlignment="viewStart"
-        android:textSize="18sp"
         android:layout_below="@+id/info"
-        android:layout_alignRight="@+id/time"
-        android:layout_alignEnd="@+id/time" />
-
+        android:layout_marginEnd="17dp"
+        android:layout_marginRight="17dp"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:layout_weight="1"
+        android:textSize="18sp" />
+</LinearLayout>
 
 
     <TextView
@@ -64,13 +67,14 @@
 
     <ImageView
         android:id="@+id/imageView"
+        android:layout_marginTop="30dp"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:background="@android:color/white"
         android:src="@drawable/ic_working_out"
-        android:layout_marginBottom="15dp"
-        android:layout_above="@+id/done_btn"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignLeft="@+id/done_btn"
+        android:layout_alignStart="@+id/done_btn"
+        android:layout_below="@+id/exercise_info"/>
 
     <com.github.lzyzsd.circleprogress.DonutProgress
         android:id="@+id/done_btn"
@@ -122,12 +126,15 @@
         android:id="@+id/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/playerButton"
-        android:layout_alignRight="@+id/playerButton"
         android:layout_alignTop="@+id/done_btn"
-        android:text="TextView"
+        android:text="Продолжить!"
         android:textAlignment="center"
-        tools:text="01:17" />
+        android:textColor="@color/Blue"
+        android:textStyle="bold"
+        tools:text="01:17"
+        android:layout_toRightOf="@+id/done_btn"
+        android:layout_alignRight="@+id/info"
+        android:layout_alignEnd="@+id/info" />
 
 
 </RelativeLayout>

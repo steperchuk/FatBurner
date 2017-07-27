@@ -51,6 +51,8 @@ public class Exercise extends Menu {
     SQLiteDatabase db;
     Cursor userCursor;
 
+    CountDownTimer waitTimer;
+
     int i = 0;
     int currentAttemptId = 1;
     int relaxTimerValue = 1000; // 1 sec for test purposes
@@ -85,6 +87,7 @@ public class Exercise extends Menu {
         final TextView infoLabel = (TextView) findViewById(R.id.info);
         final TextView attemptsLabel = (TextView) findViewById(R.id.attempts);
         final TextView attemptsCounterLabel = (TextView) findViewById(R.id.attemptsCounter);
+        final TextView timerStrop = (TextView) findViewById(R.id.time);
         final ImageButton infoBtn = (ImageButton) findViewById(R.id.infoBtn);
         final ImageButton playButton = (ImageButton) findViewById(R.id.playerButton);
 
@@ -257,6 +260,23 @@ public class Exercise extends Menu {
                 }
             });
 
+        //listeners
+
+        timerStrop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(waitTimer != null) {
+                    waitTimer.cancel();
+                    waitTimer = null;
+                }
+
+                animationFinished = true;
+                doneBtn.performClick();
+
+            }
+        });
+
         playButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent("android.intent.action.MUSIC_PLAYER");
@@ -347,7 +367,8 @@ public class Exercise extends Menu {
     }
 
 
-        void startAnimation ( boolean timer){
+
+        void startAnimation (boolean timer){
 
             AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(Exercise.this, R.animator.progress_anim);
             set.setInterpolator(new DecelerateInterpolator());
@@ -356,7 +377,7 @@ public class Exercise extends Menu {
                 set.start();
             } else {
                 animationFinished = false;
-                new CountDownTimer(relaxTimerValue, 1000) {
+                waitTimer = new CountDownTimer(relaxTimerValue, 1000) {
                     public void onFinish() {
                         doneBtn.setText("Далее");
                         animationFinished = true;
