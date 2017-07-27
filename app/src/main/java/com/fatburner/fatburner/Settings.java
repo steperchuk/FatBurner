@@ -499,4 +499,36 @@ public class Settings extends Menu {
         db.close();
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent;
+
+        databaseHelper = new DatabaseHelper(this);
+        databaseHelper.getWritableDatabase();
+        db = databaseHelper.open();
+
+        userCursor =  db.rawQuery("select * from APP_SETTINGS", null);
+
+        userCursor.moveToFirst();
+        if(userCursor.getInt(0) == 1)
+        {
+            intent = new Intent(Settings.this, TrainingsCalendar.class);
+            startActivity(intent);
+        }
+        else
+        {
+            Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+            homeIntent.addCategory( Intent.CATEGORY_HOME );
+            homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(homeIntent);
+        }
+
+
+        userCursor.close();
+        db.close();
+
+
+
+    }
+
 }

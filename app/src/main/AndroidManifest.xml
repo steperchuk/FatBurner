@@ -17,40 +17,40 @@
         </activity>
         <activity android:name=".TrainingsList"
                   android:screenOrientation="portrait"
-                  android:parentActivityName=".MainActivity"/>
+                  android:parentActivityName=".ProgramsList"/>
         <activity android:name=".ProgramsList"
                   android:screenOrientation="portrait"
-                  android:parentActivityName=".MainActivity"/>
+                  android:parentActivityName=".TrainingsCalendar"/>
         <activity android:name=".Products"
                   android:screenOrientation="portrait"
-                  android:parentActivityName=".MainActivity"/>
+                  android:parentActivityName=".TrainingsCalendar"/>
         <activity android:name=".Settings"
                   android:screenOrientation="portrait"
-                  android:parentActivityName=".MainActivity"/>
+                  android:parentActivityName=".TrainingsCalendar"/>
         <activity android:name=".MealCalendar"
                   android:screenOrientation="portrait"
-                  android:parentActivityName=".MainActivity"/>
+                  android:parentActivityName=".TrainingsCalendar"/>
         <activity android:name=".SelectedTraining"
             android:screenOrientation="portrait"
             android:parentActivityName=".TrainingsList"></activity>
         <activity android:name=".Exercise"
             android:screenOrientation="portrait"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".SelectedTraining"></activity>
         <activity android:name=".TrainingCompleted"
             android:screenOrientation="portrait"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".TrainingsCalendar"></activity>
         <activity android:name=".Water"
             android:screenOrientation="portrait"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".TrainingsCalendar"></activity>
         <activity android:name=".TrainingsCalendar"
             android:screenOrientation="portrait"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".TrainingsCalendar"></activity>
         <activity android:name=".Diet"
             android:screenOrientation="portrait"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".TrainingsCalendar"></activity>
         <activity android:name=".ProductsOrder"
             android:screenOrientation="portrait"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".Diet"></activity>
     </application>
 
 </manifest>

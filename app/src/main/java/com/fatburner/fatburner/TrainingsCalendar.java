@@ -2,7 +2,9 @@ package com.fatburner.fatburner;
 
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -116,6 +118,54 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
 
     }
 
+    /*
+    @Override
+    public void onBackPressed() {
+        Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+        homeIntent.addCategory( Intent.CATEGORY_HOME );
+        homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(homeIntent);
+    }
+
+    */
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("Выйти из приложения?");
+        alertDialogBuilder
+                .setMessage("Нажмите 'Да' для выхода!")
+                .setCancelable(false)
+                .setPositiveButton("Да",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                                Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+                                homeIntent.addCategory( Intent.CATEGORY_HOME );
+                                homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(homeIntent);
+
+                                /* code to kill app can be used instead of above
+                                moveTaskToBack(true);
+                                android.os.Process.killProcess(android.os.Process.myPid());
+                                System.exit(1);
+                                */
+                            }
+                        })
+
+                .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+
+
     void startAnimation ( ) {
         AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(TrainingsCalendar.this, R.animator.progress_anim);
         set.setInterpolator(new DecelerateInterpolator());
@@ -142,7 +192,7 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
         }
         return FORMATTER.format(date.getDate());
     }
-
+    
 }
 
 

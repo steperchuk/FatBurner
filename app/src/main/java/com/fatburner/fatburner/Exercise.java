@@ -367,7 +367,6 @@ public class Exercise extends Menu {
     }
 
 
-
         void startAnimation (boolean timer){
 
             AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(Exercise.this, R.animator.progress_anim);
