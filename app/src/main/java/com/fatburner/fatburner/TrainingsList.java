@@ -101,6 +101,10 @@ public class TrainingsList extends Menu {
                 cv.put("CURRENT_TRAINING", selectedTraining);
                 db.update("TRAINING_SETTINGS",cv,null,null);
 
+                cv = new ContentValues();
+                cv.put("TRAINING_NAME", selectedTraining);
+                db.update("CALENDAR", cv, "DATE = ?" , new String[]{Utils.getCurrentDate()});
+
                 db.close();
                 databaseHelper.close();
 
@@ -184,6 +188,11 @@ public class TrainingsList extends Menu {
             cv.put("COMPLETION_STATUS", programmCompletion);
             db = databaseHelper.open();
             db.update("PROGRAMMS", cv, "NAME = ?", new String[]{String.valueOf(getCurrentProgramm())});
+
+            db = databaseHelper.open();
+            cv = new ContentValues();
+            cv.put("PROGRAMM_STATUS", programmCompletion);
+            db.update("CALENDAR", cv, "DATE = ?" , new String[]{Utils.getCurrentDate()});
         }
 
         db.close();

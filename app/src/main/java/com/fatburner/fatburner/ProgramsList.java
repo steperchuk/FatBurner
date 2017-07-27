@@ -98,8 +98,17 @@ public class ProgramsList extends Menu {
                 cv = new ContentValues();
                 cv.put("CURRENT_PROGRAMM", selectedProgramm);
                 db.update("TRAINING_SETTINGS",cv,null,null);
+
+                cv = new ContentValues();
+                cv.put("PROGRAMM_NAME", selectedProgramm);
+                db.update("CALENDAR", cv, "DATE = ?" , new String[]{Utils.getCurrentDate()});
+
                 db.close();
                 databaseHelper.close();
+
+
+
+
                 Intent intent;
                 intent = new Intent(ProgramsList.this, TrainingsList.class);
                 startActivity(intent);

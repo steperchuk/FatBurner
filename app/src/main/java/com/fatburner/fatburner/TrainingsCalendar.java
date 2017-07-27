@@ -35,6 +35,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 
 /**
@@ -54,6 +55,7 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
     TextView trainingStatusLabel;
     TextView dietStatusLabel;
     TextView waterStatusLabel;
+    ImageButton infoButton;
     MaterialCalendarView mCalendarView;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +68,8 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
         trainingStatusLabel = (TextView) findViewById(R.id.trainingStatusLabel);
         dietStatusLabel = (TextView) findViewById(R.id.dietStatusLabel);
         waterStatusLabel = (TextView) findViewById(R.id.waterStatusLabel);
+
+        infoButton = (ImageButton) findViewById(R.id.infoBtn);
 
         mCalendarView = (MaterialCalendarView) findViewById(R.id.trainingCalendarView);
 
@@ -120,19 +124,17 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
             }
         });
 
+        infoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //initiate modal dialog with info;
+
+            }
+        });
 
     }
 
-    /*
-    @Override
-    public void onBackPressed() {
-        Intent homeIntent = new Intent(Intent.ACTION_MAIN);
-        homeIntent.addCategory( Intent.CATEGORY_HOME );
-        homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(homeIntent);
-    }
-
-    */
 
     @Override
     public void onBackPressed() {
@@ -206,6 +208,12 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
 
     private void loadProgressForSpecificDay(String day){
 
+        String selectedDay = day;
+        String programName = "Не выбрана";
+        String programStatus = "0";
+        String trainingName = "Не выбрана";
+
+
         databaseHelper = new DatabaseHelper(this);
         databaseHelper.getWritableDatabase();
         db = databaseHelper.open();
@@ -216,6 +224,9 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
         {
 
             userCursor.moveToFirst();
+            programName = userCursor.getString(1);
+            programStatus = userCursor.getString(2);
+            trainingName = userCursor.getString(3);
             trainingStatusLabel.setText(" - " + userCursor.getString(4)+"%");
             dietStatusLabel.setText(" - " + userCursor.getString(5)+"%");
             waterStatusLabel.setText(" - " + userCursor.getString(6)+"%");
@@ -239,6 +250,17 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
         {dietStatusLabel.setText(" - выкл");}
 
     }
+
+
+
+    private void fillDayColors(Date date){
+        //getting current day name
+        String weekDay = (String) android.text.format.DateFormat.format("EEEE", date);
+        /////
+
+
+    }
+
     
 }
 
