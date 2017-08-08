@@ -3,6 +3,7 @@ package com.fatburner.fatburner;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -47,6 +49,15 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
     DatabaseHelper databaseHelper;
     SQLiteDatabase db;
     Cursor userCursor;
+
+    String selectedDay = "";
+    String programName = "Нет данных";
+    String programStatus = "0";
+    String trainingName = "Не данных";
+    String trainingStatus = "0";
+    String waterStatus = "0";
+    String dietStatus = "выкл";
+
 
     private static final DateFormat FORMATTER = SimpleDateFormat.getDateInstance();
 
@@ -91,6 +102,7 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
 
         mCalendarView.setSelectedDate(CalendarDay.today());
         loadProgressForSpecificDay(getSelectedDatesString());
+        clearChash();
 
 
         ImageButton playerButton = (ImageButton) findViewById(R.id.playerButton);
@@ -128,10 +140,49 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
             @Override
             public void onClick(View v) {
 
-                //initiate modal dialog with info;
+                final Dialog dialog = new Dialog(TrainingsCalendar.this);
+                dialog.setContentView(R.layout.modal_info);
+                dialog.setCancelable(true);
+
+                clearChash();
+                loadProgressForSpecificDay(getSelectedDatesString());
+
+                //set up text
+                TextView date = (TextView) dialog.findViewById(R.id.date);
+                date.setText(getSelectedDatesString());
+
+                TextView programNameLabel = (TextView) dialog.findViewById(R.id.programName);
+                programNameLabel.setText(programName);
+
+                TextView programProgressLabel = (TextView) dialog.findViewById(R.id.programStatus);
+                programProgressLabel.setText(Math.round(Float.valueOf(programStatus)) + "%");
+
+                TextView trainingNameLabel = (TextView) dialog.findViewById(R.id.trainingName);
+                trainingNameLabel.setText(trainingName);
+
+                TextView trainingProgressLabel = (TextView) dialog.findViewById(R.id.trainingStatus);
+                trainingProgressLabel.setText(trainingStatus + "%");
+
+                TextView waterStatusLabel = (TextView) dialog.findViewById(R.id.waterStatus);
+                waterStatusLabel.setText(waterStatus + "%");
+
+                TextView dietStatusLabel = (TextView) dialog.findViewById(R.id.dietStatus);
+                dietStatusLabel.setText(dietStatus + "%");
+
+                //set up button
+                ImageButton button = (ImageButton) dialog.findViewById(R.id.Button01);
+                button.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        dialog.cancel();
+                        clearChash();
+                    }
+                });
+
+                dialog.show();
 
             }
         });
+
 
     }
 
@@ -208,12 +259,7 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
 
     private void loadProgressForSpecificDay(String day){
 
-        String selectedDay = day;
-        String programName = "Не выбрана";
-        String programStatus = "0";
-        String trainingName = "Не выбрана";
-
-
+        selectedDay = day;
         databaseHelper = new DatabaseHelper(this);
         databaseHelper.getWritableDatabase();
         db = databaseHelper.open();
@@ -227,9 +273,12 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
             programName = userCursor.getString(1);
             programStatus = userCursor.getString(2);
             trainingName = userCursor.getString(3);
-            trainingStatusLabel.setText(" - " + userCursor.getString(4)+"%");
-            dietStatusLabel.setText(" - " + userCursor.getString(5)+"%");
-            waterStatusLabel.setText(" - " + userCursor.getString(6)+"%");
+            trainingStatus = userCursor.getString(4);
+            dietStatus = userCursor.getString(5);
+            waterStatus = userCursor.getString(6);
+            trainingStatusLabel.setText(" - " + trainingStatus + "%");
+            dietStatusLabel.setText(" - " + dietStatus + "%");
+            waterStatusLabel.setText(" - " + waterStatus +"%");
 
         }
         else
@@ -249,6 +298,16 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
         if(userCursor.getInt(6) == 0)
         {dietStatusLabel.setText(" - выкл");}
 
+    }
+
+    private void clearChash(){
+         selectedDay = "";
+         programName = "Нет данных";
+         programStatus = "0";
+         trainingName = "Нет данных";
+         trainingStatus = "0";
+         waterStatus = "0";
+         dietStatus = "0";
     }
 
 
