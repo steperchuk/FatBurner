@@ -103,12 +103,11 @@
 
     <ImageButton
         android:id="@+id/infoBtn"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:background="@color/White"
-        android:layout_marginTop="10dp"
         android:src="@drawable/ic_information_smal"
-        android:layout_below="@+id/trainingCalendarView"
+        android:layout_above="@+id/imageView4"
         android:layout_toRightOf="@+id/playerButton"
         android:layout_toEndOf="@+id/playerButton" />
 

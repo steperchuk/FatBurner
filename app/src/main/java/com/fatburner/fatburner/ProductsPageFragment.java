@@ -199,7 +199,7 @@ public class ProductsPageFragment extends Fragment{
                 }
         });
 
-       ;
+
 
         applyButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -217,7 +217,6 @@ public class ProductsPageFragment extends Fragment{
 
         return view;
     }
-
 
 
     @Override

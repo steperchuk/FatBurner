@@ -1,6 +1,9 @@
 package com.fatburner.fatburner;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -17,6 +20,7 @@ import android.widget.TextView;
 
 import static com.fatburner.fatburner.GlobalVariables.PRODUCTS_PAGES_COUNT;
 import static com.fatburner.fatburner.GlobalVariables.PRODUCTS;
+import static com.fatburner.fatburner.GlobalVariables.globalProductsMap;
 
 public class Products extends FragmentActivity {
 
@@ -52,6 +56,33 @@ public class Products extends FragmentActivity {
             public void onPageScrollStateChanged(int state) {
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        //alertDialogBuilder.setTitle("Выйти из приложения?");
+        alertDialogBuilder
+                .setMessage("Вы уверены что сохранили список продуктов?")
+                .setCancelable(false)
+                .setPositiveButton("Да",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                                Intent intent = new Intent(Products.this, MealCalendar.class);
+                                startActivity(intent);
+                            }
+                        })
+
+                .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 }
 

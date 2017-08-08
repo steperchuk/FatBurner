@@ -41,7 +41,7 @@ public class ProductsOrder extends Menu {
     Switch switchHideOrdered;
 
     List<String> productsList = new ArrayList<String>();
-    boolean hideOrdered = true;
+    boolean hideOrdered = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,7 @@ public class ProductsOrder extends Menu {
 
         productsOrderList = (ListView) findViewById(R.id.orders_list);
         switchHideOrdered = (Switch) findViewById(R.id.hideOrdred);
-        switchHideOrdered.setChecked(true);
+        switchHideOrdered.setChecked(false);
 
         productsOrderList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 

@@ -61,6 +61,15 @@ public class TrainingCompleted extends Menu {
                 db.close();
                 databaseHelper.close();
 
+                db = databaseHelper.open();
+
+                cv = new ContentValues();
+                cv.put("TRAINING_STATUS", 100);
+                db.update("CALENDAR", cv, "DATE = ?" , new String[]{Utils.getCurrentDate()});
+
+                databaseHelper.close();
+                db.close();
+
                     Intent intent = new Intent(TrainingCompleted.this, MainActivity.class);
                     startActivity(intent);
             }

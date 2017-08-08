@@ -25,7 +25,7 @@
         android:layout_marginTop="37dp"
         android:text="Тренировка окончена!"
         android:textColor="@android:color/holo_orange_dark"
-        android:textSize="36sp"
+        android:textSize="32sp"
         android:textStyle="bold"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
@@ -34,12 +34,16 @@
         android:id="@+id/scoreLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/textView10"
+        android:layout_alignLeft="@+id/textView10"
+        android:layout_alignRight="@+id/textView10"
+        android:layout_alignStart="@+id/textView10"
+        android:layout_below="@+id/textView10"
         android:layout_marginTop="18dp"
         android:text="Время: 1 час 15 мин"
+        android:textAlignment="center"
         android:textColor="@android:color/holo_orange_dark"
-        android:textSize="18sp"
-        android:layout_below="@+id/textView10"
-        android:layout_centerHorizontal="true" />
+        android:textSize="18sp" />
 
     <ImageButton
         android:id="@+id/imageButton"

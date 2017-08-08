@@ -65,16 +65,25 @@
         android:layout_alignLeft="@+id/exercise_label"
         android:layout_alignStart="@+id/exercise_label" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_marginTop="30dp"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:background="@android:color/white"
-        android:src="@drawable/ic_working_out"
-        android:layout_alignLeft="@+id/done_btn"
-        android:layout_alignStart="@+id/done_btn"
-        android:layout_below="@+id/exercise_info"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/exercise_info">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="175dp"
+            android:layout_height="175dp"
+            android:background="@android:color/white"
+            android:src="@drawable/ic_working_out"
+            android:layout_alignLeft="@+id/done_btn"
+            android:layout_alignStart="@+id/done_btn"
+            android:layout_below="@+id/exercise_info"/>
+
+    </LinearLayout>
+
 
     <com.github.lzyzsd.circleprogress.DonutProgress
         android:id="@+id/done_btn"
@@ -126,15 +135,16 @@
         android:id="@+id/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/info"
+        android:layout_alignRight="@+id/info"
         android:layout_alignTop="@+id/done_btn"
-        android:text="Продолжить!"
+        android:layout_toRightOf="@+id/done_btn"
+        android:text="Продолжить"
         android:textAlignment="center"
         android:textColor="@color/Blue"
+        android:textSize="12sp"
         android:textStyle="bold"
-        tools:text="01:17"
-        android:layout_toRightOf="@+id/done_btn"
-        android:layout_alignRight="@+id/info"
-        android:layout_alignEnd="@+id/info" />
+        tools:text="01:17" />
 
 
 </RelativeLayout>

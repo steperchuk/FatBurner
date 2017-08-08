@@ -46,6 +46,7 @@ import static java.lang.Thread.sleep;
 public class Exercise extends Menu {
 
     ImageView imageView;
+    TextView timerStop;
 
     DatabaseHelper databaseHelper;
     SQLiteDatabase db;
@@ -87,7 +88,7 @@ public class Exercise extends Menu {
         final TextView infoLabel = (TextView) findViewById(R.id.info);
         final TextView attemptsLabel = (TextView) findViewById(R.id.attempts);
         final TextView attemptsCounterLabel = (TextView) findViewById(R.id.attemptsCounter);
-        final TextView timerStrop = (TextView) findViewById(R.id.time);
+        timerStop = (TextView) findViewById(R.id.time);
         final ImageButton infoBtn = (ImageButton) findViewById(R.id.infoBtn);
         final ImageButton playButton = (ImageButton) findViewById(R.id.playerButton);
 
@@ -234,7 +235,8 @@ public class Exercise extends Menu {
                         relaxTimerValue = relaxTimeList.get(i) * 1000;    // comment this row for debug purposes
 
                         if (!exerciseList.get(i).equals("Отдых")) {
-
+                            timerStop.setVisibility(View.VISIBLE);
+                            doneBtn.setMax(100);
                             progress = progress + 100 / (exerciseList.size() / 2);
                             doneBtn.setText(String.valueOf(progress).substring(0, 2) + "%");
                             doneBtn.setProgress(progress);
@@ -271,7 +273,7 @@ public class Exercise extends Menu {
 
         //listeners
 
-        timerStrop.setOnClickListener(new View.OnClickListener() {
+        timerStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -388,10 +390,12 @@ public class Exercise extends Menu {
                 waitTimer = new CountDownTimer(relaxTimerValue, 1000) {
                     public void onFinish() {
                         doneBtn.setText("Далее");
+                        timerStop.setVisibility(View.INVISIBLE);
                         animationFinished = true;
                     }
 
                     public void onTick(long millisUntilFinished) {
+                        timerStop.setVisibility(View.VISIBLE);
                         doneBtn.setText(millisUntilFinished / 1000 + " sec");
                         doneBtn.setMax(relaxTimerValue/1000);
                         doneBtn.setProgress(relaxTimerValue/1000 - millisUntilFinished/1000);

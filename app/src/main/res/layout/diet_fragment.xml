@@ -11,42 +11,37 @@
 
  <LinearLayout
      android:layout_width="match_parent"
-     android:layout_height="match_parent"
+     android:layout_height="wrap_content"
      android:orientation="vertical">
 
      <ListView
          android:id="@+id/breakfestList"
          android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:layout_marginTop="5dp">
+         android:layout_height="wrap_content">
      </ListView>
 
      <ListView
          android:id="@+id/secondBreakfestList"
          android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:layout_marginTop="5dp">
+         android:layout_height="wrap_content">
      </ListView>
 
      <ListView
          android:id="@+id/lunchList"
          android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:layout_marginTop="5dp">
+         android:layout_height="wrap_content">
      </ListView>
 
      <ListView
          android:id="@+id/secondLunchList"
          android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:layout_marginTop="5dp">
+         android:layout_height="wrap_content">
      </ListView>
 
      <ListView
          android:id="@+id/dinnerList"
          android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:layout_marginTop="5dp">
+         android:layout_height="wrap_content">
      </ListView>
 
  </LinearLayout>
