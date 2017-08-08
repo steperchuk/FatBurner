@@ -51,6 +51,49 @@
         android:textSize="18sp" />
 </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/weightInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:layout_below="@+id/exercise_info"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:id="@+id/weightLabelText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Предыдущий вес: "
+            android:layout_gravity="end"
+            android:textAlignment="textEnd"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:textSize="18sp"/>
+
+        <EditText
+            android:id="@+id/weightLabel"
+            android:layout_width="30dp"
+            android:background="@android:color/transparent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/Blue"
+            android:layout_gravity="center"
+            android:layout_marginEnd="17dp"
+            android:layout_marginRight="17dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:maxLength="3"
+            android:text="80"
+            android:textSize="18sp" />
+
+
+    </LinearLayout>
+
+
 
     <TextView
         android:id="@+id/info"
@@ -68,19 +111,19 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/exercise_info">
+        android:layout_below="@+id/weightInfo">
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="175dp"
-            android:layout_height="175dp"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
             android:background="@android:color/white"
             android:src="@drawable/ic_working_out"
             android:layout_alignLeft="@+id/done_btn"
             android:layout_alignStart="@+id/done_btn"
-            android:layout_below="@+id/exercise_info"/>
+            android:layout_below="@+id/weightInfo"/>
 
     </LinearLayout>
 

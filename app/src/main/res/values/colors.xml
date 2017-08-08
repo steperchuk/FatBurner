@@ -8,7 +8,7 @@
     <color name="Orange">#33FFFF00</color>
     <color name="Green">#3300FF00</color>
     <color name="Black">#000000</color>
-    <color name="White">#FFFFFF</color>
+    <color name="White">#ffffff</color>
     <color name="Blue">#2488FF</color>
     <color name="OrangeDark">#FFA500</color>
 </resources>

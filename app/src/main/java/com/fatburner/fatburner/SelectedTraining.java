@@ -214,10 +214,10 @@ public class SelectedTraining extends Menu {
                     @Override
                     public void run() {
                         TextView txt = (TextView) findViewById(R.id.startLabel);
-                        if(txt.getVisibility() == View.VISIBLE){
-                            txt.setVisibility(View.INVISIBLE);
+                        if(txt.getText() == "Нажмите чтобы начать"){
+                            txt.setText("");
                         }else{
-                            txt.setVisibility(View.VISIBLE);
+                            txt.setText("Нажмите чтобы начать");
                         }
                         blink();
                     }

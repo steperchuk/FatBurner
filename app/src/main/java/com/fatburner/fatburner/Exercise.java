@@ -15,12 +15,15 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.github.lzyzsd.circleprogress.DonutProgress;
@@ -91,6 +94,10 @@ public class Exercise extends Menu {
         timerStop = (TextView) findViewById(R.id.time);
         final ImageButton infoBtn = (ImageButton) findViewById(R.id.infoBtn);
         final ImageButton playButton = (ImageButton) findViewById(R.id.playerButton);
+        final TextView weightLabelText = (TextView) findViewById(R.id.weightLabelText);
+        final EditText weight = (EditText) findViewById(R.id.weightLabel);
+
+
 
 
         List<String> exercises = new ArrayList<>();
@@ -214,6 +221,8 @@ public class Exercise extends Menu {
 
                             if(!exerciseList.get(i).equals("Отдых")) {
                                 attemptsCounterLabel.setVisibility(View.VISIBLE);
+                                weightLabelText.setVisibility(View.VISIBLE);
+                                weight.setVisibility(View.VISIBLE);
                                 if (currentAttemptId > Integer.parseInt(attemptsList.get(i))) {
                                     currentAttemptId = 1;
                                     attemptsCounterLabel.setText("Подход: " + currentAttemptId + "/" + attemptsList.get(i));
@@ -225,6 +234,8 @@ public class Exercise extends Menu {
                         } else {
                             repeatsLabel.setText(" ");
                             attemptsCounterLabel.setVisibility(View.INVISIBLE);
+                            weightLabelText.setVisibility(View.INVISIBLE);
+                            weight.setVisibility(View.INVISIBLE);
                         }
 
                         if (!exerciseList.get(i).equals("Отдых")) {
@@ -287,6 +298,7 @@ public class Exercise extends Menu {
 
             }
         });
+
 
         playButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
