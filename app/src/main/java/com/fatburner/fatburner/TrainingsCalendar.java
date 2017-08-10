@@ -39,6 +39,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 
 /**
  * Created by sete on 6/19/2017.
@@ -101,7 +102,17 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
         mCalendarView.setOnMonthChangedListener(this);
 
         mCalendarView.setSelectedDate(CalendarDay.today());
-        loadProgressForSpecificDay(getSelectedDatesString());
+        List<String> info = loadProgressForSpecificDay(getSelectedDatesString());
+        trainingStatusLabel.setText(" - " + info.get(0) + "%");
+        if(info.get(1).equals("выкл"))
+        {
+            dietStatusLabel.setText(" - " + info.get(1));
+        }
+        else
+            {
+                dietStatusLabel.setText(" - " + info.get(1) +"%");
+            }
+        waterStatusLabel.setText(" - " + info.get(2) + "%");
         clearChash();
 
 
@@ -167,7 +178,8 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
                 waterStatusLabel.setText(waterStatus + "%");
 
                 TextView dietStatusLabel = (TextView) dialog.findViewById(R.id.dietStatus);
-                dietStatusLabel.setText(dietStatus + "%");
+                if(dietStatus.equals("выкл")){dietStatusLabel.setText(dietStatus);}
+                else{dietStatusLabel.setText(dietStatus + "%");}
 
                 //set up button
                 ImageButton button = (ImageButton) dialog.findViewById(R.id.Button01);
@@ -247,17 +259,11 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
 
     private String getSelectedDatesString() {
         CalendarDay date = mCalendarView.getSelectedDate();
-        /*
-        if (date == null) {
-            return "No Selection";
-        }
-        return FORMATTER.format(date.getDate());
-        */
         return String.valueOf(date).replace("CalendarDay", "").replace("}","").replace("{","");
     }
 
 
-    private void loadProgressForSpecificDay(String day){
+    private List<String> loadProgressForSpecificDay(String day){
 
         selectedDay = day;
         databaseHelper = new DatabaseHelper(this);
@@ -266,8 +272,7 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
 
         userCursor = db.query("CALENDAR", null, "DATE = ?", new String[] {day}, null, null, null);
 
-        if(userCursor.getCount() != 0)
-        {
+        if(userCursor.getCount() != 0) {
 
             userCursor.moveToFirst();
             programName = userCursor.getString(1);
@@ -276,9 +281,12 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
             trainingStatus = userCursor.getString(4);
             dietStatus = userCursor.getString(5);
             waterStatus = userCursor.getString(6);
+
+            /* //commented to show statistics only for current date
             trainingStatusLabel.setText(" - " + trainingStatus + "%");
             dietStatusLabel.setText(" - " + dietStatus + "%");
             waterStatusLabel.setText(" - " + waterStatus +"%");
+
 
         }
         else
@@ -288,16 +296,28 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
             waterStatusLabel.setText(" - 0%");
         }
 
-        userCursor.close();
-        db.close();
+        */
+        }
+            userCursor.close();
+            db.close();
 
 
-        db = databaseHelper.open();
-        userCursor =  db.rawQuery("select * from APP_SETTINGS", null);
-        userCursor.moveToFirst();
-        if(userCursor.getInt(6) == 0)
-        {dietStatusLabel.setText(" - выкл");}
+            db = databaseHelper.open();
+            userCursor =  db.rawQuery("select * from APP_SETTINGS", null);
+            userCursor.moveToFirst();
+            if(userCursor.getInt(6) == 0)
+            {
+                //dietStatusLabel.setText(" - выкл");
+                dietStatus = "выкл";
+            }
 
+            List<String> info = new ArrayList<>();
+            info.add(trainingStatus);
+            info.add(dietStatus);
+            info.add(waterStatus);
+
+
+        return info;
     }
 
     private void clearChash(){
