@@ -50,6 +50,9 @@ public class Exercise extends Menu {
 
     ImageView imageView;
     TextView timerStop;
+    int day;
+    String programmName;
+    String newWeight;
 
     DatabaseHelper databaseHelper;
     SQLiteDatabase db;
@@ -86,6 +89,7 @@ public class Exercise extends Menu {
         }
         */
 
+
         final TextView exerciseLabel = (TextView) findViewById(R.id.exercise_label);
         final TextView repeatsLabel = (TextView) findViewById(R.id.repeats);
         final TextView infoLabel = (TextView) findViewById(R.id.info);
@@ -105,7 +109,7 @@ public class Exercise extends Menu {
         List<String> attempts = new ArrayList<>();
         List<String> repeats = new ArrayList<>();
         List<Integer> relaxTime = new ArrayList<>();
-
+        List<String> weights = new ArrayList<>();
 
         imageView = (ImageView) findViewById(R.id.imageView);
 
@@ -119,11 +123,11 @@ public class Exercise extends Menu {
 
         userCursor = db.rawQuery("select DAY from TRAININGS where IS_CURRENT = 1", null);
         userCursor.moveToFirst();
-        int day = userCursor.getInt(0);
+        day = userCursor.getInt(0);
 
         userCursor = db.rawQuery("select PROGRAMM_NAME from TRAININGS where IS_CURRENT = 1", null);
         userCursor.moveToFirst();
-        String programmName = userCursor.getString(0);
+        programmName = userCursor.getString(0);
 
         userCursor = db.query("EXERCISES_LIST", null, "DAY = ? AND PROGRAMM_NAME = ?", new String[]{String.valueOf(day), programmName}, null, null, null);
 
@@ -135,6 +139,7 @@ public class Exercise extends Menu {
                 attempts.add(userCursor.getString(userCursor.getColumnIndex("ATTEMPTS")));
                 repeats.add(userCursor.getString(userCursor.getColumnIndex("REPEATS")));
                 relaxTime.add(userCursor.getInt(userCursor.getColumnIndex("RELAX_TIME")));
+                weights.add(userCursor.getString(userCursor.getColumnIndex("WEIGHT")));
             } while (userCursor.moveToNext());
         }
 
@@ -147,6 +152,7 @@ public class Exercise extends Menu {
         final List<String> attemptsList = new ArrayList<>();
         final List<String> repeatsList = new ArrayList<>();
         final List<Integer> relaxTimeList = new ArrayList<>();
+        final List<String> weightsList = new ArrayList<>();
 
 
         for (int i = 0; i < exercises.size(); i++) {
@@ -156,11 +162,13 @@ public class Exercise extends Menu {
                 attemptsList.add(attempts.get(i));
                 repeatsList.add(repeats.get(i));
                 relaxTimeList.add(relaxTime.get(i));
+                weightsList.add(weights.get(i));
                 exerciseList.add("Отдых");
                 infoList.add(" ");
                 attemptsList.add(" ");
                 repeatsList.add(" ");
                 relaxTimeList.add(relaxTime.get(i));
+                weightsList.add(" ");
             }
         }
 
@@ -169,9 +177,10 @@ public class Exercise extends Menu {
         doneBtn.setFinishedStrokeWidth(15);
         doneBtn.setUnfinishedStrokeWidth(15);
 
+
         //Imageloading
         db = databaseHelper.open();
-        userCursor = db.rawQuery("select * from EXERCISES_INFO where NAME = ?", new String[]{String.valueOf(exerciseList.get(i))}, null);
+        userCursor = db.rawQuery("select * from EXERCISES_INFO where NAME = ?", new String[]{String.valueOf(exerciseList.get(0))}, null);
         userCursor.moveToFirst();
         if (userCursor.getCount() != 0)
         {   String filename = userCursor.getString(1);
@@ -181,12 +190,14 @@ public class Exercise extends Menu {
         db.close();
         ///
 
+            exerciseLabel.setText(exerciseList.get(0));
+            infoLabel.setText(infoList.get(0));
+            attemptsLabel.setText("Подходов: " + attemptsList.get(0));
+            repeatsLabel.setText("Повторений: " + repeatsList.get(0));
+            weight.setText(weightsList.get(0).trim());
 
-            exerciseLabel.setText(exerciseList.get(i));
-            infoLabel.setText(infoList.get(i));
-            attemptsLabel.setText("Подходов: " + attemptsList.get(i));
-            repeatsLabel.setText("Повторений: " + repeatsList.get(i));
-            attemptsCounterLabel.setText("Подход: " + currentAttemptId + "/" + attemptsList.get(i));
+        attemptsCounterLabel.setText("Подход: " + currentAttemptId + "/" + attemptsList.get(0));
+
             i = 1;
             doneBtn.setText("Далее");
             startAnimation(false);
@@ -196,6 +207,22 @@ public class Exercise extends Menu {
                     if (animationFinished) {
                         String filename = "";
                         exerciseLabel.setText(exerciseList.get(i));
+
+                        //
+                        newWeight = weight.getText().toString().trim();
+                        /*
+                        if(i==1){weightsList.set(i-1, newWeight);}
+                        else {weightsList.set(i, newWeight);}
+                        */
+                        weightsList.set(i-1, newWeight);
+                        if(exerciseList.get(i) == "Отдых") {
+                            db = databaseHelper.open();
+                            ContentValues cv = new ContentValues();
+                            cv.put("WEIGHT", newWeight);
+                            db.update("EXERCISES_LIST", cv, "DAY = ? AND PROGRAMM_NAME = ? AND EXERCISE = ?", new String[]{String.valueOf(day), programmName, exerciseList.get(i - 1)});
+                        }
+                        ////
+
                         //Imageloading
                         db = databaseHelper.open();
                         userCursor = db.rawQuery("select * from EXERCISES_INFO where NAME = ?", new String[] {String.valueOf(exerciseList.get(i))}, null);
@@ -217,12 +244,19 @@ public class Exercise extends Menu {
                         infoLabel.setText(infoList.get(i));
                         if (!exerciseList.get(i).equals("Отдых")) {
                             repeatsLabel.setText("Повторений: " + repeatsList.get(i));
+                            if(exerciseList.get(i).equals(exerciseList.get(i-2))){
+                                weight.setText(weightsList.get(i-1).trim());
+                            }
+                            if(!exerciseList.get(i).equals(exerciseList.get(i-2))){
+                                weight.setText(weightsList.get(i).trim());
+                            }
                             currentAttemptId++;
 
                             if(!exerciseList.get(i).equals("Отдых")) {
                                 attemptsCounterLabel.setVisibility(View.VISIBLE);
                                 weightLabelText.setVisibility(View.VISIBLE);
                                 weight.setVisibility(View.VISIBLE);
+
                                 if (currentAttemptId > Integer.parseInt(attemptsList.get(i))) {
                                     currentAttemptId = 1;
                                     attemptsCounterLabel.setText("Подход: " + currentAttemptId + "/" + attemptsList.get(i));
@@ -255,6 +289,7 @@ public class Exercise extends Menu {
                             startAnimation(true);
                         }
                     }
+
 
                     if (i == exerciseList.size() - 1) {
                         Intent intent = new Intent(Exercise.this, TrainingCompleted.class);
