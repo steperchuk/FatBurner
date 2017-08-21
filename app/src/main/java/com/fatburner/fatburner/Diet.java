@@ -21,10 +21,12 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import static com.fatburner.fatburner.Diet.PAGE_COUNT;
@@ -71,6 +73,7 @@ public class Diet extends FragmentActivity {
         pager = (ViewPager) findViewById(R.id.pager);
         pagerAdapter = new DietPagerAdapter(getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
+        pager.setCurrentItem(Utils.getCurrentDayID()-1);
 
         pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -88,6 +91,12 @@ public class Diet extends FragmentActivity {
             public void onPageScrollStateChanged(int state) {
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(Diet.this, TrainingsCalendar.class);
+        startActivity(intent);
     }
 
     protected Dialog onCreateDialog(int id) {

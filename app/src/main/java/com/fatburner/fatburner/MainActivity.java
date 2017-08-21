@@ -17,6 +17,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.fatburner.fatburner.broadcast_receivers.NotificationEventReceiver;
 import com.github.lzyzsd.circleprogress.DonutProgress;
 
 import java.io.IOException;
@@ -90,7 +91,20 @@ public class MainActivity extends Menu {
             startActivity(intent);
             }
 
+    }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+    }
+
+    // To prevent crash on resuming activity  : interaction with fragments allowed only after Fragments Resumed or in OnCreate
+    // http://www.androiddesignpatterns.com/2013/08/fragment-transaction-commit-state-loss.html
+    @Override
+    protected void onResumeFragments() {
+        super.onResumeFragments();
+        // handleIntent();
     }
 
     @Override

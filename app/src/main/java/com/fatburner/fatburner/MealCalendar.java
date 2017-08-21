@@ -12,6 +12,9 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
 
+import java.util.Calendar;
+import java.util.Locale;
+
 import static com.fatburner.fatburner.MealCalendar.PAGE_COUNT;
 
 public class MealCalendar extends FragmentActivity {
@@ -30,6 +33,7 @@ public class MealCalendar extends FragmentActivity {
         pager = (ViewPager) findViewById(R.id.pager);
         pagerAdapter = new MealCalendarPagerAdapter(getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
+        pager.setCurrentItem(Utils.getCurrentDayID()-1);
 
         pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 

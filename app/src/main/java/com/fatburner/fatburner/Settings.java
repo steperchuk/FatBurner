@@ -29,6 +29,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.fatburner.fatburner.broadcast_receivers.NotificationEventReceiver;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -136,11 +138,13 @@ public class Settings extends Menu {
             switchUseCustomDiet.setText("Да");
             switchDietType.setVisibility(View.VISIBLE);
             phase.setVisibility(View.VISIBLE);
+            switchFoodNotification.setVisibility(View.VISIBLE);
         }
         else {
             switchUseCustomDiet.setText("Нет");
             switchDietType.setVisibility(View.INVISIBLE);
             phase.setVisibility(View.INVISIBLE);
+            switchFoodNotification.setVisibility(View.INVISIBLE);
         }
 
         gender.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -158,10 +162,13 @@ public class Settings extends Menu {
                 {switchUseCustomDiet.setText("Да");
                     switchDietType.setVisibility(View.VISIBLE);
                     phase.setVisibility(View.VISIBLE);
+                    switchFoodNotification.setVisibility(View.VISIBLE);
                 }
                 else {switchUseCustomDiet.setText("Нет");
                     switchDietType.setVisibility(View.INVISIBLE);
                     phase.setVisibility(View.INVISIBLE);
+                    switchFoodNotification.setVisibility(View.INVISIBLE);
+                    switchFoodNotification.setChecked(false);
                 }
                 useCustomDietValue = isChecked;
                 deleteAllMealSettingsAndDiet();
@@ -176,6 +183,11 @@ public class Settings extends Menu {
 
         switchFoodNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(switchFoodNotification.getText().equals("Нет")){
+                    switchFoodNotification.setText("Да");
+                }
+                else {switchFoodNotification.setText("Нет");}
+
                 foodNotificationValue = isChecked;
             }
         });
@@ -267,6 +279,14 @@ public class Settings extends Menu {
                 //dialog.show(getSupportFragmentManager(), "custom");
 
                     saveSettings();
+
+                if(foodNotificationValue){
+                    NotificationEventReceiver.setupAlarm(getApplicationContext());
+                }
+                else {
+                    NotificationEventReceiver.cancelAlarm(getApplicationContext());
+                }
+
                     Intent intent = new Intent(Settings.this, MainActivity.class);
                     startActivity(intent);
 

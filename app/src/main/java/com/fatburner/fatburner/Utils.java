@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.fatburner.fatburner.GlobalVariables.PRODUCTS_COUNT;
@@ -194,5 +195,36 @@ public class Utils {
                 break;
         }
         return String.valueOf(value);
+    }
+
+    public static int getCurrentDayID() {
+
+        int result = 1;
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_WEEK);
+        switch (day) {
+            case Calendar.SUNDAY:
+                result = 7;
+                break;
+            case Calendar.MONDAY:
+                result = 1;
+                break;
+            case Calendar.TUESDAY:
+                result = 2;
+                break;
+            case Calendar.WEDNESDAY:
+                result = 3;
+                break;
+            case Calendar.THURSDAY:
+                result = 4;
+                break;
+            case Calendar.FRIDAY:
+                result = 5;
+                break;
+            case Calendar.SATURDAY:
+                result = 6;
+                break;
+        }
+        return result;
     }
 }

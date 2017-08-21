@@ -110,7 +110,8 @@
             android:layout_below="@+id/textView17"
             android:layout_alignLeft="@+id/textView17"
             android:layout_alignStart="@+id/textView17"
-            android:layout_marginTop="14dp" />
+            android:layout_marginTop="14dp"
+            android:visibility="invisible"/>
 
         <TextView
             android:id="@+id/textView8"
@@ -122,7 +123,8 @@
             android:layout_below="@+id/switchWaterNotification"
             android:layout_alignLeft="@+id/textView7"
             android:layout_alignStart="@+id/textView7"
-            android:layout_marginTop="14dp" />
+            android:layout_marginTop="14dp"
+            />
 
         <TextView
             android:id="@+id/textView9"
@@ -158,6 +160,8 @@
             android:layout_height="wrap_content"
             android:layout_alignEnd="@+id/switchSleepNotification"
             android:layout_alignRight="@+id/switchSleepNotification"
+            android:text="Да"
+            android:textSize="18sp"
             android:layout_alignTop="@+id/textView8" />
 
         <Switch
@@ -166,7 +170,8 @@
             android:layout_height="wrap_content"
             android:layout_alignEnd="@+id/switchFoodNotification"
             android:layout_alignRight="@+id/switchFoodNotification"
-            android:layout_alignTop="@+id/textView7" />
+            android:layout_alignTop="@+id/textView7"
+            android:visibility="invisible"/>
 
         <EditText
             android:id="@+id/waterDayNorm"

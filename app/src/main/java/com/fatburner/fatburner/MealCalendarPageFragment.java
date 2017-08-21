@@ -22,6 +22,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.fatburner.fatburner.broadcast_receivers.NotificationEventReceiver;
+
 import java.util.ArrayList;
 import java.util.List;
 
