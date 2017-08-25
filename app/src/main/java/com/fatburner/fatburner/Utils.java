@@ -2,8 +2,12 @@ package com.fatburner.fatburner;
 
 import android.util.ArrayMap;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -226,5 +230,63 @@ public class Utils {
                 break;
         }
         return result;
+    }
+
+    public static String getSpecifiedDayName(String date){
+
+        String result = null;
+
+        Date formatedDate = new Date();
+        SimpleDateFormat date_format = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            formatedDate = date_format.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+         Calendar calendar = new GregorianCalendar();
+         calendar.setTime(formatedDate);
+
+        int day  = calendar.get(Calendar.DAY_OF_WEEK);
+        switch (day) {
+            case Calendar.MONDAY:
+                result = "Пон";
+                break;
+            case Calendar.TUESDAY:
+                result = "Вто";
+                break;
+            case Calendar.WEDNESDAY:
+                result = "Сре";
+                break;
+            case Calendar.THURSDAY:
+                result = "Чет";
+                break;
+            case Calendar.FRIDAY:
+                result = "Пят";
+                break;
+            case Calendar.SATURDAY:
+                result = "Суб";
+                break;
+            case Calendar.SUNDAY:
+                result = "Вос";
+                break;
+        }
+
+        return result;
+    }
+
+    public static List<Integer> normalizeDateForColoring(String date){
+        List<Integer> normalizedDate = new ArrayList<>();
+
+        String year = date.substring(0, date.indexOf("-"));
+        date = date.replace(year + "-","");
+        String month = date.substring(0, date.indexOf("-"));
+        String day = date = date.replace(month + "-","");
+
+        normalizedDate.add(Integer.valueOf(year));
+        normalizedDate.add(Integer.valueOf(month));
+        normalizedDate.add(Integer.valueOf(day));
+
+        return normalizedDate;
     }
 }
