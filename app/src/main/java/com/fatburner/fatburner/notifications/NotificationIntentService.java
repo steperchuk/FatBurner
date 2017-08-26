@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
@@ -132,12 +134,15 @@ public class NotificationIntentService extends IntentService {
 
         // Do something. For example, fetch fresh data from backend to create a rich notification?
 
+        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
         final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         builder.setContentTitle("Fat burner")
                 .setAutoCancel(true)
                 .setColor(getResources().getColor(R.color.colorAccent))
                 .setContentText("Прием пищи")
                 .setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 })
+                .setSound(alarmSound)
                 .setSmallIcon(R.drawable.ic_dish);
 
         Intent mainIntent = new Intent(this, Diet.class);
