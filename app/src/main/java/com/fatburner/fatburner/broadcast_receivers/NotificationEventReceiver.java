@@ -30,6 +30,7 @@ public class NotificationEventReceiver extends WakefulBroadcastReceiver {
         PendingIntent alarmIntent = getStartPendingIntent(context);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, getTriggerAt(new Date()), NOTIFICATIONS_INTERVAL_IN_HOURS * AlarmManager.INTERVAL_HOUR, alarmIntent); //use 1000 delay for debug
 
+
     }
 
     public static void cancelAlarm(Context context) {

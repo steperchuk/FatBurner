@@ -82,7 +82,7 @@ public class NotificationIntentService extends IntentService {
         db = databaseHelper.open();
         int dayId = Utils.getCurrentDayID();
 
-        userCursor = db.query("MEAL_SETTINGS", null, "DAY = ?", new String[]{String.valueOf(dayId-1)}, null, null, null);
+        userCursor = db.query("MEAL_SETTINGS", null, "DAY = ?", new String[]{String.valueOf(dayId)}, null, null, null);
 
         List<String> timesList = new ArrayList<>();
         List<Integer> days = new ArrayList<>();
@@ -107,7 +107,6 @@ public class NotificationIntentService extends IntentService {
 
         String time = timesList.get(0);
 
-        timesList.clear();
 
         Integer hour  = Integer.valueOf(time.substring(0, time.indexOf(":")));
         Integer min  = Integer.valueOf(time.substring(time.indexOf(":")+1, time.length()));
@@ -152,10 +151,13 @@ public class NotificationIntentService extends IntentService {
 
         final NotificationManager manager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        Integer lastHour  = Integer.valueOf(time.substring(0, timesList.get(4).indexOf(":")));
+        Integer lastHour  = Integer.valueOf(timesList.get(4).substring(0, timesList.get(4).indexOf(":")));
 
-        if(hour-1 < currentTime && currentTime > lastHour + 1) {
+        if( (hour-1 < currentTime) && (currentTime < lastHour - 1)) {
             manager.notify(NOTIFICATION_ID, builder.build());
         }
+
+        timesList.clear();
+
     }
 }
