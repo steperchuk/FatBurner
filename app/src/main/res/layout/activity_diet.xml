@@ -21,8 +21,8 @@
     </android.support.v4.view.ViewPager>
     <ImageButton
         android:id="@+id/getTotalItemsList"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginEnd="21dp"
         android:layout_marginRight="21dp"
         android:background="@color/White"
@@ -38,5 +38,19 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/getTotalItemsList"
+        android:layout_marginEnd="11dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginTop="16dp"
+        android:layout_toLeftOf="@+id/getTotalItemsList"
+        android:layout_toStartOf="@+id/getTotalItemsList"
+        android:text="Перейти к покупкам"
+        android:textSize="14dp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

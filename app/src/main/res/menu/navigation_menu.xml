@@ -29,9 +29,11 @@
         android:title="Приемы Пищи"
         android:icon="@drawable/ic_time"/>
 
+    <!--
     <item android:id="@+id/products_list"
         android:title="Список Продуктов"
         android:icon="@drawable/ic_dish"/>
+    -->
 
     <item android:id="@+id/nav_settings"
         android:title="Настройки"

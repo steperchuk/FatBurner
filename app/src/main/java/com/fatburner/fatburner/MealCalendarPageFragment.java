@@ -396,7 +396,7 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
     };
 
 
-    private void setTimeValues(){ //crash
+    private void setTimeValues(){
 
         String incrementedHour;
         String decrementedHour;

@@ -131,6 +131,7 @@ public class Menu extends AppCompatActivity {
                         return;
                     }
                     break;
+                /*
                 case R.id.products_list:
                     dietListViewMode = true;
                     PRODUCTS_PAGES_COUNT = 6;
@@ -138,6 +139,7 @@ public class Menu extends AppCompatActivity {
                     intent = new Intent(Menu.this, Products.class);
                     startActivity(intent);
                     break;
+                 */
                 case R.id.nav_settings:
                     intent = new Intent(Menu.this, Settings.class);
                     startActivity(intent);

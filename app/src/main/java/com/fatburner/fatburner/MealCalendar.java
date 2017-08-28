@@ -1,8 +1,13 @@
 package com.fatburner.fatburner;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -11,6 +16,11 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -34,6 +44,12 @@ public class MealCalendar extends FragmentActivity {
         pagerAdapter = new MealCalendarPagerAdapter(getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
         pager.setCurrentItem(Utils.getCurrentDayID()-1);
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        boolean show = sp.getBoolean("showMealAdvice", true);
+        if(show) {
+            ShowInfoDialog();
+        }
 
         pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -79,6 +95,43 @@ public class MealCalendar extends FragmentActivity {
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
+
+
+    private void ShowInfoDialog(){
+        final Dialog dialog = new Dialog(MealCalendar.this);
+        dialog.setContentView(R.layout.modal_advice);
+        dialog.setCancelable(true);
+
+        CheckBox checkBoxSave = (CheckBox) dialog.findViewById(R.id.checkBoxSave);
+        checkBoxSave.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+            if (isChecked){
+                SharedPreferences.Editor sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
+                sp.putBoolean("showMealAdvice", false);
+                sp.commit();
+            }
+        }
+        });
+
+
+        TextView exerciseLabel = (TextView) dialog.findViewById(R.id.label);
+        exerciseLabel.setText("1. Вам необходимо сохранить настройки для каждого дня по отдельности.\n\n" +
+                "2. Необходимый список продуктов будет отображен исходя из выбраной вами формулы.\n\n" +
+                "3. Для выбора будут доступны только продукты из соответсвующих категорий.\n");
+
+        //set up button
+        ImageButton button = (ImageButton) dialog.findViewById(R.id.Button01);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+
+        dialog.show();
+    }
+
+
 }
 
     class MealCalendarPagerAdapter extends FragmentPagerAdapter {

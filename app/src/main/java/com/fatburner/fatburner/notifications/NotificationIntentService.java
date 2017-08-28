@@ -130,7 +130,9 @@ public class NotificationIntentService extends IntentService {
         calendar.set(Calendar.MILLISECOND, 0);
         int currentTime = calendar.HOUR;
 
-        int NOTIFICATION_ID = (int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);
+        //int NOTIFICATION_ID = (int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);
+
+        int NOTIFICATION_ID = 1;
 
         // Do something. For example, fetch fresh data from backend to create a rich notification?
 

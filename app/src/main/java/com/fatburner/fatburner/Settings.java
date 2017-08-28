@@ -490,6 +490,7 @@ public class Settings extends Menu {
         userCursor.close();
 
 
+        /*
         userCursor =  db.rawQuery("select * from MEAL_SETTINGS", null);
 
         if (userCursor.moveToFirst()) {
@@ -504,7 +505,7 @@ public class Settings extends Menu {
             } while (userCursor.moveToNext());
         }
         userCursor.close();
-
+        */
 
         userCursor =  db.rawQuery("select * from DIET", null);
 
