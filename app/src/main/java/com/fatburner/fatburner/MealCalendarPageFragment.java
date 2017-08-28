@@ -26,6 +26,7 @@ import com.fatburner.fatburner.broadcast_receivers.NotificationEventReceiver;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.fatburner.fatburner.GlobalVariables.PRODUCTS_PAGES_COUNT;
@@ -308,7 +309,7 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
 
     public void onClick(View v) {
 
-        Calendar calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance(android.icu.util.TimeZone.getDefault());
         dietListViewMode = false;
         String shema = null;
 
@@ -386,7 +387,7 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
 
     TimePickerDialog.OnTimeSetListener onStartTimeListener = new TimePickerDialog.OnTimeSetListener() {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            Calendar calendar = Calendar.getInstance();
+            Calendar calendar = Calendar.getInstance(android.icu.util.TimeZone.getDefault());
             calendar.set(Calendar.HOUR, hourOfDay);
             calendar.set(Calendar.MINUTE, minute);
             hour = hourOfDay;

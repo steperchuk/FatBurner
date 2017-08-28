@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 import static com.fatburner.fatburner.GlobalVariables.PRODUCTS_COUNT;
 import static com.fatburner.fatburner.GlobalVariables.PRODUCTS_PAGES_COUNT;
@@ -175,7 +176,7 @@ public class Utils {
     }
 
     public static String getCurrentDate(){
-        Calendar c = Calendar.getInstance();
+        Calendar c = Calendar.getInstance(TimeZone.getDefault());
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DATE);
@@ -184,12 +185,12 @@ public class Utils {
         return date;
     }
 
-    public static String getParsedDate(String parameter){
+    public static Integer getParsedDate(String parameter){
         Integer value = null;
-        Calendar c = Calendar.getInstance();
+        Calendar c = Calendar.getInstance(TimeZone.getDefault());
         switch (parameter){
             case "day":
-                value = c.get(Calendar.DATE);
+                value = c.get(Calendar.DAY_OF_MONTH);
                 break;
             case "month":
                 value = c.get(Calendar.MONTH);
@@ -198,13 +199,13 @@ public class Utils {
                 value = c.get(Calendar.YEAR);
                 break;
         }
-        return String.valueOf(value);
+        return value;
     }
 
     public static int getCurrentDayID() {
 
         int result = 1;
-        Calendar calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
         int day = calendar.get(Calendar.DAY_OF_WEEK);
         switch (day) {
             case Calendar.SUNDAY:
@@ -233,6 +234,9 @@ public class Utils {
     }
 
     public static String getSpecifiedDayName(String date){
+
+        List<Integer> dateForIncrement = normalizeDateForColoring(date);
+        date = dateForIncrement.get(0) + "-" + (dateForIncrement.get(1)+1) + "-" + dateForIncrement.get(2);
 
         String result = null;
 

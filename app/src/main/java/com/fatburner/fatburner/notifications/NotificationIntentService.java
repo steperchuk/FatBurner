@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * Created by klogi
@@ -113,7 +114,7 @@ public class NotificationIntentService extends IntentService {
         Integer hour  = Integer.valueOf(time.substring(0, time.indexOf(":")));
         Integer min  = Integer.valueOf(time.substring(time.indexOf(":")+1, time.length()));
 
-        Calendar calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
 
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.set(Calendar.DAY_OF_WEEK, dayId-1);
@@ -124,7 +125,7 @@ public class NotificationIntentService extends IntentService {
 
         int scheduleTime = calendar.HOUR;
 
-        calendar = Calendar.getInstance();
+        calendar = Calendar.getInstance(TimeZone.getDefault());
         calendar.setTime(new Date());
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);

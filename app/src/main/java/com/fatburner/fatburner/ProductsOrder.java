@@ -1,7 +1,10 @@
 package com.fatburner.fatburner;
 
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -58,7 +61,9 @@ public class ProductsOrder extends Menu {
 
         productsOrderList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
-        loadList();
+        if(loadList() == 0){
+            showDialog();
+        }
 
         switchHideOrdered.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -92,8 +97,35 @@ public class ProductsOrder extends Menu {
 
     }
 
+    private void showDialog(){
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            //alertDialogBuilder.setTitle("Выйти из приложения?");
+            alertDialogBuilder
+                    .setMessage("Продукты не выбраны в настройках диеты. Перейти к настройкам?")
+                    .setCancelable(false)
+                    .setPositiveButton("Да",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                    Intent intent = new Intent(ProductsOrder.this, MealCalendar.class);
+                                    startActivity(intent);
+                                }
+                            })
 
-    private void loadList(){
+                    .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+
+                            Intent intent = new Intent(ProductsOrder.this, Diet.class);
+                            startActivity(intent);
+                        }
+                    });
+
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+    }
+
+
+    private Integer loadList(){
 
         productsList.clear();
         databaseHelper = new DatabaseHelper(getApplicationContext());
@@ -146,6 +178,7 @@ public class ProductsOrder extends Menu {
         userCursor.close();
         db.close();
 
+        return productsList.size();
     }
 
     private List<String> getCurrentProductsList(){

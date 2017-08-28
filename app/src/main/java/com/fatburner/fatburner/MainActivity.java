@@ -21,7 +21,9 @@ import com.fatburner.fatburner.broadcast_receivers.NotificationEventReceiver;
 import com.github.lzyzsd.circleprogress.DonutProgress;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import static com.fatburner.fatburner.GlobalVariables.LOAD_ARRAY;
 import static com.fatburner.fatburner.GlobalVariables.TRAINING_DAYS;
@@ -35,7 +37,8 @@ public class MainActivity extends Menu {
 
     Intent intent;
 
-    String trainingDaysDB;
+    List<String> dates = new ArrayList<>();
+    List<Integer> lastDateInDB = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,10 +58,75 @@ public class MainActivity extends Menu {
         databaseHelper.getWritableDatabase();
         db = databaseHelper.open();
 
+        userCursor = db.query("CALENDAR", null, null, null, null, null, null);
 
+            if (userCursor.moveToFirst()) {
+                do {
+                    dates.add(userCursor.getString(userCursor.getColumnIndex("DATE")));
+                } while (userCursor.moveToNext());
+            }
+
+       int day =  Utils.getParsedDate("day");
+       int month = Utils.getParsedDate("month"); //apparently current month returned as previous
+       int year = Utils.getParsedDate("year");
+
+        if(dates.size() != 0)
+        {lastDateInDB = Utils.normalizeDateForColoring(dates.get(dates.size()-1));}
+        else{lastDateInDB = Utils.normalizeDateForColoring(year + "-" + month + "-" + (day-1));}
+
+        if(year == lastDateInDB.get(0) && month == lastDateInDB.get(1) && day > lastDateInDB.get(2) )
+        {
+            for(int i = 1; i < 31 - lastDateInDB.get(2) + 1; i++){
+                ContentValues cv = new ContentValues();
+                cv.put("DATE", year + "-" + month + "-" + (lastDateInDB.get(2) + i));
+                cv.put("TRAINING_STATUS", "0");
+                cv.put("WATER_STATUS","0");
+                cv.put("FOOD_STATUS","0");
+                cv.put("PROGRAMM_STATUS","0");
+                cv.put("TRAINING_NAME","Нет данных");
+                cv.put("PROGRAMM_NAME","Нет данных");
+                db.insert("CALENDAR", null, cv);
+            }
+        }
+
+        if(year == lastDateInDB.get(0) && month > lastDateInDB.get(1))
+        {
+            for(int i = 1; i < 32; i++){
+                ContentValues cv = new ContentValues();
+                cv.put("DATE", year + "-" + month + "-" + i);
+                cv.put("TRAINING_STATUS", "0");
+                cv.put("WATER_STATUS","0");
+                cv.put("FOOD_STATUS","0");
+                cv.put("PROGRAMM_STATUS","0");
+                cv.put("TRAINING_NAME","");
+                cv.put("PROGRAMM_NAME","0");
+                db.insert("CALENDAR", null, cv);
+            }
+        }
+
+        if(year > lastDateInDB.get(0))
+        {
+            for(int i = 1; i < 32; i++){
+                ContentValues cv = new ContentValues();
+                cv.put("DATE", year + "-" + month + "-" + i);
+                cv.put("TRAINING_STATUS", "0");
+                cv.put("WATER_STATUS","0");
+                cv.put("FOOD_STATUS","0");
+                cv.put("PROGRAMM_STATUS","0");
+                cv.put("TRAINING_NAME","");
+                cv.put("PROGRAMM_NAME","0");
+                db.insert("CALENDAR", null, cv);
+            }
+        }
+
+
+
+
+        /*
         userCursor = db.query("CALENDAR", null, "DATE = ?", new String[] {Utils.getCurrentDate()}, null, null, null);
+        int itemsCount = userCursor.getCount();
 
-        if(userCursor.getCount() == 0){
+        if(itemsCount == 0){
             ContentValues cv = new ContentValues();
             cv.put("DATE", Utils.getCurrentDate());
             cv.put("TRAINING_STATUS", "0");
@@ -69,6 +137,8 @@ public class MainActivity extends Menu {
             cv.put("PROGRAMM_NAME","0");
             db.insert("CALENDAR", null, cv);
         }
+        */
+        //2017-7-28
 
         userCursor.close();
         db.close();

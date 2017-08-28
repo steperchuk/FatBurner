@@ -2,6 +2,7 @@ package com.fatburner.fatburner;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
@@ -160,6 +161,12 @@ public class Water extends Menu {
         });
 
 
+        }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(Water.this, TrainingsCalendar.class);
+            startActivity(intent);
         }
 
          void loadData(){

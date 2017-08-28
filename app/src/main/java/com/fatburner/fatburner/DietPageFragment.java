@@ -143,6 +143,8 @@ public class DietPageFragment extends Fragment {
 
     private void fillList(String mealIdentifier, ListView list){
         String productsList = getProductsList(mealIdentifier);
+        if(productsList.isEmpty())
+        {productsList = "Продукты не выбраны";}
         ArrayList<Map<String, Object>> data = new ArrayList<Map<String, Object>>(1);
         Map<String, Object> m;
         for (int i = 0; i < 1; i++) {

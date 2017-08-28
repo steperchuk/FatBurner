@@ -15,6 +15,17 @@
         />
 
     <TextView
+        android:id="@+id/day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/trainingStatusLabel"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/OrangeDark"
+        android:text="Текущий статус:"
+        android:textSize="14sp" />
+
+    <TextView
         android:id="@+id/trainingStatusLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -73,6 +73,7 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
     ArrayList<CalendarDay> greenDates = new ArrayList<>();
     ArrayList<CalendarDay> yellowDates = new ArrayList<>();
     ArrayList<CalendarDay> redDates = new ArrayList<>();
+    ArrayList<CalendarDay> grayDates = new ArrayList<>();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,6 +92,7 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
 
         fillDayColors();
 
+        mCalendarView.addDecorator(new CircleDecorator(getApplicationContext(), R.drawable.calendar_date_gray, grayDates));
         mCalendarView.addDecorator(new CircleDecorator(getApplicationContext(), R.drawable.calendar_date_green, greenDates));
         mCalendarView.addDecorator(new CircleDecorator(getApplicationContext(), R.drawable.calendar_date_yellow, yellowDates));
         mCalendarView.addDecorator(new CircleDecorator(getApplicationContext(), R.drawable.calendar_date_red, redDates));
@@ -157,7 +159,9 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
 
                 //set up text
                 TextView date = (TextView) dialog.findViewById(R.id.date);
-                date.setText(getSelectedDatesString());
+                List<Integer> dateForIncrement = Utils.normalizeDateForColoring(getSelectedDatesString());
+                String dateToShow = dateForIncrement.get(0) + "-" + (dateForIncrement.get(1)+1) + "-" + dateForIncrement.get(2);
+                date.setText(dateToShow);
 
                 TextView programNameLabel = (TextView) dialog.findViewById(R.id.programName);
                 programNameLabel.setText(programName);
@@ -335,18 +339,28 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
             databaseHelper.getWritableDatabase();
             db = databaseHelper.open();
 
-            userCursor = db.query("CALENDAR", null, null, null, null, null, null);
-
         List<String> dates = new ArrayList<>();
         List<String> statuses = new ArrayList<>();
 
-            if(userCursor.getCount() != 0) {
+
+        userCursor = db.query("CALENDAR", null, null, null, null, null, null);
+        int itemsCount = userCursor.getCount();
+
+        if (userCursor.moveToFirst()) {
+            do {
+                dates.add(userCursor.getString(userCursor.getColumnIndex("DATE")));
+                statuses.add(userCursor.getString(userCursor.getColumnIndex("TRAINING_STATUS")));
+            } while (userCursor.moveToNext());
+        }
+
+        /*
+            if(itemsCount != 0) {
 
                 userCursor.moveToFirst();
                 dates.add(userCursor.getString(0));
                 statuses.add(userCursor.getString(4));
             }
-
+*/
             userCursor.close();
             db.close();
 
@@ -364,30 +378,31 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
         for (int i =0; i < dates.size(); i++) {
 
             String day = Utils.getSpecifiedDayName(dates.get(i));
-            if(trainingDays.contains(day)){
+            if (trainingDays.contains(day)) {
 
                 int status = Integer.parseInt(statuses.get(i));
                 List<Integer> normalizedDate = Utils.normalizeDateForColoring(dates.get(i));
+                int currentDay = Utils.getParsedDate("day");
 
-                if(status == 100)
-                {
-                    greenDates.add(CalendarDay.from(normalizedDate.get(0),normalizedDate.get(1),normalizedDate.get(2)));
-                }
-                else
-                    {
-                    if (status == 0) {
-                        redDates.add(CalendarDay.from(normalizedDate.get(0),normalizedDate.get(1),normalizedDate.get(2)));
+                if (normalizedDate.get(2) > currentDay) {
+                    grayDates.add(CalendarDay.from(normalizedDate.get(0), normalizedDate.get(1), normalizedDate.get(2)));
+                } else {
+                    if (status == 100) {
+                        greenDates.add(CalendarDay.from(normalizedDate.get(0), normalizedDate.get(1), normalizedDate.get(2)));
+                    } else {
+                        if (status == 0) {
+                            redDates.add(CalendarDay.from(normalizedDate.get(0), normalizedDate.get(1), normalizedDate.get(2)));
+                        } else {
+                            yellowDates.add(CalendarDay.from(normalizedDate.get(0), normalizedDate.get(1), normalizedDate.get(2)));
+                        }
                     }
-                    else {
-                        yellowDates.add(CalendarDay.from(normalizedDate.get(0),normalizedDate.get(1),normalizedDate.get(2)));
-                    }
+
+
                 }
 
             }
 
         }
-
-
     }
 
     
