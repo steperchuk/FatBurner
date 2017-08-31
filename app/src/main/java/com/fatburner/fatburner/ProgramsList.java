@@ -3,10 +3,12 @@ package com.fatburner.fatburner;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -58,7 +60,10 @@ public class ProgramsList extends Menu {
 
 
         switchRecommended = (Switch) findViewById(R.id.isRecommended);
-        switchRecommended.setChecked(true);
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        showRecommended = sp.getBoolean("showRecomendedPrograms", true);
+        switchRecommended.setChecked(showRecommended);
 
         ///Work with DB
         // открываем подключение
@@ -76,6 +81,10 @@ public class ProgramsList extends Menu {
         switchRecommended.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 showRecommended = isChecked;
+                SharedPreferences.Editor sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
+                sp.putBoolean("showRecomendedPrograms", showRecommended);
+                sp.commit();
+
                 fillList();
             }
         });
@@ -123,6 +132,8 @@ public class ProgramsList extends Menu {
     void fillList(){
         databaseHelper.getWritableDatabase();
         db = databaseHelper.open();
+
+
 
         if(showRecommended)
         {

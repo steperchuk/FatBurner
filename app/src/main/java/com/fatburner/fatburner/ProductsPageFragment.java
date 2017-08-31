@@ -318,6 +318,8 @@ public class ProductsPageFragment extends Fragment{
 
             cv.put("PRODUCT", productName);
             cv.put("WEIGHT", productWeight);
+            cv.put("MEAL_STATUS", "false");
+            cv.put("DATE", Utils.getCurrentDate());
 
             db.insert("DIET", null, cv);
         }

@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,13 +71,20 @@ public class TrainingsList extends Menu {
         mDrawerLayout.addView(contentView, 0);
 
         switchCompleted = (Switch) findViewById(R.id.hideCompleted);
-        switchCompleted.setChecked(true);
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        hideCompleted = sp.getBoolean("hideCompleted", true);
+        switchCompleted.setChecked(hideCompleted);
 
         loadList();
 
         switchCompleted.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 hideCompleted = isChecked;
+
+                SharedPreferences.Editor sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
+                sp.putBoolean("hideCompleted", hideCompleted);
+                sp.commit();
+
                 loadList();
             }
         });

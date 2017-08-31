@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@color/White"
     android:orientation="horizontal"
+    android:descendantFocusability="blocksDescendants"
     android:padding="5dip" >
 
     <!--  ListRow Left sied Thumbnail image -->
@@ -36,6 +37,14 @@
         android:textAlignment="center"
         android:textColor="#040404"
         android:textSize="12dip" />
+
+    <CheckBox
+        android:id="@+id/checkBoxMealStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true" />
 
 
     <!-- Rightend Arrow -->

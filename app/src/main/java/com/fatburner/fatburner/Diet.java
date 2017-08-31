@@ -124,6 +124,7 @@ public class Diet extends FragmentActivity {
     DialogInterface.OnClickListener myBtnClickListener = new DialogInterface.OnClickListener() {
         public void onClick(DialogInterface dialog, int which) {
             int atLeastOneChecked = 0;
+            daysSelected = "";
             SparseBooleanArray sbArray = ((AlertDialog)dialog).getListView().getCheckedItemPositions();
             for (int i = 0; i < sbArray.size(); i++) {
                 int key = sbArray.keyAt(i);
@@ -213,10 +214,15 @@ public class Diet extends FragmentActivity {
     }
 
     void getProducts(Cursor userCursor){
+        String product = "";
         if (userCursor.moveToFirst()) {
             do {
-                products.add(userCursor.getString(userCursor.getColumnIndex("PRODUCT")));
-                weights.add(userCursor.getString(userCursor.getColumnIndex("WEIGHT")).replace("гр", ""));
+                product = userCursor.getString(userCursor.getColumnIndex("PRODUCT"));
+                if(product.isEmpty()){continue;}
+                else {
+                    products.add(product);
+                    weights.add(userCursor.getString(userCursor.getColumnIndex("WEIGHT")).replace("гр", ""));
+                }
             } while (userCursor.moveToNext());
         }
 
@@ -233,9 +239,13 @@ public class Diet extends FragmentActivity {
         for(int j = 0; j < uniqueList.size(); j++){
             int increment = 0;
             int weightValue = 0;
+            String weightInDb = "";
             for(int i = 0; i < list.size(); i++){
                 if(uniqueList.get(j).equals(list.get(i))) {increment++;}
-                weightValue = Integer.parseInt(weights.get(products.indexOf(uniqueList.get(j))).trim()) * increment;
+                weightInDb = weights.get(products.indexOf(uniqueList.get(j))).trim();
+                if(weightInDb.isEmpty())
+                {continue;}
+                else {weightValue = Integer.parseInt(weightInDb) * increment;}
             }
             uniqueWeights.add(String.valueOf(weightValue));
         }

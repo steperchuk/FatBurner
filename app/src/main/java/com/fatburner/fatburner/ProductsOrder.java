@@ -5,9 +5,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -57,7 +59,9 @@ public class ProductsOrder extends Menu {
 
         productsOrderList = (ListView) findViewById(R.id.orders_list);
         switchHideOrdered = (Switch) findViewById(R.id.hideOrdred);
-        switchHideOrdered.setChecked(false);
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        hideOrdered = sp.getBoolean("hideOrdered", false);
+        switchHideOrdered.setChecked(hideOrdered);
 
         productsOrderList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
@@ -68,6 +72,11 @@ public class ProductsOrder extends Menu {
         switchHideOrdered.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 hideOrdered = isChecked;
+
+                SharedPreferences.Editor sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
+                sp.putBoolean("hideOrdered", hideOrdered);
+                sp.commit();
+
                 loadList();
             }
         });

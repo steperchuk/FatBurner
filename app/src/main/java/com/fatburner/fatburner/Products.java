@@ -91,7 +91,8 @@ public class Products extends FragmentActivity {
         TextView exerciseLabel = (TextView) dialog.findViewById(R.id.label);
         exerciseLabel.setText("1. Вам необходимо выбрать продукты из каждой категории.\n\n" +
                               "2. Необходимый список продуктов отображен исходя из выбраной вами формулы.\n\n" +
-                              "3. Для выбора доступно только количество продуктов исходя из выбраной формулы.\n");
+                              "3. Для выбора доступно количество продуктов исходя из выбраной формулы.\n\n" +
+                              "4. При превышении лимита количеста продуктов первый выбраный продукт будет заменен последним.\n");
 
         //set up button
         ImageButton button = (ImageButton) dialog.findViewById(R.id.Button01);

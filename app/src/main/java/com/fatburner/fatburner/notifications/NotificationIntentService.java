@@ -115,20 +115,7 @@ public class NotificationIntentService extends IntentService {
         Integer min  = Integer.valueOf(time.substring(time.indexOf(":")+1, time.length()));
 
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
-
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.DAY_OF_WEEK, dayId-1);
-        calendar.set(Calendar.HOUR_OF_DAY, hour);
-        calendar.set(Calendar.MINUTE, min);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-
-        int scheduleTime = calendar.HOUR;
-
-        calendar = Calendar.getInstance(TimeZone.getDefault());
         calendar.setTime(new Date());
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
         int currentTime = calendar.HOUR;
 
         //int NOTIFICATION_ID = (int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);
