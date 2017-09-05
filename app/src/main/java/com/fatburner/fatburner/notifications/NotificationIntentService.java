@@ -108,48 +108,60 @@ public class NotificationIntentService extends IntentService {
         userCursor.close();
         db.close();
 
+        boolean foodNotificationValue = false;
+        db = databaseHelper.open();
+        userCursor =  db.rawQuery("select * from APP_SETTINGS", null);
+        userCursor.moveToFirst();
+        if(userCursor.getInt(9) == 1)
+        {foodNotificationValue = true;}
+        userCursor.close();
+        db.close();
+
         String time = timesList.get(0);
 
 
         Integer hour  = Integer.valueOf(time.substring(0, time.indexOf(":")));
-        Integer min  = Integer.valueOf(time.substring(time.indexOf(":")+1, time.length()));
 
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
         calendar.setTime(new Date());
         int currentTime = calendar.HOUR;
 
-        //int NOTIFICATION_ID = (int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);
-
-        int NOTIFICATION_ID = 1;
-
-        // Do something. For example, fetch fresh data from backend to create a rich notification?
-
-        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-
-        final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        builder.setContentTitle("Fat burner")
-                .setAutoCancel(true)
-                .setColor(getResources().getColor(R.color.colorAccent))
-                .setContentText("Прием пищи")
-                .setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 })
-                .setSound(alarmSound)
-                .setSmallIcon(R.drawable.ic_dish);
-
-        Intent mainIntent = new Intent(this, Diet.class);
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(this,
-                NOTIFICATION_ID,
-                mainIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
-        builder.setContentIntent(pendingIntent);
-        builder.setDeleteIntent(NotificationEventReceiver.getDeleteIntent(this));
-
-        final NotificationManager manager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 
         Integer lastHour  = Integer.valueOf(timesList.get(4).substring(0, timesList.get(4).indexOf(":")));
 
-        if( (hour-1 < currentTime) && (currentTime < lastHour - 1)) {
-            manager.notify(NOTIFICATION_ID, builder.build());
+        if(foodNotificationValue)
+        {
+            if(hour-1 < currentTime)
+            {
+                if(currentTime < lastHour - 1){
+                    //int NOTIFICATION_ID = (int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);
+                    int NOTIFICATION_ID = 1;
+
+                    Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+                    final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+                    builder.setContentTitle("Fat burner")
+                            .setAutoCancel(true)
+                            .setColor(getResources().getColor(R.color.colorAccent))
+                            .setContentText("Прием пищи")
+                            .setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 })
+                            .setSound(alarmSound)
+                            .setSmallIcon(R.drawable.ic_dish);
+
+                    Intent mainIntent = new Intent(this, Diet.class);
+
+                    PendingIntent pendingIntent = PendingIntent.getActivity(this,
+                            NOTIFICATION_ID,
+                            mainIntent,
+                            PendingIntent.FLAG_UPDATE_CURRENT);
+                    builder.setContentIntent(pendingIntent);
+                    builder.setDeleteIntent(NotificationEventReceiver.getDeleteIntent(this));
+
+                    final NotificationManager manager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+
+                    manager.notify(NOTIFICATION_ID, builder.build());
+                }
+            }
         }
 
         timesList.clear();

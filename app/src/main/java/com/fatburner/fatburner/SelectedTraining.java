@@ -203,6 +203,14 @@ public class SelectedTraining extends Menu {
         exercisesList.setOnItemClickListener(mOnListClick);
         }
 
+    @Override
+    public void onBackPressed() {
+
+        Intent intent = new Intent(SelectedTraining.this, TrainingsList.class);
+        startActivity(intent);
+
+    }
+
     private void blink(){
         final Handler handler = new Handler();
         new Thread(new Runnable() {

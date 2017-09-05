@@ -47,7 +47,7 @@ public class ProgramsList extends Menu {
 
     ListView programms_list;
     Switch switchRecommended;
-    boolean showRecommended = true;
+    boolean showRecommended = false;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -62,7 +62,7 @@ public class ProgramsList extends Menu {
         switchRecommended = (Switch) findViewById(R.id.isRecommended);
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        showRecommended = sp.getBoolean("showRecomendedPrograms", true);
+        showRecommended = sp.getBoolean("showRecomendedPrograms", false);
         switchRecommended.setChecked(showRecommended);
 
         ///Work with DB
@@ -129,6 +129,14 @@ public class ProgramsList extends Menu {
 
     }
 
+    @Override
+    public void onBackPressed() {
+
+        Intent intent = new Intent(ProgramsList.this, TrainingsCalendar.class);
+        startActivity(intent);
+
+    }
+
     void fillList(){
         databaseHelper.getWritableDatabase();
         db = databaseHelper.open();
@@ -164,8 +172,9 @@ public class ProgramsList extends Menu {
                 programs.add(userCursor.getString(userCursor.getColumnIndex(DatabaseHelper.COLUMN_NAME)) );
                 load.add(userCursor.getInt(userCursor.getColumnIndex(DatabaseHelper.COLUMN_COMPLETION_STATUS)));
                 info.add("Недели: " + userCursor.getInt(userCursor.getColumnIndex(DatabaseHelper.COLUMN_WEEKS)) +
-                        "  Дней в неделю: " + String.valueOf(userCursor.getInt(userCursor.getColumnIndex(DatabaseHelper.COLUMN_DAYS_PER_WEEK))) +
-                        "  Время: " + userCursor.getString(userCursor.getColumnIndex(DatabaseHelper.COLUMN_HOURS)));
+                        "  Дней в неделю: " + String.valueOf(userCursor.getInt(userCursor.getColumnIndex(DatabaseHelper.COLUMN_DAYS_PER_WEEK)))
+                        //+ "  Время: " + userCursor.getString(userCursor.getColumnIndex(DatabaseHelper.COLUMN_HOURS))
+                );
                 isCurrent.add(userCursor.getInt(userCursor.getColumnIndex(DatabaseHelper.COLUMN_IS_CURRENT)) );
             } while (userCursor.moveToNext());
         }

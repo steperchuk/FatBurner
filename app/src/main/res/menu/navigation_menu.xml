@@ -31,7 +31,7 @@
 
     <!--
     <item android:id="@+id/products_list"
-        android:title="Список Продуктов"
+        android:title="Полезные продукты"
         android:icon="@drawable/ic_dish"/>
     -->
 

@@ -1,16 +1,23 @@
 package com.fatburner.fatburner.broadcast_receivers;
 
 import android.app.AlarmManager;
+import android.app.Application;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
+import com.fatburner.fatburner.DatabaseHelper;
+import com.fatburner.fatburner.Utils;
 import com.fatburner.fatburner.notifications.NotificationIntentService;
 
 /**
@@ -64,7 +71,72 @@ public class NotificationEventReceiver extends WakefulBroadcastReceiver {
         Intent serviceIntent = null;
         if (ACTION_START_NOTIFICATION_SERVICE.equals(action)) {
             Log.i(getClass().getSimpleName(), "onReceive from alarm, starting notification service");
-            serviceIntent = NotificationIntentService.createIntentStartNotificationService(context);
+
+            //Don't know if it helps
+            ////// - getting time
+            DatabaseHelper databaseHelper;
+            SQLiteDatabase db;
+            Cursor userCursor;
+
+            databaseHelper = new DatabaseHelper(context);
+            databaseHelper.getWritableDatabase();
+            db = databaseHelper.open();
+            int dayId = Utils.getCurrentDayID();
+
+            userCursor = db.query("MEAL_SETTINGS", null, "DAY = ?", new String[]{String.valueOf(dayId)}, null, null, null);
+
+            List<String> timesList = new ArrayList<>();
+            List<Integer> days = new ArrayList<>();
+
+
+            Integer a = userCursor.getCount();
+
+            if (userCursor.getCount() == 0)
+            {
+                return;
+            }
+
+            if (userCursor.moveToFirst()) {
+                do {
+                    timesList.add(userCursor.getString(4));
+                    days.add(userCursor.getInt(0));
+                } while (userCursor.moveToNext());
+            }
+
+            userCursor.close();
+            db.close();
+
+            boolean foodNotificationValue = false;
+            db = databaseHelper.open();
+            userCursor =  db.rawQuery("select * from APP_SETTINGS", null);
+            userCursor.moveToFirst();
+            if(userCursor.getInt(9) == 1)
+            {foodNotificationValue = true;}
+            userCursor.close();
+            db.close();
+
+            String time = timesList.get(0);
+
+
+            Integer hour  = Integer.valueOf(time.substring(0, time.indexOf(":")));
+
+            Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
+            calendar.setTime(new Date());
+            int currentTime = calendar.HOUR;
+
+
+            Integer lastHour  = Integer.valueOf(timesList.get(4).substring(0, timesList.get(4).indexOf(":")));
+
+            if(foodNotificationValue) {
+                if (hour - 1 < currentTime) {
+                    if (currentTime < lastHour - 1) {
+                        serviceIntent = NotificationIntentService.createIntentStartNotificationService(context);
+                    }
+                }
+            }
+            //
+
+            //serviceIntent = NotificationIntentService.createIntentStartNotificationService(context);
         } else if (ACTION_DELETE_NOTIFICATION.equals(action)) {
             Log.i(getClass().getSimpleName(), "onReceive delete notification action, starting notification service to handle delete");
             serviceIntent = NotificationIntentService.createIntentDeleteNotification(context);

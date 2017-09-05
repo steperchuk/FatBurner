@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -107,6 +108,8 @@ public class DietPageFragment extends Fragment {
         lunchList = (ListView) view.findViewById(R.id.lunchList);
         secondLunchList = (ListView) view.findViewById(R.id.secondLunchList);
         dinnerList = (ListView) view.findViewById(R.id.dinnerList);
+
+
 
         ListView.OnItemClickListener mOnListClick = new ListView.OnItemClickListener(){
 

@@ -216,8 +216,8 @@ public class Exercise extends Menu {
                         if(i==1){weightsList.set(i-1, newWeight);}
                         else {weightsList.set(i, newWeight);}
                         */
-                        weightsList.set(i-1, newWeight);
-                        if(exerciseList.get(i) == "Отдых") {
+                        weightsList.set(i - 1, newWeight);
+                        if (exerciseList.get(i) == "Отдых") {
                             db = databaseHelper.open();
                             ContentValues cv = new ContentValues();
                             cv.put("WEIGHT", newWeight);
@@ -227,18 +227,20 @@ public class Exercise extends Menu {
 
                         //Imageloading
                         db = databaseHelper.open();
-                        userCursor = db.rawQuery("select * from EXERCISES_INFO where NAME = ?", new String[] {String.valueOf(exerciseList.get(i))}, null);
+                        userCursor = db.rawQuery("select * from EXERCISES_INFO where NAME = ?", new String[]{String.valueOf(exerciseList.get(i))}, null);
                         userCursor.moveToFirst();
-                        if(exerciseList.get(i) != "Отдых")
-                        {
-                            if(userCursor.getCount() != 0) {
+                        if (exerciseList.get(i) != "Отдых") {
+                            if (userCursor.getCount() != 0) {
                                 filename = userCursor.getString(1);
 
+                            } else {
+                                filename = "working-out-silhouette.png";
                             }
-                            else {filename = "working-out-silhouette.png";}
-                                relaxNow = false;
+                            relaxNow = false;
+                        } else {
+                            filename = "relax.png";
+                            relaxNow = true;
                         }
-                        else {filename = "relax.png"; relaxNow = true;}
                         loadImage(filename);
                         userCursor.close();
                         db.close();
@@ -246,15 +248,15 @@ public class Exercise extends Menu {
                         infoLabel.setText(infoList.get(i));
                         if (!exerciseList.get(i).equals("Отдых")) {
                             repeatsLabel.setText("Повторений: " + repeatsList.get(i));
-                            if(exerciseList.get(i).equals(exerciseList.get(i-2))){
-                                weight.setText(weightsList.get(i-1).trim());
+                            if (exerciseList.get(i).equals(exerciseList.get(i - 2))) {
+                                weight.setText(weightsList.get(i - 1).trim());
                             }
-                            if(!exerciseList.get(i).equals(exerciseList.get(i-2))){
+                            if (!exerciseList.get(i).equals(exerciseList.get(i - 2))) {
                                 weight.setText(weightsList.get(i).trim());
                             }
                             currentAttemptId++;
 
-                            if(!exerciseList.get(i).equals("Отдых")) {
+                            if (!exerciseList.get(i).equals("Отдых")) {
                                 attemptsCounterLabel.setVisibility(View.VISIBLE);
                                 weightLabelText.setVisibility(View.VISIBLE);
                                 weight.setVisibility(View.VISIBLE);
@@ -298,12 +300,14 @@ public class Exercise extends Menu {
                         startActivity(intent);
                     }
 
-                    i++;
+
+                        i++;
+
 
                     db = databaseHelper.open();
                     ContentValues cv = new ContentValues();
                     cv.put("PROGRESS", (int) progress);
-                    db.update("TRAININGS", cv, "IS_CURRENT = ?" , new String[]{String.valueOf(1)});
+                    db.update("TRAININGS", cv, "IS_CURRENT = ?", new String[]{String.valueOf(1)});
                     db.close();
 
 
@@ -311,10 +315,11 @@ public class Exercise extends Menu {
 
                     cv = new ContentValues();
                     cv.put("TRAINING_STATUS", (int) progress);
-                    db.update("CALENDAR", cv, "DATE = ?" , new String[]{Utils.getCurrentDate()});
+                    db.update("CALENDAR", cv, "DATE = ?", new String[]{Utils.getCurrentDate()});
 
                     databaseHelper.close();
                     db.close();
+
 
                 }
             });

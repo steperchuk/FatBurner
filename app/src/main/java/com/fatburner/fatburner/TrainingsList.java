@@ -1,7 +1,9 @@
 package com.fatburner.fatburner;
 
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -136,6 +138,13 @@ public class TrainingsList extends Menu {
         loadList();
     }
 
+    @Override
+    public void onBackPressed() {
+
+         Intent intent = new Intent(TrainingsList.this, ProgramsList.class);
+         startActivity(intent);
+
+    }
 
 
     private void loadList(){
@@ -166,7 +175,7 @@ public class TrainingsList extends Menu {
             do {
                 trainings.add(userCursor.getInt(userCursor.getColumnIndex(COLUMN_TRAINING_ID)));
                 load.add(userCursor.getInt(userCursor.getColumnIndex(COLUMN_PROGRESS)));
-                info.add("Время выполнения:" + userCursor.getInt(userCursor.getColumnIndex(COLUMN_EXPECTED_TIME)));
+                info.add("Время выполнения: " + userCursor.getInt(userCursor.getColumnIndex(COLUMN_EXPECTED_TIME)));
                 isCurrent.add(userCursor.getInt(userCursor.getColumnIndex(COLUMN_IS_CURRENT)));
             } while (userCursor.moveToNext());
         }

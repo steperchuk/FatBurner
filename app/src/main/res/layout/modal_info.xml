@@ -113,7 +113,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
+
             android:text="Тренировка: "
             android:layout_gravity="center_vertical"
             android:textColor="@color/Black"
@@ -125,7 +125,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="18dp"
             android:layout_marginStart="3dp"
-            android:layout_marginTop="5dp"
             android:layout_gravity="center_vertical"
             android:textColor="@color/Blue"
             android:textSize="12sp" />

@@ -116,6 +116,7 @@
         android:id="@+id/infoBtn"
         android:layout_width="25dp"
         android:layout_height="25dp"
+        android:layout_marginRight="5dp"
         android:background="@color/White"
         android:src="@drawable/ic_information_smal"
         android:layout_above="@+id/imageView4"
