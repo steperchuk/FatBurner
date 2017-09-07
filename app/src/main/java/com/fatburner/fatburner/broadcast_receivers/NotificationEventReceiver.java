@@ -47,10 +47,7 @@ public class NotificationEventReceiver extends WakefulBroadcastReceiver {
 
     private static long getTriggerAt(Date now) {
         //get Start Time for current date.
-
-        Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
-        calendar.setTime(now);
-        return calendar.getTimeInMillis();
+        return Calendar.getInstance(TimeZone.getDefault()).getTimeInMillis();
     }
 
     private static PendingIntent getStartPendingIntent(Context context) {
@@ -72,6 +69,7 @@ public class NotificationEventReceiver extends WakefulBroadcastReceiver {
         if (ACTION_START_NOTIFICATION_SERVICE.equals(action)) {
             Log.i(getClass().getSimpleName(), "onReceive from alarm, starting notification service");
 
+
             //Don't know if it helps
             ////// - getting time
             DatabaseHelper databaseHelper;
@@ -81,7 +79,7 @@ public class NotificationEventReceiver extends WakefulBroadcastReceiver {
             databaseHelper = new DatabaseHelper(context);
             databaseHelper.getWritableDatabase();
             db = databaseHelper.open();
-            int dayId = Utils.getCurrentDayID();
+            int dayId = Utils.getCurrentDayID()-1;
 
             userCursor = db.query("MEAL_SETTINGS", null, "DAY = ?", new String[]{String.valueOf(dayId)}, null, null, null);
 
@@ -120,16 +118,15 @@ public class NotificationEventReceiver extends WakefulBroadcastReceiver {
 
             Integer hour  = Integer.valueOf(time.substring(0, time.indexOf(":")));
 
-            Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
-            calendar.setTime(new Date());
-            int currentTime = calendar.HOUR;
+
+            int currentTime = Calendar.getInstance(TimeZone.getDefault()).getTime().getHours();
 
 
             Integer lastHour  = Integer.valueOf(timesList.get(4).substring(0, timesList.get(4).indexOf(":")));
 
             if(foodNotificationValue) {
-                if (hour - 1 < currentTime) {
-                    if (currentTime < lastHour - 1) {
+                if (hour -1 < currentTime) {
+                    if (currentTime < lastHour + 1) {
                         serviceIntent = NotificationIntentService.createIntentStartNotificationService(context);
                     }
                 }
@@ -139,7 +136,9 @@ public class NotificationEventReceiver extends WakefulBroadcastReceiver {
             //serviceIntent = NotificationIntentService.createIntentStartNotificationService(context);
         } else if (ACTION_DELETE_NOTIFICATION.equals(action)) {
             Log.i(getClass().getSimpleName(), "onReceive delete notification action, starting notification service to handle delete");
-            serviceIntent = NotificationIntentService.createIntentDeleteNotification(context);
+
+            //commented
+            //serviceIntent = NotificationIntentService.createIntentDeleteNotification(context);
         }
 
         if (serviceIntent != null) {

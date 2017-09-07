@@ -281,6 +281,7 @@ public class Settings extends Menu {
                     saveSettings();
 
                 if(foodNotificationValue){
+                    NotificationEventReceiver.cancelAlarm(getApplicationContext());
                     NotificationEventReceiver.setupAlarm(getApplicationContext());
                 }
                 else {

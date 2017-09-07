@@ -83,7 +83,7 @@ public class NotificationIntentService extends IntentService {
         databaseHelper = new DatabaseHelper(getApplicationContext());
         databaseHelper.getWritableDatabase();
         db = databaseHelper.open();
-        int dayId = Utils.getCurrentDayID();
+        int dayId = Utils.getCurrentDayID()-1;
 
         userCursor = db.query("MEAL_SETTINGS", null, "DAY = ?", new String[]{String.valueOf(dayId)}, null, null, null);
 
@@ -122,18 +122,15 @@ public class NotificationIntentService extends IntentService {
 
         Integer hour  = Integer.valueOf(time.substring(0, time.indexOf(":")));
 
-        Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
-        calendar.setTime(new Date());
-        int currentTime = calendar.HOUR;
-
+        int currentTime = Calendar.getInstance(TimeZone.getDefault()).getTime().getHours();
 
         Integer lastHour  = Integer.valueOf(timesList.get(4).substring(0, timesList.get(4).indexOf(":")));
 
         if(foodNotificationValue)
         {
-            if(hour-1 < currentTime)
+            if(hour - 1 < currentTime)
             {
-                if(currentTime < lastHour - 1){
+                if(currentTime < lastHour + 1){
                     //int NOTIFICATION_ID = (int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);
                     int NOTIFICATION_ID = 1;
 
@@ -142,6 +139,7 @@ public class NotificationIntentService extends IntentService {
                     final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
                     builder.setContentTitle("Fat burner")
                             .setAutoCancel(true)
+                            .setOngoing(true) //maybe not need this
                             .setColor(getResources().getColor(R.color.colorAccent))
                             .setContentText("Прием пищи")
                             .setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 })
