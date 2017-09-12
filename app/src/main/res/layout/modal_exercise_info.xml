@@ -44,7 +44,7 @@
         android:textColor="@color/Blue"
         android:text="ОК"
         android:layout_marginBottom="13dp"
-        android:src="@drawable/ic_down_chevron_transparent"
+        android:src="@drawable/ic_down_chevron"
         android:background="@color/White"
         android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/youtubeButton"

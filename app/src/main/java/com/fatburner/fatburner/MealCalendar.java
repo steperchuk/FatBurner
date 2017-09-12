@@ -17,6 +17,7 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
@@ -121,7 +122,7 @@ public class MealCalendar extends FragmentActivity {
                 "3. Для выбора будут доступны только продукты из соответсвующих категорий.\n");
 
         //set up button
-        ImageButton button = (ImageButton) dialog.findViewById(R.id.Button01);
+        Button button = (Button) dialog.findViewById(R.id.Button01);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dialog.cancel();

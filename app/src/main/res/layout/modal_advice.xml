@@ -5,14 +5,13 @@
     android:layout_height="wrap_content"
     android:background="@color/White">
 
-    <ImageButton
+    <Button
         android:id="@+id/Button01"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:textSize="14dp"
         android:textColor="@color/Blue"
         android:text="ОК"
-        android:src="@drawable/ic_down_chevron_transparent"
         android:background="@color/White"
         android:layout_below="@+id/label"
         android:layout_alignRight="@+id/label"

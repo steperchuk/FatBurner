@@ -180,15 +180,16 @@
             android:layout_alignBaseline="@+id/textView4"
             android:layout_alignBottom="@+id/textView4"
             android:layout_alignEnd="@+id/trainingDays"
-            android:layout_alignLeft="@+id/switchWaterNotification"
             android:layout_alignRight="@+id/trainingDays"
-            android:layout_alignStart="@+id/switchWaterNotification"
             android:ems="10"
             android:inputType="numberDecimal"
             android:maxLength="4"
+            android:digits="1234567890"
             android:textAlignment="viewEnd"
             android:textColor="@color/Blue"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:layout_toRightOf="@+id/textView8"
+            android:layout_toEndOf="@+id/textView8" />
 
         <Switch
             android:id="@+id/gender"

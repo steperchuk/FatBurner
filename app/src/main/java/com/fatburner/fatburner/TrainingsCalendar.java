@@ -63,11 +63,6 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
     private static final DateFormat FORMATTER = SimpleDateFormat.getDateInstance();
 
     DonutProgress startButton;
-
-    TextView trainingStatusLabel;
-    TextView dietStatusLabel;
-    TextView waterStatusLabel;
-    ImageButton infoButton;
     MaterialCalendarView mCalendarView;
 
     ArrayList<CalendarDay> greenDates = new ArrayList<>();
@@ -82,12 +77,6 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
         View contentView = inflater.inflate(R.layout.activity_trainings_calendar, null, false);
         mDrawerLayout.addView(contentView, 0);
 
-        trainingStatusLabel = (TextView) findViewById(R.id.trainingStatusLabel);
-        dietStatusLabel = (TextView) findViewById(R.id.dietStatusLabel);
-        waterStatusLabel = (TextView) findViewById(R.id.waterStatusLabel);
-
-        infoButton = (ImageButton) findViewById(R.id.infoBtn);
-
         mCalendarView = (MaterialCalendarView) findViewById(R.id.trainingCalendarView);
 
         fillDayColors();
@@ -101,6 +90,11 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
         mCalendarView.setOnMonthChangedListener(this);
 
         mCalendarView.setSelectedDate(CalendarDay.today());
+
+
+        LoadProgress();
+
+        /*
         List<String> info = loadProgressForSpecificDay(getSelectedDatesString());
         trainingStatusLabel.setText(" - " + info.get(0) + "%");
         if(info.get(1).equals("выкл"))
@@ -113,7 +107,7 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
             }
         waterStatusLabel.setText(" - " + info.get(2) + "%");
         clearChash();
-
+        */
 
         ImageButton playerButton = (ImageButton) findViewById(R.id.playerButton);
 
@@ -146,6 +140,7 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
             }
         });
 
+        /*
         infoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -195,6 +190,8 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
 
             }
         });
+
+        */
 
 
     }
@@ -248,9 +245,40 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
 
 
     public void onDateSelected(@NonNull MaterialCalendarView widget, @Nullable CalendarDay date, boolean selected) {
+        LoadProgress();
+    }
 
 
+    private void LoadProgress(){
+        clearChash();
         loadProgressForSpecificDay(getSelectedDatesString());
+
+        //set up text
+        TextView dateLabel = (TextView) findViewById(R.id.date);
+        List<Integer> dateForIncrement = Utils.normalizeDateForColoring(getSelectedDatesString());
+        String dateToShow = dateForIncrement.get(0) + "-" + (dateForIncrement.get(1)+1) + "-" + dateForIncrement.get(2);
+        dateLabel.setText(dateToShow);
+
+        TextView programNameLabel = (TextView) findViewById(R.id.programName);
+        programNameLabel.setText(programName);
+
+        TextView programProgressLabel = (TextView) findViewById(R.id.programStatus);
+        programProgressLabel.setText(Math.round(Float.valueOf(programStatus)) + "%");
+
+        TextView trainingNameLabel = (TextView) findViewById(R.id.trainingName);
+        trainingNameLabel.setText(trainingName);
+
+        TextView trainingProgressLabel = (TextView) findViewById(R.id.trainingStatus);
+        trainingProgressLabel.setText(trainingStatus + "%");
+
+        TextView waterStatusLabel = (TextView) findViewById(R.id.waterStatus);
+        waterStatusLabel.setText(waterStatus + "%");
+
+        TextView dietStatusLabel = (TextView) findViewById(R.id.dietStatus);
+        if(dietStatus.equals("выкл")){dietStatusLabel.setText(dietStatus);}
+        else{dietStatusLabel.setText(dietStatus + "%");}
+
+        clearChash();
     }
 
 

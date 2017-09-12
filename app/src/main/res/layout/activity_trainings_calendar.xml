@@ -10,117 +10,288 @@
         android:id="@+id/trainingCalendarView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:mcv_calendarMode="week"
         app:mcv_showOtherDates="all"
         app:mcv_selectionColor="#00F"
         />
 
-    <TextView
-        android:id="@+id/day"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/trainingStatusLabel"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
-        android:textColor="@color/Blue"
-        android:text="Текущий статус:"
-        android:textSize="14sp" />
-
-    <TextView
-        android:id="@+id/trainingStatusLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/trainingCalendarView"
-        android:layout_alignStart="@+id/trainingCalendarView"
-        android:layout_below="@+id/trainingCalendarView"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="15dp"
-        android:text=" - 100%"
-        android:textSize="14sp" />
-
-    <TextView
-        android:id="@+id/dietStatusLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/trainingStatusLabel"
-        android:layout_alignStart="@+id/trainingStatusLabel"
-        android:layout_below="@+id/trainingStatusLabel"
-        android:layout_marginTop="15dp"
-        android:text=" - 75%"
-        android:textSize="14sp" />
-
-    <TextView
-        android:id="@+id/waterStatusLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/dietStatusLabel"
-        android:layout_alignStart="@+id/dietStatusLabel"
-        android:layout_below="@+id/dietStatusLabel"
-        android:layout_marginTop="15dp"
-        android:text=" - 100%"
-        android:textSize="14sp" />
-
-    <com.github.lzyzsd.circleprogress.DonutProgress
-        android:id="@+id/start_btn"
-        custom:donut_progress="0"
-        custom:donut_text_size="14dp"
-        android:layout_marginBottom="15dp"
-        android:layout_marginLeft="200dp"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@+id/scoreLabel"
-        />
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginLeft="10sp"
-        android:src="@drawable/ic_working_out"
-        android:layout_above="@+id/dietStatusLabel"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:src="@drawable/ic_dish"
-        android:layout_above="@+id/waterStatusLabel"
-        android:layout_alignLeft="@+id/imageView3"
-        android:layout_alignStart="@+id/imageView3" />
-
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:src="@drawable/ic_glass_of_water_medium"
-        android:layout_alignBottom="@+id/waterStatusLabel"
-        android:layout_alignLeft="@+id/imageView4"
-        android:layout_alignStart="@+id/imageView4" />
-
-    <ImageButton
-        android:id="@+id/playerButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_play_button"
+    <LinearLayout
+        android:id="@+id/infoLayout"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
         android:background="@color/White"
-        android:layout_marginLeft="40dp"
-        android:layout_marginStart="40dp"
-        android:layout_alignBottom="@+id/start_btn"
-        android:layout_toRightOf="@+id/start_btn"
-        android:layout_toEndOf="@+id/start_btn" />
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/trainingCalendarView">
 
-    <ImageButton
-        android:id="@+id/infoBtn"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginRight="5dp"
-        android:background="@color/White"
-        android:src="@drawable/ic_information_smal"
-        android:layout_above="@+id/imageView4"
-        android:layout_toRightOf="@+id/playerButton"
-        android:layout_toEndOf="@+id/playerButton" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="10dp"
+                android:background="@color/White"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_time" />
+
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="18dp"
+                android:layout_marginStart="5dp"
+                android:textAlignment="viewStart"
+                android:text="вфеф"
+                android:textColor="@color/Blue"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/White"
+                android:src="@drawable/ic_working_out" />
+
+            <TextView
+                android:id="@+id/programName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:text="Программа: "
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/Black"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:text="Выполнена на: "
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/Black"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/programStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/Blue"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/White"
+                android:src="@drawable/ic_dumbbell" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="10dp"
+                android:text="Тренировка: "
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/Black"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/trainingName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
+                android:layout_marginStart="3dp"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/Blue"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:text="Выполнена на: "
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/Black"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/trainingStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/Blue"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/White"
+                android:src="@drawable/ic_glass_of_water_small" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:text="Дневная норма воды: "
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/Black"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/waterStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/Blue"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/White"
+                android:src="@drawable/ic_dish" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:text="Дневная норма еды: "
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/Black"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/dietStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/Blue"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/infoLayout"
+            android:layout_marginTop="10dp"
+            >
+
+            <com.github.lzyzsd.circleprogress.DonutProgress
+                android:id="@+id/start_btn"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginBottom="15dp"
+                custom:donut_progress="0"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                custom:donut_text_size="14dp" />
+
+            <ImageButton
+                android:id="@+id/playerButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/White"
+                android:src="@drawable/ic_play_button"
+                android:layout_marginLeft="39dp"
+                android:layout_marginStart="39dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/start_btn"
+                android:layout_toEndOf="@+id/start_btn" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
 
 </RelativeLayout>
