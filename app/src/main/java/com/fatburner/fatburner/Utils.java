@@ -1,5 +1,8 @@
 package com.fatburner.fatburner;
 
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.ArrayMap;
 
 import java.text.ParseException;
@@ -293,4 +296,110 @@ public class Utils {
 
         return normalizedDate;
     }
+
+    public static Calendar getNotificationTime(Context context, Date date){
+        //Don't know if it helps
+        ////// - getting time
+        DatabaseHelper databaseHelper;
+        SQLiteDatabase db;
+        Cursor userCursor;
+
+        databaseHelper = new DatabaseHelper(context);
+        databaseHelper.getWritableDatabase();
+        db = databaseHelper.open();
+        int dayId = Utils.getCurrentDayID()-1;
+
+        userCursor = db.query("MEAL_SETTINGS", null, "DAY = ?", new String[]{String.valueOf(dayId)}, null, null, null);
+
+        List<String> timesList = new ArrayList<>();
+        List<Integer> days = new ArrayList<>();
+
+
+        Integer a = userCursor.getCount();
+
+        if (userCursor.getCount() == 0)
+        {
+            return null;
+        }
+
+        if (userCursor.moveToFirst()) {
+            do {
+                timesList.add(userCursor.getString(4));
+                days.add(userCursor.getInt(0));
+            } while (userCursor.moveToNext());
+        }
+
+        userCursor.close();
+        db.close();
+
+
+        Date currentTime = date;
+        Integer currentHour = currentTime.getHours();
+        Integer currentMinute = currentTime.getMinutes();
+        Integer currentDay = currentTime.getDate();
+
+        Integer hour = 0;
+        Integer minute = 0;
+
+        Date dateToShowNotification = currentTime;
+        Calendar cal = Calendar.getInstance();
+
+
+
+        for(int i = 0; i<timesList.size(); i++){
+
+            String time = timesList.get(i);
+
+            hour  = Integer.valueOf(time.substring(0, time.indexOf(":")));
+            minute = Integer.valueOf(time.substring(time.indexOf(":")+1, time.length()));
+
+            if (currentHour <= hour)
+            {
+                if(currentMinute <= minute) {
+                    dateToShowNotification.setDate(currentDay);
+                    dateToShowNotification.setHours(hour);
+                    dateToShowNotification.setMinutes(minute);
+                    dateToShowNotification.setSeconds(0);
+                    cal.setTime(dateToShowNotification);
+                    break;
+                }
+            }
+        }
+
+        Integer lastHour  = Integer.valueOf(timesList.get(4).substring(0, timesList.get(4).indexOf(":")));
+        Integer firstHour  = Integer.valueOf(timesList.get(0).substring(0, timesList.get(0).indexOf(":")));
+        Integer firstMinute = Integer.valueOf(timesList.get(0).substring(timesList.get(0).indexOf(":")+1, timesList.get(0).length()));
+
+        if(currentHour == lastHour){
+            if(currentMinute >= minute) {
+                dateToShowNotification.setDate(currentDay);
+                dateToShowNotification.setHours(firstHour);
+                dateToShowNotification.setMinutes(firstMinute);
+                dateToShowNotification.setSeconds(0);
+                cal.setTime(dateToShowNotification);
+                cal.add(Calendar.DATE, 1);
+            }
+        }
+        if(currentHour > lastHour){
+            dateToShowNotification.setDate(currentDay);
+            dateToShowNotification.setHours(firstHour);
+            dateToShowNotification.setMinutes(firstMinute);
+            dateToShowNotification.setSeconds(0);
+            cal.setTime(dateToShowNotification);
+            cal.add(Calendar.DATE, 1);
+        }
+
+        return cal;
+    }
+
+    public static Date getCurrentTime(){
+        return Calendar.getInstance(TimeZone.getDefault()).getTime();
+    }
+
+    public static Date incrementTimeOnOneMin(){
+        Date date = Calendar.getInstance(TimeZone.getDefault()).getTime();
+        date.setMinutes(date.getMinutes()+1);
+        return date;
+    }
+
 }

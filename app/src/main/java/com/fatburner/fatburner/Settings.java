@@ -283,7 +283,7 @@ public class Settings extends Menu {
 
                 if(foodNotificationValue){
                     NotificationEventReceiver.cancelAlarm(getApplicationContext());
-                    NotificationEventReceiver.setupAlarm(getApplicationContext());
+                    NotificationEventReceiver.setupAlarm(getApplicationContext(), Utils.getNotificationTime(getApplicationContext(), Utils.getCurrentTime()));
                 }
                 else {
                     NotificationEventReceiver.cancelAlarm(getApplicationContext());

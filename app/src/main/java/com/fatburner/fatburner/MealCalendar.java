@@ -122,7 +122,7 @@ public class MealCalendar extends FragmentActivity {
                 "3. Для выбора будут доступны только продукты из соответсвующих категорий.\n");
 
         //set up button
-        Button button = (Button) dialog.findViewById(R.id.Button01);
+        TextView button = (TextView) dialog.findViewById(R.id.Button01);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dialog.cancel();

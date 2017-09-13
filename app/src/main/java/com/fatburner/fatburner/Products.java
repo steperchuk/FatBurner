@@ -95,7 +95,7 @@ public class Products extends FragmentActivity {
                               "4. При превышении лимита количеста продуктов первый выбраный продукт будет заменен последним.\n");
 
         //set up button
-        ImageButton button = (ImageButton) dialog.findViewById(R.id.Button01);
+        TextView button = (TextView) dialog.findViewById(R.id.Button01);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dialog.cancel();

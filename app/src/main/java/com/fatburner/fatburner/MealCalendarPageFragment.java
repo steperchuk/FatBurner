@@ -6,6 +6,7 @@ package com.fatburner.fatburner;
 
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -381,6 +382,9 @@ public class MealCalendarPageFragment extends Fragment implements View.OnClickLi
 
             case R.id.applyMealCalendarBtn:
                 saveMealSettings();
+                NotificationEventReceiver.cancelAlarm(getContext());
+                NotificationEventReceiver.setupAlarm(getContext(), Utils.getNotificationTime(getContext(), Utils.getCurrentTime()));
+
                 break;
         }
     }

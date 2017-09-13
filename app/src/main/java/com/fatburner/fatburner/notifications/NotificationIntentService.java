@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
@@ -29,6 +30,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+
+import static com.fatburner.fatburner.broadcast_receivers.NotificationEventReceiver.cancelAlarm;
+import static com.fatburner.fatburner.broadcast_receivers.NotificationEventReceiver.setupAlarm;
 
 /**
  * Created by klogi
@@ -75,7 +79,6 @@ public class NotificationIntentService extends IntentService {
 
     private void processStartNotification() {
 
-        ////// - getting time
         DatabaseHelper databaseHelper;
         SQLiteDatabase db;
         Cursor userCursor;
@@ -83,30 +86,6 @@ public class NotificationIntentService extends IntentService {
         databaseHelper = new DatabaseHelper(getApplicationContext());
         databaseHelper.getWritableDatabase();
         db = databaseHelper.open();
-        int dayId = Utils.getCurrentDayID()-1;
-
-        userCursor = db.query("MEAL_SETTINGS", null, "DAY = ?", new String[]{String.valueOf(dayId)}, null, null, null);
-
-        List<String> timesList = new ArrayList<>();
-        List<Integer> days = new ArrayList<>();
-
-
-        Integer a = userCursor.getCount();
-
-        if (userCursor.getCount() == 0)
-        {
-            return;
-        }
-
-        if (userCursor.moveToFirst()) {
-            do {
-                timesList.add(userCursor.getString(4));
-                days.add(userCursor.getInt(0));
-            } while (userCursor.moveToNext());
-        }
-
-        userCursor.close();
-        db.close();
 
         boolean foodNotificationValue = false;
         db = databaseHelper.open();
@@ -117,52 +96,39 @@ public class NotificationIntentService extends IntentService {
         userCursor.close();
         db.close();
 
-        String time = timesList.get(0);
+        if(foodNotificationValue) {
 
 
-        Integer hour  = Integer.valueOf(time.substring(0, time.indexOf(":")));
+            int NOTIFICATION_ID = 1;
 
-        int currentTime = Calendar.getInstance(TimeZone.getDefault()).getTime().getHours();
+            Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-        Integer lastHour  = Integer.valueOf(timesList.get(4).substring(0, timesList.get(4).indexOf(":")));
+            final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+            builder.setContentTitle("Fat burner")
+                    .setAutoCancel(true)
+                    .setColor(getResources().getColor(R.color.colorAccent))
+                    .setContentText("Прием пищи")
+                    .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
+                    .setSound(alarmSound)
+                    .setSmallIcon(R.drawable.ic_dish);
 
-        if(foodNotificationValue)
-        {
-            if(hour - 1 < currentTime)
-            {
-                if(currentTime < lastHour + 1){
-                    //int NOTIFICATION_ID = (int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);
-                    int NOTIFICATION_ID = 1;
+            Intent mainIntent = new Intent(this, Diet.class);
 
-                    Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this,
+                    NOTIFICATION_ID,
+                    mainIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+            builder.setContentIntent(pendingIntent);
+            builder.setDeleteIntent(NotificationEventReceiver.getDeleteIntent(this));
 
-                    final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-                    builder.setContentTitle("Fat burner")
-                            .setAutoCancel(true)
-                            .setOngoing(true) //maybe not need this
-                            .setColor(getResources().getColor(R.color.colorAccent))
-                            .setContentText("Прием пищи")
-                            .setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 })
-                            .setSound(alarmSound)
-                            .setSmallIcon(R.drawable.ic_dish);
+            final NotificationManager manager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 
-                    Intent mainIntent = new Intent(this, Diet.class);
+            manager.notify(NOTIFICATION_ID, builder.build());
 
-                    PendingIntent pendingIntent = PendingIntent.getActivity(this,
-                            NOTIFICATION_ID,
-                            mainIntent,
-                            PendingIntent.FLAG_UPDATE_CURRENT);
-                    builder.setContentIntent(pendingIntent);
-                    builder.setDeleteIntent(NotificationEventReceiver.getDeleteIntent(this));
+            cancelAlarm(getApplicationContext());
+            Calendar nextNotificationTime = Utils.getNotificationTime(getApplicationContext(), Utils.incrementTimeOnOneMin());
+            setupAlarm(getApplicationContext(), nextNotificationTime);
 
-                    final NotificationManager manager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-
-                    manager.notify(NOTIFICATION_ID, builder.build());
-                }
-            }
         }
-
-        timesList.clear();
-
     }
 }

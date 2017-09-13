@@ -13,6 +13,6 @@ public final class NotificationServiceStarterReceiver extends BroadcastReceiver 
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        NotificationEventReceiver.setupAlarm(context);  //setup alarm was static
+        //NotificationEventReceiver.setupAlarm(context);  //setup alarm was static
     }
 }
