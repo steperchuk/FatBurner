@@ -111,6 +111,7 @@ public class DietPageFragment extends Fragment {
 
 
 
+
         ListView.OnItemClickListener mOnListClick = new ListView.OnItemClickListener(){
 
             @Override
@@ -121,7 +122,7 @@ public class DietPageFragment extends Fragment {
 
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
                     alertDialogBuilder
-                            .setMessage("Статус может быть сохранен только для текущего дня.")
+                            .setMessage("Статус может быть изменен только для текущего дня.")
                             .setCancelable(false)
                             .setIcon(R.drawable.ic_information)
                             .setNegativeButton("ОК", new DialogInterface.OnClickListener() {

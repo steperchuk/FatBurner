@@ -15,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +26,9 @@ import com.appodeal.ads.SkippableVideoCallbacks;
 import com.github.lzyzsd.circleprogress.DonutProgress;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static android.R.color.holo_orange_dark;
 import static com.fatburner.fatburner.TrainingsList.COLUMN_PROGRAMM_NAME;
@@ -141,6 +145,13 @@ public class TrainingCompleted extends Menu {
         userCursor.close();
     }
 
+    void startAnimation () {
+        AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(TrainingCompleted.this, R.animator.progress_anim);
+        set.setInterpolator(new DecelerateInterpolator());
+        set.setTarget(doneBtn);
+        set.start();
+    }
+
     private String getCurrentProgramm() {
         db = databaseHelper.open();
         userCursor = db.rawQuery("select " + DatabaseHelper.COLUMN_NAME + " from PROGRAMMS" +
@@ -156,12 +167,5 @@ public class TrainingCompleted extends Menu {
         db.close();
         userCursor.close();
         return current.get(0);
-    }
-
-    void startAnimation () {
-        AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(TrainingCompleted.this, R.animator.progress_anim);
-        set.setInterpolator(new DecelerateInterpolator());
-        set.setTarget(doneBtn);
-        set.start();
     }
 }
