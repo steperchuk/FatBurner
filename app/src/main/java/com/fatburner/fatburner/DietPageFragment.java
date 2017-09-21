@@ -146,19 +146,19 @@ public class DietPageFragment extends Fragment {
                 String mealID = null;
                 int listID = parent.getId();
                 switch (listID){
-                    case 2131689699:
+                    case 2131689747:
                         mealID = "0";
                         break;
-                    case 2131689700:
+                    case 2131689748:
                         mealID = "1";
                         break;
-                    case 2131689701:
+                    case 2131689749:
                         mealID = "2";
                         break;
-                    case 2131689702:
+                    case 2131689750:
                         mealID = "3";
                         break;
-                    case 2131689703:
+                    case 2131689751:
                         mealID = "4";
                         break;
                 }
@@ -264,7 +264,7 @@ public class DietPageFragment extends Fragment {
 
 
         if (productsList.isEmpty() || productsList.equals("   - "+"\n")) {
-            productsList = "Продукты не выбраны";
+            productsList = "Продукты не выбраны в настройках диеты";
         }
         ArrayList<Map<String, Object>> data = new ArrayList<Map<String, Object>>(1);
         Map<String, Object> m;

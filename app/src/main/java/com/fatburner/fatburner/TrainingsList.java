@@ -12,7 +12,6 @@ import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -63,7 +62,6 @@ public class TrainingsList extends Menu {
 
     List<Integer> trainings;
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,6 +129,7 @@ public class TrainingsList extends Menu {
     }
 
 
+
     @Override
     public void onResume()
     {  // After a pause OR at startup
@@ -140,10 +139,22 @@ public class TrainingsList extends Menu {
 
     @Override
     public void onBackPressed() {
+        Intent intent;
+        boolean isOpenedFromPrograms = getIntent().getBooleanExtra("openedFromPrograms",false);
+        boolean isOpenedFromMenu = getIntent().getBooleanExtra("openedFromMenu",false);
 
-         Intent intent = new Intent(TrainingsList.this, ProgramsList.class);
-         startActivity(intent);
-
+        if(isOpenedFromPrograms || !isOpenedFromMenu)
+        {
+            intent = new Intent(TrainingsList.this, ProgramsList.class);
+            startActivity(intent);
+            return;
+        }
+        else
+        {
+            intent = new Intent(TrainingsList.this, TrainingsCalendar.class);
+            startActivity(intent);
+            return;
+        }
     }
 
 
@@ -200,7 +211,7 @@ public class TrainingsList extends Menu {
 
             float totalTrainings = (allTrainings.size() * 100);
             float percentValue = totalTrainingsLoad / totalTrainings;
-            float programmCompletion = percentValue * 100;
+            float programmCompletion = Math.round(percentValue * 100);
             ContentValues cv = new ContentValues();
             cv.put("COMPLETION_STATUS", programmCompletion);
             db = databaseHelper.open();
@@ -276,7 +287,6 @@ public class TrainingsList extends Menu {
         int green = getResources().getColor(R.color.Green);
         int white = getResources().getColor(R.color.White);
 
-        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
         @Override
         public boolean setViewValue(View view, Object data,
                                     String textRepresentation) {

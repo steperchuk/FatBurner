@@ -5,17 +5,30 @@
     android:layout_height="wrap_content"
     android:background="@color/White">
 
+
+        <ImageButton
+            android:id="@+id/infoBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:background="@color/White"
+            android:src="@drawable/ic_information_smal"/>
+
     <TextView
         android:id="@+id/Button01"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:textSize="14dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16dp"
         android:textColor="@color/Blue"
         android:text="ОК"
         android:background="@color/White"
-        android:layout_below="@+id/label"
-        android:layout_alignRight="@+id/label"
-        android:layout_alignEnd="@+id/label" />
+        android:layout_marginRight="11dp"
+        android:layout_marginEnd="11dp"
+        android:layout_alignBaseline="@+id/checkBoxSave"
+        android:layout_alignBottom="@+id/checkBoxSave"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:id="@+id/label"
@@ -23,23 +36,33 @@
         android:layout_height="wrap_content"
         android:textSize="16dp"
         android:textColor="@color/Blue"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="40dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="7dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_toLeftOf="@+id/youtubeButton"
-        android:layout_toStartOf="@+id/youtubeButton" />
+        android:layout_alignParentStart="true" />
 
     <CheckBox
         android:id="@+id/checkBoxSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
         android:text="Больше не отображать"
         android:layout_marginTop="3dp"
-        android:layout_alignTop="@+id/Button01"
-        android:layout_alignLeft="@+id/label"
-        android:layout_alignStart="@+id/label" />
+        android:layout_below="@id/label"/>
+
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/infoBtn"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="6dp"
+        android:layout_toEndOf="@+id/infoBtn"
+        android:layout_toRightOf="@+id/infoBtn"
+        android:text="Советы"
+        android:textSize="16dp"
+        android:textColor="@color/Black" />
 
 </RelativeLayout>

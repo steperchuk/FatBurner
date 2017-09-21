@@ -24,6 +24,8 @@ import android.widget.TextView;
 
 import com.github.lzyzsd.circleprogress.DonutProgress;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -188,7 +190,7 @@ public class SelectedTraining extends Menu {
 
 
                 //set up button
-                ImageButton button = (ImageButton) dialog.findViewById(R.id.Button01);
+                TextView button = (TextView) dialog.findViewById(R.id.Button01);
                 button.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         dialog.cancel();
@@ -206,7 +208,16 @@ public class SelectedTraining extends Menu {
     @Override
     public void onBackPressed() {
 
-        Intent intent = new Intent(SelectedTraining.this, TrainingsList.class);
+        Intent intent;
+        boolean isOpenedFromMenu = getIntent().getBooleanExtra("openedFromMenu",false);
+        if(isOpenedFromMenu){
+            intent = new Intent(SelectedTraining.this, TrainingsCalendar.class);
+        }
+        else {
+            intent = new Intent(SelectedTraining.this, TrainingsList.class);
+            intent.putExtra("openedFromPrograms", false);
+        }
+
         startActivity(intent);
 
     }

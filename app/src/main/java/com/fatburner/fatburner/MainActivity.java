@@ -17,6 +17,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.appodeal.ads.Appodeal;
 import com.fatburner.fatburner.broadcast_receivers.NotificationEventReceiver;
 import com.github.lzyzsd.circleprogress.DonutProgress;
 
@@ -52,6 +53,10 @@ public class MainActivity extends Menu {
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View contentView = inflater.inflate(R.layout.activity_main, null, false);
         mDrawerLayout.addView(contentView, 0);
+
+        String appKey = "5ea0f9120f32340d9a53490829a3e2df63da3f72a50fc69d";
+        Appodeal.initialize(this, appKey, Appodeal.SKIPPABLE_VIDEO | Appodeal.BANNER);
+        Appodeal.disableNetwork(this, "cheetah");
 
 
         databaseHelper = new DatabaseHelper(this);

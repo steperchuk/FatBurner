@@ -40,7 +40,7 @@
         android:layout_alignStart="@+id/textView10"
         android:layout_below="@+id/textView10"
         android:layout_marginTop="18dp"
-        android:text="Время: 1 час 15 мин"
+        android:text=""
         android:textAlignment="center"
         android:textColor="@android:color/holo_orange_dark"
         android:textSize="18sp" />

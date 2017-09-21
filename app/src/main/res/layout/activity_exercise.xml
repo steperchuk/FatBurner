@@ -85,8 +85,9 @@
             android:layout_marginRight="17dp"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="numberDecimal"
+            android:digits="1234567890"
             android:maxLength="3"
+            android:inputType="numberDecimal"
             android:text="80"
             android:textSize="18sp" />
 

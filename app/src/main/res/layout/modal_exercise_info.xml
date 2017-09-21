@@ -36,19 +36,19 @@
 
     </ScrollView>
 
-    <ImageButton
+    <TextView
         android:id="@+id/Button01"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:textSize="14dp"
-        android:textColor="@color/Blue"
-        android:text="ОК"
-        android:layout_marginBottom="13dp"
-        android:src="@drawable/ic_down_chevron"
-        android:background="@color/White"
-        android:layout_alignParentBottom="true"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_alignLeft="@+id/youtubeButton"
-        android:layout_alignStart="@+id/youtubeButton" />
+        android:layout_alignParentBottom="true"
+        android:background="@color/White"
+        android:src="@drawable/ic_down_chevron"
+        android:text="ОК"
+        android:layout_marginTop="7dp"
+        android:textAlignment="textEnd"
+        android:textColor="@color/Blue"
+        android:textSize="16dp" />
 
     <TextView
         android:id="@+id/exercise_label"

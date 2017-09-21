@@ -1,1 +1,1 @@
-include ':app', ':circleButtonLibrary', ':calendarLibrary', 'verticalSeekbar'
+include ':app', ':circleButtonLibrary', ':calendarLibrary', 'verticalSeekbar', ':cheetah-mobile-3.4.7', ':appodeal-1.15.9', ':applovin-6.3.0', ':chartboost-6.6.1', ':flurry-analytics-6.5.0', ':my-target-4.5.10', ':unity-ads-2.0.4', ':yandex-metrica-2.62'

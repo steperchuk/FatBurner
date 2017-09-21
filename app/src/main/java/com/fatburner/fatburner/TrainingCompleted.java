@@ -5,6 +5,7 @@ import android.animation.AnimatorSet;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -14,10 +15,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.appodeal.ads.Appodeal;
+import com.appodeal.ads.BannerCallbacks;
+import com.appodeal.ads.SkippableVideoCallbacks;
 import com.github.lzyzsd.circleprogress.DonutProgress;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static android.R.color.holo_orange_dark;
+import static com.fatburner.fatburner.TrainingsList.COLUMN_PROGRAMM_NAME;
+import static com.fatburner.fatburner.TrainingsList.COLUMN_PROGRESS;
+import static com.fatburner.fatburner.TrainingsList.COLUMN_TRAINING_ID;
 
 /**
  * Created by sergeyteperchuk on 6/13/17.
@@ -29,9 +41,14 @@ public class TrainingCompleted extends Menu {
 
     DatabaseHelper databaseHelper;
     SQLiteDatabase db;
+    Cursor userCursor;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Appodeal.show(TrainingCompleted.this, Appodeal.SKIPPABLE_VIDEO);
+        //Appodeal.disableNetwork(this, "cheetah");
+
 
         databaseHelper = new DatabaseHelper(this);
         databaseHelper.getWritableDatabase();
@@ -70,10 +87,75 @@ public class TrainingCompleted extends Menu {
                 databaseHelper.close();
                 db.close();
 
+                SetProgramProgress();
+
                     Intent intent = new Intent(TrainingCompleted.this, MainActivity.class);
                     startActivity(intent);
             }
         });
+    }
+
+
+    private void SetProgramProgress(){
+        ///Work with DB
+        // открываем подключение
+        databaseHelper = new DatabaseHelper(this);
+        databaseHelper.getWritableDatabase();
+        db = databaseHelper.open();
+
+        //DatabaseHelper.TABLE = "TRAININGS";
+
+        List<Integer> allTrainings = new ArrayList<>();
+        List<Integer> allLoad = new ArrayList<>();
+        db = databaseHelper.open();
+        userCursor = db.rawQuery("select * from " + "TRAININGS" + " where " + COLUMN_PROGRAMM_NAME + " = ?", new String[]{getCurrentProgramm()});
+        if (userCursor.moveToFirst()) {
+            do {
+                allTrainings.add(userCursor.getInt(userCursor.getColumnIndex(COLUMN_TRAINING_ID)));
+                allLoad.add(userCursor.getInt(userCursor.getColumnIndex(COLUMN_PROGRESS)));
+            } while (userCursor.moveToNext());
+        }
+
+        int totalTrainingsLoad = 0;
+        for(int i = 0; i < allTrainings.size(); i++){
+            totalTrainingsLoad = totalTrainingsLoad + allLoad.get(i);
+        }
+
+        if(totalTrainingsLoad != 0) {
+
+            float totalTrainings = (allTrainings.size() * 100);
+            float percentValue = totalTrainingsLoad / totalTrainings;
+            float programmCompletion = Math.round(percentValue * 100);
+            ContentValues cv = new ContentValues();
+            cv.put("COMPLETION_STATUS", programmCompletion);
+            db = databaseHelper.open();
+            db.update("PROGRAMMS", cv, "NAME = ?", new String[]{String.valueOf(getCurrentProgramm())});
+
+            db = databaseHelper.open();
+            cv = new ContentValues();
+            cv.put("PROGRAMM_STATUS", programmCompletion);
+            db.update("CALENDAR", cv, "DATE = ?" , new String[]{Utils.getCurrentDate()});
+        }
+
+        db.close();
+        userCursor.close();
+    }
+
+    private String getCurrentProgramm() {
+        db = databaseHelper.open();
+        userCursor = db.rawQuery("select " + DatabaseHelper.COLUMN_NAME + " from PROGRAMMS" +
+                " where " + DatabaseHelper.COLUMN_IS_CURRENT + " = 1", null);
+
+        List<String> current = new ArrayList<>();
+        if (userCursor.moveToFirst()) {
+            do {
+                current.add(userCursor.getString(userCursor.getColumnIndex(DatabaseHelper.COLUMN_NAME)));
+            } while (userCursor.moveToNext());
+        }
+
+        db.close();
+        userCursor.close();
+        return current.get(0);
     }
 
     void startAnimation () {

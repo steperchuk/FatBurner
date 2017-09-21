@@ -9,9 +9,17 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/applovin-6.3.0" />
+            <option value="$PROJECT_DIR$/appodeal-1.15.9" />
             <option value="$PROJECT_DIR$/calendarLibrary" />
+            <option value="$PROJECT_DIR$/chartboost-6.6.1" />
+            <option value="$PROJECT_DIR$/cheetah-mobile-3.4.7" />
             <option value="$PROJECT_DIR$/circleButtonLibrary" />
+            <option value="$PROJECT_DIR$/flurry-analytics-6.5.0" />
+            <option value="$PROJECT_DIR$/my-target-4.5.10" />
+            <option value="$PROJECT_DIR$/unity-ads-2.0.4" />
             <option value="$PROJECT_DIR$/verticalSeekbar" />
+            <option value="$PROJECT_DIR$/yandex-metrica-2.62" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

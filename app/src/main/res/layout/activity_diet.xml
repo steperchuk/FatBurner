@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/White"
-        android:layout_marginBottom="70dp">
+        android:layout_marginBottom="105dp">
         <android.support.v4.view.PagerTabStrip
             android:id="@+id/pagerTabStrip"
             android:layout_width="match_parent"
@@ -24,8 +24,8 @@
         android:id="@+id/getTotalItemsList"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginEnd="21dp"
-        android:layout_marginRight="21dp"
+        android:layout_marginEnd="11dp"
+        android:layout_marginRight="11dp"
         android:background="@color/White"
         android:shadowColor="#45A9D4"
         android:shadowDx="0"
@@ -34,8 +34,7 @@
         android:src = "@drawable/ic_list"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="55dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
@@ -44,14 +43,13 @@
         android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/getTotalItemsList"
         android:layout_marginEnd="11dp"
-        android:layout_marginRight="7dp"
-        android:layout_marginTop="16dp"
-        android:layout_toLeftOf="@+id/getTotalItemsList"
-        android:layout_toStartOf="@+id/getTotalItemsList"
+        android:layout_marginRight="11dp"
         android:text="Перейти к покупкам"
         android:textSize="14dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_alignBottom="@+id/getTotalItemsList"
+        android:layout_toLeftOf="@+id/getTotalItemsList"
+        android:layout_toStartOf="@+id/getTotalItemsList" />
 
 </RelativeLayout>

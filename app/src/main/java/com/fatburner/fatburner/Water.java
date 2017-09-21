@@ -3,18 +3,22 @@ package com.fatburner.fatburner;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.appodeal.ads.Appodeal;
+import com.appodeal.ads.BannerCallbacks;
 import com.github.lzyzsd.circleprogress.CircleProgress;
 
 import java.io.IOException;
@@ -42,7 +46,6 @@ public class Water extends Menu {
     int progressBarState = 3;
     int amount = 0;
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +54,26 @@ public class Water extends Menu {
         View contentView = inflater.inflate(R.layout.activity_water, null, false);
         mDrawerLayout.addView(contentView, 0);
 
+
+        Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+        //Appodeal.disableNetwork(this, "cheetah");
+
+
         loadData();
+
+        SharedPreferences value = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String currentDate = value.getString("currentDay", "");
+        if(currentDate.equals(Utils.getCurrentDate())) {
+            loadData();
+        }
+        else {
+            progress = 0;
+            amount = 0;
+        }
+
+        SharedPreferences.Editor sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
+        sp.putString("currentDay", Utils.getCurrentDate());
+        sp.commit();
 
         waterProgressLabel = (TextView) findViewById(R.id.waterAmount);
         waterProgressLabel.setText(amount + " / " + waterDailyNorm + " мл");
@@ -159,7 +181,6 @@ public class Water extends Menu {
 
             }
         });
-
 
         }
 

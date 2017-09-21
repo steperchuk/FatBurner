@@ -19,6 +19,10 @@ import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.appodeal.ads.Appodeal;
+import com.appodeal.ads.BannerCallbacks;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -57,6 +61,9 @@ public class Diet extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diet);
 
+        Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+        //Appodeal.disableNetwork(this, "cheetah");
+
 
         getTotalItemsList = (ImageButton) findViewById(R.id.getTotalItemsList);
 
@@ -66,8 +73,6 @@ public class Diet extends FragmentActivity {
                 showDialog(DIALOG_DAYS);
             }
         });
-
-
 
 
         pager = (ViewPager) findViewById(R.id.pager);
@@ -91,6 +96,16 @@ public class Diet extends FragmentActivity {
             public void onPageScrollStateChanged(int state) {
             }
         });
+
+
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+        //Appodeal.disableNetwork(this, "cheetah");
     }
 
     @Override

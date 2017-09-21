@@ -23,6 +23,8 @@ import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.Switch;
 
+import com.appodeal.ads.Appodeal;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,6 +58,9 @@ public class ProductsOrder extends Menu {
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View contentView = inflater.inflate(R.layout.activity_products_order, null, false);
         //mDrawerLayout.addView(contentView, 0);
+
+        Appodeal.show(this, Appodeal.BANNER_BOTTOM);
+        //Appodeal.disableNetwork(this, "cheetah");
 
         productsOrderList = (ListView) findViewById(R.id.orders_list);
         switchHideOrdered = (Switch) findViewById(R.id.hideOrdred);

@@ -4,9 +4,17 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/FatBurner.iml" filepath="$PROJECT_DIR$/FatBurner.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/applovin-6.3.0/applovin-6.3.0.iml" filepath="$PROJECT_DIR$/applovin-6.3.0/applovin-6.3.0.iml" />
+      <module fileurl="file://$PROJECT_DIR$/appodeal-1.15.9/appodeal-1.15.9.iml" filepath="$PROJECT_DIR$/appodeal-1.15.9/appodeal-1.15.9.iml" />
       <module fileurl="file://$PROJECT_DIR$/calendarLibrary/calendarLibrary.iml" filepath="$PROJECT_DIR$/calendarLibrary/calendarLibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/chartboost-6.6.1/chartboost-6.6.1.iml" filepath="$PROJECT_DIR$/chartboost-6.6.1/chartboost-6.6.1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cheetah-mobile-3.4.7/cheetah-mobile-3.4.7.iml" filepath="$PROJECT_DIR$/cheetah-mobile-3.4.7/cheetah-mobile-3.4.7.iml" />
       <module fileurl="file://$PROJECT_DIR$/circleButtonLibrary/circleButtonLibrary.iml" filepath="$PROJECT_DIR$/circleButtonLibrary/circleButtonLibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/flurry-analytics-6.5.0/flurry-analytics-6.5.0.iml" filepath="$PROJECT_DIR$/flurry-analytics-6.5.0/flurry-analytics-6.5.0.iml" />
+      <module fileurl="file://$PROJECT_DIR$/my-target-4.5.10/my-target-4.5.10.iml" filepath="$PROJECT_DIR$/my-target-4.5.10/my-target-4.5.10.iml" />
+      <module fileurl="file://$PROJECT_DIR$/unity-ads-2.0.4/unity-ads-2.0.4.iml" filepath="$PROJECT_DIR$/unity-ads-2.0.4/unity-ads-2.0.4.iml" />
       <module fileurl="file://$PROJECT_DIR$/verticalSeekbar/verticalSeekbar.iml" filepath="$PROJECT_DIR$/verticalSeekbar/verticalSeekbar.iml" />
+      <module fileurl="file://$PROJECT_DIR$/yandex-metrica-2.62/yandex-metrica-2.62.iml" filepath="$PROJECT_DIR$/yandex-metrica-2.62/yandex-metrica-2.62.iml" />
     </modules>
   </component>
 </project>

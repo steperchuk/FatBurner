@@ -13,6 +13,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -20,6 +21,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
 }
 
 dependencies {
@@ -35,4 +37,14 @@ dependencies {
     compile project(':circleButtonLibrary')
     compile project(':calendarLibrary')
     compile project(':verticalSeekbar')
+    compile project(':cheetah-mobile-3.4.7')
+    compile project(':appodeal-1.15.9')
+    compile project(':applovin-6.3.0')
+    compile project(':chartboost-6.6.1')
+    compile project(':flurry-analytics-6.5.0')
+    compile project(':my-target-4.5.10')
+    compile project(':unity-ads-2.0.4')
+    compile project(':yandex-metrica-2.62')
+    compile 'com.google.android.gms:play-services-ads:9.8.0'
+    compile 'com.google.android.gms:play-services-location:9.8.0'
 }

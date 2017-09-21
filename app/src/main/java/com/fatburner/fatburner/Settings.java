@@ -13,13 +13,17 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.opengl.Visibility;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.text.InputFilter;
 import android.text.InputType;
+import android.text.Spanned;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -40,6 +44,8 @@ import java.util.List;
 import static com.fatburner.fatburner.GlobalVariables.TRAINING_DAYS;
 import static com.fatburner.fatburner.GlobalVariables.selectedPhase;
 import static com.fatburner.fatburner.GlobalVariables.selectedDiet;
+import static com.fatburner.fatburner.R.color.Blue;
+import static com.fatburner.fatburner.R.color.Red;
 
 
 public class Settings extends Menu {
@@ -95,6 +101,11 @@ public class Settings extends Menu {
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View contentView = inflater.inflate(R.layout.activity_settings, null, false);
         mDrawerLayout.addView(contentView, 0);
+
+        //Show dialog instead of warning bottom label
+        TextView warningLabel = (TextView) findViewById(R.id.textView9);
+        warningLabel.setVisibility(View.INVISIBLE);
+        ShowInfoDialog();
 
         final ImageButton applyButton = (ImageButton) findViewById(R.id.applyBtn);
 
@@ -557,6 +568,37 @@ public class Settings extends Menu {
 
 
 
+    }
+
+    private void ShowInfoDialog(){
+        final Dialog dialog = new Dialog(Settings.this);
+        dialog.setContentView(R.layout.modal_advice);
+        dialog.setCancelable(true);
+
+        CheckBox checkBoxSave = (CheckBox) dialog.findViewById(R.id.checkBoxSave);
+        checkBoxSave.setVisibility(View.INVISIBLE);
+
+        TextView textViewTitle = (TextView) dialog.findViewById(R.id.textViewTitle);
+        textViewTitle.setText("Внимание!");
+        textViewTitle.setTextColor(R.color.Black);
+
+        TextView exerciseLabel = (TextView) dialog.findViewById(R.id.label);
+        exerciseLabel.setTextColor(R.color.Black);
+        exerciseLabel.setText("Изменение настроек диеты может привести к удалению текущих настроек диеты!\n");
+
+        ImageButton infoBtn = (ImageButton) dialog.findViewById(R.id.infoBtn);
+        infoBtn.setImageResource(R.drawable.ic_warning_smal);
+
+
+        //set up button
+        TextView button = (TextView) dialog.findViewById(R.id.Button01);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+
+        dialog.show();
     }
 
     private void getTrainingDaysFromDB(String trainingDaysValue){

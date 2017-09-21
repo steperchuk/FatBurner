@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -38,7 +39,7 @@ public class Menu extends AppCompatActivity {
 
         getMenuSettings();
 
-        mDrawerLayout.addDrawerListener(mToogle);
+        mDrawerLayout.setDrawerListener(mToogle);
         mToogle.syncState();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -75,18 +76,20 @@ public class Menu extends AppCompatActivity {
             String products[] = {"П", "К", "М", "Ф", "О", "Ж"};
             switch (item.getItemId()) {
                 case R.id.nav_training:
-                    intent = new Intent(Menu.this, Exercise.class);
-                    if(currentTraining != "") {
+                    intent = new Intent(Menu.this, TrainingsList.class);
+                    intent.putExtra("openedFromMenu", true);
+                    if(currentProgram != "") {
                     startActivity(intent);
                     }
                     else{
-                        ModalDialogNotSelected dialog = new ModalDialogNotSelected();
+                        ModalDialogProgramNotSelected dialog = new ModalDialogProgramNotSelected();
                         dialog.show(getSupportFragmentManager(), "custom");
                         return;
                     }
                     break;
                 case R.id.nav_challange:
                     intent = new Intent(Menu.this, SelectedTraining.class);
+                    intent.putExtra("openedFromMenu", true);
                     if(currentTraining != "") {
                     startActivity(intent);
                     }

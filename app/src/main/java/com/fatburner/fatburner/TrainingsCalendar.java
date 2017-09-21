@@ -4,6 +4,7 @@ import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -40,6 +41,10 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+
+import static com.fatburner.fatburner.TrainingsList.COLUMN_PROGRAMM_NAME;
+import static com.fatburner.fatburner.TrainingsList.COLUMN_PROGRESS;
+import static com.fatburner.fatburner.TrainingsList.COLUMN_TRAINING_ID;
 
 /**
  * Created by sete on 6/19/2017.
@@ -91,8 +96,8 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
 
         mCalendarView.setSelectedDate(CalendarDay.today());
 
-
         LoadProgress();
+
 
         /*
         List<String> info = loadProgressForSpecificDay(getSelectedDatesString());
@@ -433,7 +438,6 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
         }
     }
 
-    
 }
 
 

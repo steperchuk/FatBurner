@@ -9,6 +9,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
@@ -16,18 +17,23 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.annotation.RequiresApi;
+import android.preference.PreferenceManager;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import com.appodeal.ads.Appodeal;
 import com.github.lzyzsd.circleprogress.DonutProgress;
 
 import org.w3c.dom.Text;
@@ -91,6 +97,12 @@ public class Exercise extends Menu {
         }
         */
 
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        boolean show = sp.getBoolean("showExerciseAdvice", true);
+        if(show) {
+            ShowInfoDialog();
+        }
+
 
         final TextView exerciseLabel = (TextView) findViewById(R.id.exercise_label);
         final TextView repeatsLabel = (TextView) findViewById(R.id.repeats);
@@ -102,9 +114,6 @@ public class Exercise extends Menu {
         final ImageButton playButton = (ImageButton) findViewById(R.id.playerButton);
         final TextView weightLabelText = (TextView) findViewById(R.id.weightLabelText);
         final EditText weight = (EditText) findViewById(R.id.weightLabel);
-
-
-
 
         List<String> exercises = new ArrayList<>();
         List<String> infos = new ArrayList<>();
@@ -261,6 +270,8 @@ public class Exercise extends Menu {
                                 weightLabelText.setVisibility(View.VISIBLE);
                                 weight.setVisibility(View.VISIBLE);
 
+                                Appodeal.hide(Exercise.this, Appodeal.BANNER);
+
                                 if (currentAttemptId > Integer.parseInt(attemptsList.get(i))) {
                                     currentAttemptId = 1;
                                     attemptsCounterLabel.setText("Подход: " + currentAttemptId + "/" + attemptsList.get(i));
@@ -274,6 +285,10 @@ public class Exercise extends Menu {
                             attemptsCounterLabel.setVisibility(View.INVISIBLE);
                             weightLabelText.setVisibility(View.INVISIBLE);
                             weight.setVisibility(View.INVISIBLE);
+
+                            Appodeal.show(Exercise.this, Appodeal.BANNER_TOP);
+                            //Appodeal.disableNetwork(Exercise.this, "cheetah");
+
                         }
 
                         if (!exerciseList.get(i).equals("Отдых")) {
@@ -394,7 +409,7 @@ public class Exercise extends Menu {
 
 
                     //set up button
-                    ImageButton button = (ImageButton) dialog.findViewById(R.id.Button01);
+                    TextView button = (TextView) dialog.findViewById(R.id.Button01);
                     button.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
                             dialog.cancel();
@@ -407,6 +422,43 @@ public class Exercise extends Menu {
             }
         });
 
+    }
+
+    private void ShowInfoDialog(){
+        final Dialog dialog = new Dialog(Exercise.this);
+        dialog.setContentView(R.layout.modal_advice);
+        dialog.setCancelable(true);
+
+        CheckBox checkBoxSave = (CheckBox) dialog.findViewById(R.id.checkBoxSave);
+        checkBoxSave.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+                if (isChecked){
+                    SharedPreferences.Editor sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
+                    sp.putBoolean("showExerciseAdvice", false);
+                    sp.commit();
+                }
+            }
+        });
+
+
+        TextView exerciseLabel = (TextView) dialog.findViewById(R.id.label);
+        exerciseLabel.setText(
+                "1. Указывайте максимальный вес для учета Ваших достижений.\n\n" +
+                "2. Указанный максимальный вес будет отображен для упражнения при повторе тренировки.\n\n" +
+                "3. Воспользуйтесь возможностью пропуска отдыха, если вы считаете что достаточно отдохнули и готовы перейти к следующему подходу или упражнению.\n\n"+
+                "4. Просматривайте информацию о упражнении для улучшении техники выполнения.\n"
+        );
+
+        //set up button
+        TextView button = (TextView) dialog.findViewById(R.id.Button01);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+
+        dialog.show();
     }
 
     @Override

@@ -24,3 +24,4 @@ public class ModalDialogNotSelected extends DialogFragment {
                 .create();
     }
 }
+

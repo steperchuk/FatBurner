@@ -9,7 +9,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
 import android.os.Build;
 import android.preference.PreferenceManager;
-import android.support.annotation.RequiresApi;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,7 +48,6 @@ public class ProgramsList extends Menu {
     Switch switchRecommended;
     boolean showRecommended = false;
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,6 +118,7 @@ public class ProgramsList extends Menu {
 
                 Intent intent;
                 intent = new Intent(ProgramsList.this, TrainingsList.class);
+                intent.putExtra("openedFromPrograms", true);
                 startActivity(intent);
             }
         };
@@ -242,7 +241,6 @@ public class ProgramsList extends Menu {
         int green = getResources().getColor(R.color.Green);
 
 
-        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
         @Override
         public boolean setViewValue(View view, Object data, String textRepresentation) {
         int i = 0;

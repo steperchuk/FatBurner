@@ -1,0 +1,2 @@
+configurations.maybeCreate("default")
+artifacts.add("default", file('android-support-v7-recyclerview-23.1.1.jar'))

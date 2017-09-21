@@ -106,6 +106,7 @@ public class NotificationIntentService extends IntentService {
             final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
             builder.setContentTitle("Fat burner")
                     .setAutoCancel(true)
+                    .setOngoing(true)
                     .setColor(getResources().getColor(R.color.colorAccent))
                     .setContentText("Прием пищи")
                     .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
@@ -126,7 +127,7 @@ public class NotificationIntentService extends IntentService {
             manager.notify(NOTIFICATION_ID, builder.build());
 
             cancelAlarm(getApplicationContext());
-            Calendar nextNotificationTime = Utils.getNotificationTime(getApplicationContext(), Utils.incrementTimeOnOneMin());
+            Calendar nextNotificationTime = Utils.getNotificationTime(getApplicationContext(), Utils.incrementTime(1));
             setupAlarm(getApplicationContext(), nextNotificationTime);
 
         }
