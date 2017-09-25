@@ -117,7 +117,7 @@
             android:id="@+id/textView8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Напомнить о приеме пищи"
+            android:text="Напоминать о приеме\nпищи"
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_below="@+id/switchWaterNotification"

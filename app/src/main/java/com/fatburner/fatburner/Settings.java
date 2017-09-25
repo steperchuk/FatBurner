@@ -105,7 +105,10 @@ public class Settings extends Menu {
         //Show dialog instead of warning bottom label
         TextView warningLabel = (TextView) findViewById(R.id.textView9);
         warningLabel.setVisibility(View.INVISIBLE);
-        ShowInfoDialog();
+        boolean isFirtsStart = getIntent().getBooleanExtra("isFirstStart", false);
+        if(!isFirtsStart){
+            ShowInfoDialog();
+        }
 
         final ImageButton applyButton = (ImageButton) findViewById(R.id.applyBtn);
 

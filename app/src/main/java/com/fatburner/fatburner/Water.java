@@ -69,6 +69,7 @@ public class Water extends Menu {
         else {
             progress = 0;
             amount = 0;
+            saveData();
         }
 
         SharedPreferences.Editor sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();

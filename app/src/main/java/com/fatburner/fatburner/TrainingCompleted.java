@@ -50,7 +50,7 @@ public class TrainingCompleted extends Menu {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Appodeal.show(TrainingCompleted.this, Appodeal.SKIPPABLE_VIDEO);
+        Appodeal.show(TrainingCompleted.this, Appodeal.INTERSTITIAL);
         //Appodeal.disableNetwork(this, "cheetah");
 
 

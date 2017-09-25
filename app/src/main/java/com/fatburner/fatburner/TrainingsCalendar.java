@@ -8,6 +8,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -15,6 +16,7 @@ import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -51,6 +53,9 @@ import static com.fatburner.fatburner.TrainingsList.COLUMN_TRAINING_ID;
  */
 
 public class TrainingsCalendar extends Menu implements OnDateSelectedListener, OnMonthChangedListener {
+
+    static final String COLUMN_COMPLETION_STATUS = "COMPLETION_STATUS";
+    static final String COLUMN_IS_CURRENT = "IS_CURRENT";
 
     DatabaseHelper databaseHelper;
     SQLiteDatabase db;
@@ -97,6 +102,21 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
         mCalendarView.setSelectedDate(CalendarDay.today());
 
         LoadProgress();
+
+        SharedPreferences value = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String lastTrainingDate = value.getString("currentDay", "");
+        int lastTrainingProgress = loadProgressForLastTrainig();
+        int currentTrainingID = getCurrentTrainingID();
+
+
+        if(!lastTrainingDate.equals(Utils.getCurrentDate()) &&  lastTrainingProgress == 100 &&  currentTrainingID !=0)
+        {
+            selectNextTraining();
+        }
+
+        SharedPreferences.Editor sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
+        sp.putString("currentDay", Utils.getCurrentDate());
+        sp.commit();
 
 
         /*
@@ -199,6 +219,29 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
         */
 
 
+    }
+
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        LoadProgress();
+        
+        SharedPreferences value = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String lastTrainingDate = value.getString("currentDay", "");
+        int lastTrainingProgress = loadProgressForLastTrainig();
+        int currentTrainingID = getCurrentTrainingID();
+
+
+        if(!lastTrainingDate.equals(Utils.getCurrentDate()) &&  lastTrainingProgress == 100 &&  currentTrainingID !=0)
+        {
+            selectNextTraining();
+        }
+
+        SharedPreferences.Editor sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
+        sp.putString("currentDay", Utils.getCurrentDate());
+        sp.commit();
     }
 
 
@@ -364,6 +407,123 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
          dietStatus = "0";
     }
 
+    private void selectNextTraining(){
+        String currentProgram = getCurrentProgramm();
+        int currentTraining = getCurrentTrainingID();
+        int trainingsCount = getTrainingsCount();
+        if(currentTraining == trainingsCount)
+        {
+            return;
+        }
+
+        databaseHelper.getWritableDatabase();
+        db = databaseHelper.open();
+
+        ContentValues cv = new ContentValues();
+        cv.put("IS_CURRENT", 0);
+        db.update("TRAININGS", cv, null, null);
+
+        db = databaseHelper.open();
+        cv.put("IS_CURRENT", 1);
+        db.update("TRAININGS", cv, COLUMN_TRAINING_ID + " = ? and " + COLUMN_PROGRAMM_NAME + " = ?", new String[]{String.valueOf(currentTraining+1), String.valueOf(currentProgram)});
+
+        cv = new ContentValues();
+        db = databaseHelper.open();
+        cv.put("CURRENT_PROGRAMM", currentProgram);
+        cv.put("CURRENT_TRAINING", currentTraining+1);
+        db.update("TRAINING_SETTINGS",cv,null,null);
+
+        db = databaseHelper.open();
+        cv = new ContentValues();
+        cv.put("PROGRAMM_NAME", currentProgram);
+        cv.put("TRAINING_NAME", currentTraining+1);
+        db.update("CALENDAR", cv, "DATE = ?" , new String[]{Utils.getCurrentDate()});
+
+        db.close();
+        databaseHelper.close();
+
+    }
+
+    private int getTrainingsCount(){
+
+        databaseHelper = new DatabaseHelper(this);
+        databaseHelper.getWritableDatabase();
+        db = databaseHelper.open();
+
+        userCursor = db.rawQuery("select * from " + "TRAININGS" + " where " + COLUMN_PROGRAMM_NAME + " = ?", new String[]{getCurrentProgramm()});
+
+        List<Integer> trainings = new ArrayList<>();
+        List<Integer> isCurrent = new ArrayList<>();
+
+        if (userCursor.moveToFirst()) {
+            do {
+                trainings.add(userCursor.getInt(userCursor.getColumnIndex(COLUMN_TRAINING_ID)));
+                isCurrent.add(userCursor.getInt(userCursor.getColumnIndex(COLUMN_IS_CURRENT)));
+            } while (userCursor.moveToNext());
+        }
+
+        db.close();
+        userCursor.close();
+
+        return trainings.size();
+
+    }
+
+    private int getCurrentTrainingID(){
+
+        databaseHelper = new DatabaseHelper(this);
+        databaseHelper.getWritableDatabase();
+        db = databaseHelper.open();
+
+        int trainingId = 0;
+
+        userCursor = db.rawQuery("select TRAINING_ID from TRAININGS where IS_CURRENT = 1", null);
+        if(userCursor.moveToFirst()){
+            trainingId = userCursor.getInt(0);
+        }
+
+        db.close();
+        userCursor.close();
+
+        return trainingId;
+
+    }
+
+    private String getCurrentProgramm() {
+        db = databaseHelper.open();
+        userCursor = db.rawQuery("select " + DatabaseHelper.COLUMN_NAME + " from PROGRAMMS" +
+                " where " + DatabaseHelper.COLUMN_IS_CURRENT + " = 1", null);
+
+        List<String> current = new ArrayList<>();
+        if (userCursor.moveToFirst()) {
+            do {
+                current.add(userCursor.getString(userCursor.getColumnIndex(DatabaseHelper.COLUMN_NAME)));
+            } while (userCursor.moveToNext());
+        }
+
+        db.close();
+        userCursor.close();
+        return current.get(0);
+    }
+
+    private int loadProgressForLastTrainig(){
+
+        databaseHelper = new DatabaseHelper(this);
+        databaseHelper.getWritableDatabase();
+        db = databaseHelper.open();
+
+        int progress = 0;
+
+        userCursor = db.rawQuery("select PROGRESS from TRAININGS where IS_CURRENT = 1", null);
+        if(userCursor.moveToFirst()){
+            progress = userCursor.getInt(0);
+        }
+
+        db.close();
+        userCursor.close();
+
+        return progress;
+    }
 
 
     private void fillDayColors(){

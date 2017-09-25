@@ -19,7 +19,7 @@
         android:text="TextView"
         android:textColor="@color/Blue"
         android:textAlignment="center"
-        android:textSize="24sp"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
 <LinearLayout
@@ -67,7 +67,7 @@
             android:id="@+id/weightLabelText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Максимальный вес (кг): "
+            android:text="Макс. вес (кг): "
             android:layout_gravity="end"
             android:textAlignment="textEnd"
             android:layout_weight="1"
@@ -186,7 +186,7 @@
         android:text="Продолжить"
         android:textAlignment="center"
         android:textColor="@color/Blue"
-        android:textSize="12sp"
+        android:textSize="11sp"
         android:textStyle="bold"
         tools:text="01:17" />
 
