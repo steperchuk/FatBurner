@@ -87,6 +87,17 @@
 
     </com.h6ah4i.android.widget.verticalseekbar.VerticalSeekBarWrapper>
 
+    <ImageButton
+        android:id="@+id/resetWaterStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_reset"
+        android:background="@color/White"
+        android:layout_alignBottom="@+id/waterProgress"
+        android:layout_toLeftOf="@+id/waterProgress"
+        android:layout_toStartOf="@+id/waterProgress"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp" />
 
 
 </RelativeLayout>

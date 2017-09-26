@@ -188,8 +188,9 @@
             android:textAlignment="viewEnd"
             android:textColor="@color/Blue"
             android:textSize="18sp"
-            android:layout_toRightOf="@+id/textView8"
-            android:layout_toEndOf="@+id/textView8" />
+            android:layout_toEndOf="@+id/textView7"
+            android:layout_alignLeft="@+id/customDietUsage"
+            android:layout_alignStart="@+id/customDietUsage" />
 
         <Switch
             android:id="@+id/gender"

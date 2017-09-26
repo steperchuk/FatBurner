@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -58,25 +59,41 @@ public class Water extends Menu {
         Appodeal.show(this, Appodeal.BANNER_BOTTOM);
         //Appodeal.disableNetwork(this, "cheetah");
 
+        waterProgressLabel = (TextView) findViewById(R.id.waterAmount);
+        waterProgress = (CircleProgress) findViewById(R.id.waterProgress);
+        waterProgress.setTextSize(100);
 
         loadData();
 
         SharedPreferences value = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String currentDate = value.getString("currentDay", "");
+        String currentDate = value.getString("currentDayWater", "");
         if(currentDate.equals(Utils.getCurrentDate())) {
             loadData();
         }
         else {
             progress = 0;
             amount = 0;
+            waterProgressLabel.setText(amount + " / " + waterDailyNorm + " мл");
+            waterProgress.setProgress(Math.round(progress));
             saveData();
         }
 
         SharedPreferences.Editor sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
-        sp.putString("currentDay", Utils.getCurrentDate());
+        sp.putString("currentDayWater", Utils.getCurrentDate());
         sp.commit();
 
-        waterProgressLabel = (TextView) findViewById(R.id.waterAmount);
+        ImageButton resetWaterStatus = (ImageButton) findViewById(R.id.resetWaterStatus);
+        resetWaterStatus.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                progress = 0;
+                amount = 0;
+                waterProgressLabel.setText(amount + " / " + waterDailyNorm + " мл");
+                waterProgress.setProgress(Math.round(progress));
+                saveData();
+            }
+        });
+
+
         waterProgressLabel.setText(amount + " / " + waterDailyNorm + " мл");
 
         imageView = (ImageView) findViewById(R.id.imageView);
@@ -103,8 +120,7 @@ public class Water extends Menu {
         imageView.getLayoutParams().width = (progressBarState * 50) + 100;
         imageView.requestLayout();
 
-        waterProgress = (CircleProgress) findViewById(R.id.waterProgress);
-        waterProgress.setTextSize(100);
+
         if(amount >= waterDailyNorm)
         {
             waterProgress.setProgress(100);
@@ -184,6 +200,29 @@ public class Water extends Menu {
         });
 
         }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        SharedPreferences value = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String currentDate = value.getString("currentDayWater", "");
+        if(currentDate.equals(Utils.getCurrentDate())) {
+            loadData();
+        }
+        else {
+            progress = 0;
+            amount = 0;
+            waterProgressLabel.setText(amount + " / " + waterDailyNorm + " мл");
+            waterProgress.setProgress(Math.round(progress));
+            saveData();
+        }
+
+        SharedPreferences.Editor sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
+        sp.putString("currentDayWater", Utils.getCurrentDate());
+        sp.commit();
+
+    }
+
 
     @Override
     public void onBackPressed() {

@@ -114,10 +114,16 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
             selectNextTraining();
         }
 
+        if(!lastTrainingDate.equals(Utils.getCurrentDate()) &&  lastTrainingProgress != 100 &&  currentTrainingID !=0)
+        {
+            selectNextSameTraining();
+        }
+
         SharedPreferences.Editor sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
         sp.putString("currentDay", Utils.getCurrentDate());
         sp.commit();
 
+        mCalendarView.setSelectedDate(CalendarDay.today());
 
         /*
         List<String> info = loadProgressForSpecificDay(getSelectedDatesString());
@@ -239,9 +245,16 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
             selectNextTraining();
         }
 
+        if(!lastTrainingDate.equals(Utils.getCurrentDate()) &&  lastTrainingProgress != 100 &&  currentTrainingID !=0)
+        {
+            selectNextSameTraining();
+        }
+
         SharedPreferences.Editor sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
         sp.putString("currentDay", Utils.getCurrentDate());
         sp.commit();
+
+        mCalendarView.setSelectedDate(CalendarDay.today());
     }
 
 
@@ -308,12 +321,14 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
         dateLabel.setText(dateToShow);
 
         TextView programNameLabel = (TextView) findViewById(R.id.programName);
+        if(programName.contains("0") || programName.isEmpty()){programName = "Нет данных";}
         programNameLabel.setText(programName);
 
         TextView programProgressLabel = (TextView) findViewById(R.id.programStatus);
         programProgressLabel.setText(Math.round(Float.valueOf(programStatus)) + "%");
 
         TextView trainingNameLabel = (TextView) findViewById(R.id.trainingName);
+        if(trainingName.isEmpty()){trainingName = "Нет данных";}
         trainingNameLabel.setText(trainingName);
 
         TextView trainingProgressLabel = (TextView) findViewById(R.id.trainingStatus);
@@ -442,6 +457,89 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
         db.close();
         databaseHelper.close();
 
+        SetProgramProgress();
+
+    }
+
+    private void selectNextSameTraining(){
+        String currentProgram = getCurrentProgramm();
+        int currentTraining = getCurrentTrainingID();
+        int trainingsCount = getTrainingsCount();
+        if(currentTraining == trainingsCount)
+        {
+            return;
+        }
+
+        databaseHelper.getWritableDatabase();
+        db = databaseHelper.open();
+
+        ContentValues cv = new ContentValues();
+        cv.put("IS_CURRENT", 0);
+        db.update("TRAININGS", cv, null, null);
+
+        db = databaseHelper.open();
+        cv.put("IS_CURRENT", 1);
+        db.update("TRAININGS", cv, COLUMN_TRAINING_ID + " = ? and " + COLUMN_PROGRAMM_NAME + " = ?", new String[]{String.valueOf(currentTraining), String.valueOf(currentProgram)});
+
+        cv = new ContentValues();
+        db = databaseHelper.open();
+        cv.put("CURRENT_PROGRAMM", currentProgram);
+        cv.put("CURRENT_TRAINING", currentTraining);
+        db.update("TRAINING_SETTINGS",cv,null,null);
+
+        db = databaseHelper.open();
+        cv = new ContentValues();
+        cv.put("PROGRAMM_NAME", currentProgram);
+        cv.put("TRAINING_NAME", currentTraining);
+        db.update("CALENDAR", cv, "DATE = ?" , new String[]{Utils.getCurrentDate()});
+
+        db.close();
+        databaseHelper.close();
+
+        SetProgramProgress();
+
+    }
+
+    private void SetProgramProgress(){
+        ///Work with DB
+        // открываем подключение
+        databaseHelper = new DatabaseHelper(this);
+        databaseHelper.getWritableDatabase();
+        db = databaseHelper.open();
+
+        //DatabaseHelper.TABLE = "TRAININGS";
+
+        List<Integer> allTrainings = new ArrayList<>();
+        List<Integer> allLoad = new ArrayList<>();
+        db = databaseHelper.open();
+        userCursor = db.rawQuery("select * from " + "TRAININGS" + " where " + COLUMN_PROGRAMM_NAME + " = ?", new String[]{getCurrentProgramm()});
+        if (userCursor.moveToFirst()) {
+            do {
+                allTrainings.add(userCursor.getInt(userCursor.getColumnIndex(COLUMN_TRAINING_ID)));
+                allLoad.add(userCursor.getInt(userCursor.getColumnIndex(COLUMN_PROGRESS)));
+            } while (userCursor.moveToNext());
+        }
+
+        int totalTrainingsLoad = 0;
+        for(int i = 0; i < allTrainings.size(); i++){
+            totalTrainingsLoad = totalTrainingsLoad + allLoad.get(i);
+        }
+
+        if(totalTrainingsLoad != 0) {
+
+            float totalTrainings = (allTrainings.size() * 100);
+            float percentValue = totalTrainingsLoad / totalTrainings;
+            float programmCompletion = Math.round(percentValue * 100);
+            ContentValues cv = new ContentValues();
+
+            db = databaseHelper.open();
+            cv = new ContentValues();
+            cv.put("PROGRAMM_STATUS", programmCompletion);
+            db.update("CALENDAR", cv, "DATE = ?" , new String[]{Utils.getCurrentDate()});
+        }
+
+        db.close();
+        userCursor.close();
     }
 
     private int getTrainingsCount(){
