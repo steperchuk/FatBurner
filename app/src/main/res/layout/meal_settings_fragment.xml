@@ -53,7 +53,9 @@
         android:textSize="18sp"
         android:layout_alignBottom="@+id/breakfestTime"
         android:layout_alignLeft="@+id/linearLayout"
-        android:layout_alignStart="@+id/linearLayout" />
+        android:layout_alignStart="@+id/linearLayout"
+        android:layout_alignRight="@+id/linearLayout2"
+        android:layout_alignEnd="@+id/linearLayout2" />
 
     <TextView
         android:id="@+id/breakfestTime"
@@ -117,7 +119,9 @@
         android:textSize="18sp"
         android:layout_alignBottom="@+id/secondBreakfestTime"
         android:layout_alignLeft="@+id/linearLayout2"
-        android:layout_alignStart="@+id/linearLayout2" />
+        android:layout_alignStart="@+id/linearLayout2"
+        android:layout_alignRight="@+id/linearLayout"
+        android:layout_alignEnd="@+id/linearLayout" />
 
     <TextView
         android:id="@+id/secondBreakfestTime"
@@ -179,7 +183,9 @@
         android:textSize="18sp"
         android:layout_alignBottom="@+id/lunchTime"
         android:layout_alignLeft="@+id/linearLayout3"
-        android:layout_alignStart="@+id/linearLayout3" />
+        android:layout_alignStart="@+id/linearLayout3"
+        android:layout_alignRight="@+id/secondBreakfestShema"
+        android:layout_alignEnd="@+id/secondBreakfestShema" />
 
     <TextView
         android:id="@+id/lunchTime"
@@ -241,7 +247,9 @@
         android:textSize="18sp"
         android:layout_alignBottom="@+id/secondLunchTime"
         android:layout_alignLeft="@+id/linearLayout4"
-        android:layout_alignStart="@+id/linearLayout4" />
+        android:layout_alignStart="@+id/linearLayout4"
+        android:layout_alignRight="@+id/lunchShema"
+        android:layout_alignEnd="@+id/lunchShema" />
 
     <TextView
         android:id="@+id/secondLunchTime"
@@ -303,7 +311,9 @@
         android:textSize="18sp"
         android:layout_alignBottom="@+id/dinnerTime"
         android:layout_alignLeft="@+id/linearLayout5"
-        android:layout_alignStart="@+id/linearLayout5" />
+        android:layout_alignStart="@+id/linearLayout5"
+        android:layout_alignRight="@+id/linearLayout4"
+        android:layout_alignEnd="@+id/linearLayout4" />
 
     <TextView
         android:id="@+id/dinnerTime"

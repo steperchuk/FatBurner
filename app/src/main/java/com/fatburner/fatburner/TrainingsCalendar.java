@@ -17,6 +17,7 @@ import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -43,6 +44,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import static com.fatburner.fatburner.TrainingsList.COLUMN_PROGRAMM_NAME;
 import static com.fatburner.fatburner.TrainingsList.COLUMN_PROGRESS;
@@ -165,9 +167,15 @@ public class TrainingsCalendar extends Menu implements OnDateSelectedListener, O
 
         playerButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent("android.intent.action.MUSIC_PLAYER");
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                try {
+                    Intent intent = new Intent("android.intent.action.MUSIC_PLAYER");
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+                catch (Exception e){
+                    ModalDialogUnableOpenPlayer dialog = new ModalDialogUnableOpenPlayer();
+                    dialog.show(getSupportFragmentManager(), "custom");
+                }
             }
         });
 

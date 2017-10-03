@@ -359,9 +359,15 @@ public class Exercise extends Menu {
 
         playButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent("android.intent.action.MUSIC_PLAYER");
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                    try {
+                        Intent intent = new Intent("android.intent.action.MUSIC_PLAYER");
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }
+                    catch (Exception e){
+                        ModalDialogUnableOpenPlayer dialog = new ModalDialogUnableOpenPlayer();
+                        dialog.show(getSupportFragmentManager(), "custom");
+                    }
             }
         });
 

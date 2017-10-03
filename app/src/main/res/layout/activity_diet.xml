@@ -47,7 +47,7 @@
         android:layout_marginRight="11dp"
         android:text="Перейти к покупкам"
         android:textSize="14dp"
-        android:textStyle="bold"
+        android:textColor="@color/Black"
         android:layout_alignBottom="@+id/getTotalItemsList"
         android:layout_toLeftOf="@+id/getTotalItemsList"
         android:layout_toStartOf="@+id/getTotalItemsList" />

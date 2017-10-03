@@ -1,6 +1,7 @@
 package com.fatburner.fatburner;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.ArrayMap;
@@ -418,6 +419,19 @@ public class Utils {
         db.close();
 
         return timesList;
+    }
+
+    public static boolean isPackageInstalled(String packagename, PackageManager packageManager)
+    {
+        try
+        {
+            packageManager.getPackageInfo(packagename, 0);
+            return true;
+        }
+        catch (PackageManager.NameNotFoundException e)
+        {
+            return false;
+        }
     }
 
 }

@@ -147,19 +147,19 @@ public class DietPageFragment extends Fragment {
                 String mealID = null;
                 int listID = parent.getId();
                 switch (listID){
-                    case 2131689747:
+                    case 2131689748:
                         mealID = "0";
                         break;
-                    case 2131689748:
+                    case 2131689749:
                         mealID = "1";
                         break;
-                    case 2131689749:
+                    case 2131689750:
                         mealID = "2";
                         break;
-                    case 2131689750:
+                    case 2131689751:
                         mealID = "3";
                         break;
-                    case 2131689751:
+                    case 2131689752:
                         mealID = "4";
                         break;
                 }
