@@ -31,7 +31,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
             android:text="Завтрак"
-            android:textColor="@color/Black"
+            android:textColor="@color/Blue"
             android:textSize="24sp" />
 
         <TextView
@@ -97,7 +97,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
             android:text="Перекус"
-            android:textColor="@color/Black"
+            android:textColor="@color/Blue"
             android:textSize="24sp" />
 
         <TextView
@@ -161,7 +161,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
             android:text="Обед"
-            android:textColor="@color/Black"
+            android:textColor="@color/Blue"
             android:textSize="24sp" />
 
         <TextView
@@ -225,7 +225,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
             android:text="Перекус"
-            android:textColor="@color/Black"
+            android:textColor="@color/Blue"
             android:textSize="24sp" />
 
         <TextView
@@ -289,7 +289,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
             android:text="Ужин"
-            android:textColor="@color/Black"
+            android:textColor="@color/Blue"
             android:textSize="24sp" />
 
         <TextView
