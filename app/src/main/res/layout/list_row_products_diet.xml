@@ -17,7 +17,7 @@
         android:text="Завтрак"
         android:textColor="@color/Blue"
         android:typeface="sans"
-        android:textSize="18dip"
+        android:textSize="24dip"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
