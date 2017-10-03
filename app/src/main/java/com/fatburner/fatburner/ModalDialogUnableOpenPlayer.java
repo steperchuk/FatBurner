@@ -13,9 +13,9 @@ public class ModalDialogUnableOpenPlayer extends DialogFragment {
 
         AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
         return builder
-                .setTitle("Не получается окртыть")
+                .setTitle("Не удалось окртыть")
                 .setIcon(R.drawable.ic_warning_smal)
-                .setMessage("Не получается окртыть плеер на вашем устройстве.")
+                .setMessage("К сожалению не удалось окртыть плеер на вашем устройстве.")
                 .setPositiveButton("ОК", null)
                 .create();
     }
