@@ -365,7 +365,7 @@ public class Utils {
             firstHour  = Integer.valueOf(timesList.get(0).substring(0, timesList.get(0).indexOf(":")));
             firstMinute = Integer.valueOf(timesList.get(0).substring(timesList.get(0).indexOf(":")+1, timesList.get(0).length()));
 
-            dateToShowNotification.setDate(currentDay);
+            dateToShowNotification.setDate(currentDay+1);
             dateToShowNotification.setHours(firstHour);
             dateToShowNotification.setMinutes(firstMinute);
             dateToShowNotification.setSeconds(0);
@@ -419,19 +419,6 @@ public class Utils {
         db.close();
 
         return timesList;
-    }
-
-    public static boolean isPackageInstalled(String packagename, PackageManager packageManager)
-    {
-        try
-        {
-            packageManager.getPackageInfo(packagename, 0);
-            return true;
-        }
-        catch (PackageManager.NameNotFoundException e)
-        {
-            return false;
-        }
     }
 
 }
