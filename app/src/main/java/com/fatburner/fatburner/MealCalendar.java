@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -102,6 +103,9 @@ public class MealCalendar extends FragmentActivity {
         final Dialog dialog = new Dialog(MealCalendar.this);
         dialog.setContentView(R.layout.modal_advice);
         dialog.setCancelable(true);
+
+        TextView adviceText = (TextView) dialog.findViewById(R.id.label);
+        adviceText.setMovementMethod(new ScrollingMovementMethod());
 
         CheckBox checkBoxSave = (CheckBox) dialog.findViewById(R.id.checkBoxSave);
         checkBoxSave.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

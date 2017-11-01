@@ -229,9 +229,6 @@
         <activity android:name="com.adcolony.sdk.AdColonyInterstitialActivity" android:configChanges="keyboardHidden|orientation|screenSize"
             android:hardwareAccelerated="true"/>
 
-        <uses-feature android:name="android.hardware.location" android:required="false" />
-        <uses-feature android:name="android.hardware.location.network" android:required="false" />
-
     </application>
 
 </manifest>

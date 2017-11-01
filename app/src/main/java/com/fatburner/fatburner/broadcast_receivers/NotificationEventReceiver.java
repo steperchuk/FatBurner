@@ -38,7 +38,7 @@ public class NotificationEventReceiver extends WakefulBroadcastReceiver {
     public static void setupAlarm(Context context, Calendar notificationTime) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         PendingIntent alarmIntent = getStartPendingIntent(context);
-        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, notificationTime.getTimeInMillis(), alarmIntent); //use 1000 delay for debug
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, notificationTime.getTimeInMillis(), alarmIntent); //use 1000 delay for debug
     }
 
     public static void cancelAlarm(Context context) {

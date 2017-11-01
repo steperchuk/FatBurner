@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,6 +75,9 @@ public class Products extends FragmentActivity {
         final Dialog dialog = new Dialog(Products.this);
         dialog.setContentView(R.layout.modal_advice);
         dialog.setCancelable(true);
+
+        TextView adviceText = (TextView) dialog.findViewById(R.id.label);
+        adviceText.setMovementMethod(new ScrollingMovementMethod());
 
         CheckBox checkBoxSave = (CheckBox) dialog.findViewById(R.id.checkBoxSave);
         checkBoxSave.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

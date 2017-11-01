@@ -1,17 +1,25 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'FatBurnerKey'
+            keyPassword 'Step668927'
+            storeFile file('/Users/sergeyteperchuk/Desktop/keystores/android.jks')
+            storePassword 'Step668927!'
+        }
+    }
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
-    lintOptions{
+    lintOptions {
         disable "ResourceType"
     }
     defaultConfig {
         applicationId "com.fatburner.fatburner"
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -19,9 +27,9 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
-
 }
 
 dependencies {

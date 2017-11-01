@@ -20,6 +20,7 @@ import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
 import android.text.InputFilter;
 import android.text.Spanned;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -434,6 +435,9 @@ public class Exercise extends Menu {
         final Dialog dialog = new Dialog(Exercise.this);
         dialog.setContentView(R.layout.modal_advice);
         dialog.setCancelable(true);
+
+        TextView adviceText = (TextView) dialog.findViewById(R.id.label);
+        adviceText.setMovementMethod(new ScrollingMovementMethod());
 
         CheckBox checkBoxSave = (CheckBox) dialog.findViewById(R.id.checkBoxSave);
         checkBoxSave.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

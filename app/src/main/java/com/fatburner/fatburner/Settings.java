@@ -17,6 +17,7 @@ import android.preference.PreferenceManager;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.Spanned;
+import android.text.method.ScrollingMovementMethod;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -577,6 +578,9 @@ public class Settings extends Menu {
         final Dialog dialog = new Dialog(Settings.this);
         dialog.setContentView(R.layout.modal_advice);
         dialog.setCancelable(true);
+
+        TextView adviceText = (TextView) dialog.findViewById(R.id.label);
+        adviceText.setMovementMethod(new ScrollingMovementMethod());
 
         CheckBox checkBoxSave = (CheckBox) dialog.findViewById(R.id.checkBoxSave);
         checkBoxSave.setVisibility(View.INVISIBLE);
