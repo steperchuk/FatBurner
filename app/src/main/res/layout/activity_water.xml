@@ -59,12 +59,14 @@
 
     <ImageView
         android:id="@+id/imageView"
+        android:maxHeight="350dp"
+        android:maxWidth="350dp"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:background="@android:color/white"
         android:layout_above="@+id/waterProgress"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="39dp" />
+        android:layout_marginBottom="40dp" />
 
     <!-- This library requires pair of the VerticalSeekBar and VerticalSeekBarWrapper classes -->
     <com.h6ah4i.android.widget.verticalseekbar.VerticalSeekBarWrapper

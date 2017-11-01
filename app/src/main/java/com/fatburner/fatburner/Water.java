@@ -188,8 +188,15 @@ public class Water extends Menu {
                         progressBarState = progress;
                         String progressString = String.valueOf(progress * 50);
                         selectedAmountLabel.setText(progressString + " мл");
-                        imageView.getLayoutParams().height = (progress * 50) + 100;
-                        imageView.getLayoutParams().width = (progress * 50) + 100;
+
+                        int newImageSize = progress * 50;
+                        int maxImageSize = imageView.getMaxHeight();
+
+                        if(newImageSize <= maxImageSize/2){
+                            imageView.getLayoutParams().height = newImageSize - 5;
+                            imageView.getLayoutParams().width = newImageSize - 5;
+                        }
+
                         imageView.requestLayout();
                         seekBar.setSecondaryProgress(progress);
                         selectedAmount = progress * 50;
